@@ -1,0 +1,485 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		183FC61219234606000070F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183FC61119234606000070F1 /* Foundation.framework */; };
+		183FC61419234606000070F1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183FC61319234606000070F1 /* CoreGraphics.framework */; };
+		183FC61619234606000070F1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183FC61519234606000070F1 /* UIKit.framework */; };
+		183FC61C19234606000070F1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 183FC61A19234606000070F1 /* InfoPlist.strings */; };
+		183FC61E19234606000070F1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 183FC61D19234606000070F1 /* main.m */; };
+		183FC62219234606000070F1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 183FC62119234606000070F1 /* AppDelegate.m */; };
+		183FC62519234606000070F1 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 183FC62319234606000070F1 /* Main_iPhone.storyboard */; };
+		183FC62819234606000070F1 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 183FC62619234606000070F1 /* Main_iPad.storyboard */; };
+		183FC62B19234606000070F1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183FC62A19234606000070F1 /* ViewController.m */; };
+		183FC62D19234606000070F1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 183FC62C19234606000070F1 /* Images.xcassets */; };
+		183FC63419234606000070F1 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183FC63319234606000070F1 /* XCTest.framework */; };
+		183FC63519234606000070F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183FC61119234606000070F1 /* Foundation.framework */; };
+		183FC63619234606000070F1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183FC61519234606000070F1 /* UIKit.framework */; };
+		183FC63E19234606000070F1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 183FC63C19234606000070F1 /* InfoPlist.strings */; };
+		183FC64019234606000070F1 /* EcoaSmarthomeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 183FC63F19234606000070F1 /* EcoaSmarthomeTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		183FC63719234606000070F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 183FC60619234606000070F1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 183FC60D19234606000070F1;
+			remoteInfo = EcoaSmarthome;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		183FC60E19234606000070F1 /* EcoaSmarthome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcoaSmarthome.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		183FC61119234606000070F1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		183FC61319234606000070F1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		183FC61519234606000070F1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		183FC61919234606000070F1 /* EcoaSmarthome-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EcoaSmarthome-Info.plist"; sourceTree = "<group>"; };
+		183FC61B19234606000070F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		183FC61D19234606000070F1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		183FC61F19234606000070F1 /* EcoaSmarthome-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EcoaSmarthome-Prefix.pch"; sourceTree = "<group>"; };
+		183FC62019234606000070F1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		183FC62119234606000070F1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		183FC62419234606000070F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		183FC62719234606000070F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		183FC62919234606000070F1 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		183FC62A19234606000070F1 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		183FC62C19234606000070F1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		183FC63219234606000070F1 /* EcoaSmarthomeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EcoaSmarthomeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		183FC63319234606000070F1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		183FC63B19234606000070F1 /* EcoaSmarthomeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EcoaSmarthomeTests-Info.plist"; sourceTree = "<group>"; };
+		183FC63D19234606000070F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		183FC63F19234606000070F1 /* EcoaSmarthomeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EcoaSmarthomeTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		183FC60B19234606000070F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				183FC61419234606000070F1 /* CoreGraphics.framework in Frameworks */,
+				183FC61619234606000070F1 /* UIKit.framework in Frameworks */,
+				183FC61219234606000070F1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		183FC62F19234606000070F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				183FC63419234606000070F1 /* XCTest.framework in Frameworks */,
+				183FC63619234606000070F1 /* UIKit.framework in Frameworks */,
+				183FC63519234606000070F1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		183FC60519234606000070F1 = {
+			isa = PBXGroup;
+			children = (
+				183FC61719234606000070F1 /* EcoaSmarthome */,
+				183FC63919234606000070F1 /* EcoaSmarthomeTests */,
+				183FC61019234606000070F1 /* Frameworks */,
+				183FC60F19234606000070F1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		183FC60F19234606000070F1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				183FC60E19234606000070F1 /* EcoaSmarthome.app */,
+				183FC63219234606000070F1 /* EcoaSmarthomeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		183FC61019234606000070F1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				183FC61119234606000070F1 /* Foundation.framework */,
+				183FC61319234606000070F1 /* CoreGraphics.framework */,
+				183FC61519234606000070F1 /* UIKit.framework */,
+				183FC63319234606000070F1 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		183FC61719234606000070F1 /* EcoaSmarthome */ = {
+			isa = PBXGroup;
+			children = (
+				183FC62019234606000070F1 /* AppDelegate.h */,
+				183FC62119234606000070F1 /* AppDelegate.m */,
+				183FC62319234606000070F1 /* Main_iPhone.storyboard */,
+				183FC62619234606000070F1 /* Main_iPad.storyboard */,
+				183FC62919234606000070F1 /* ViewController.h */,
+				183FC62A19234606000070F1 /* ViewController.m */,
+				183FC62C19234606000070F1 /* Images.xcassets */,
+				183FC61819234606000070F1 /* Supporting Files */,
+			);
+			path = EcoaSmarthome;
+			sourceTree = "<group>";
+		};
+		183FC61819234606000070F1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				183FC61919234606000070F1 /* EcoaSmarthome-Info.plist */,
+				183FC61A19234606000070F1 /* InfoPlist.strings */,
+				183FC61D19234606000070F1 /* main.m */,
+				183FC61F19234606000070F1 /* EcoaSmarthome-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		183FC63919234606000070F1 /* EcoaSmarthomeTests */ = {
+			isa = PBXGroup;
+			children = (
+				183FC63F19234606000070F1 /* EcoaSmarthomeTests.m */,
+				183FC63A19234606000070F1 /* Supporting Files */,
+			);
+			path = EcoaSmarthomeTests;
+			sourceTree = "<group>";
+		};
+		183FC63A19234606000070F1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				183FC63B19234606000070F1 /* EcoaSmarthomeTests-Info.plist */,
+				183FC63C19234606000070F1 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		183FC60D19234606000070F1 /* EcoaSmarthome */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 183FC64319234606000070F1 /* Build configuration list for PBXNativeTarget "EcoaSmarthome" */;
+			buildPhases = (
+				183FC60A19234606000070F1 /* Sources */,
+				183FC60B19234606000070F1 /* Frameworks */,
+				183FC60C19234606000070F1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EcoaSmarthome;
+			productName = EcoaSmarthome;
+			productReference = 183FC60E19234606000070F1 /* EcoaSmarthome.app */;
+			productType = "com.apple.product-type.application";
+		};
+		183FC63119234606000070F1 /* EcoaSmarthomeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 183FC64619234606000070F1 /* Build configuration list for PBXNativeTarget "EcoaSmarthomeTests" */;
+			buildPhases = (
+				183FC62E19234606000070F1 /* Sources */,
+				183FC62F19234606000070F1 /* Frameworks */,
+				183FC63019234606000070F1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				183FC63819234606000070F1 /* PBXTargetDependency */,
+			);
+			name = EcoaSmarthomeTests;
+			productName = EcoaSmarthomeTests;
+			productReference = 183FC63219234606000070F1 /* EcoaSmarthomeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		183FC60619234606000070F1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = ECOA;
+				TargetAttributes = {
+					183FC63119234606000070F1 = {
+						TestTargetID = 183FC60D19234606000070F1;
+					};
+				};
+			};
+			buildConfigurationList = 183FC60919234606000070F1 /* Build configuration list for PBXProject "EcoaSmarthome" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 183FC60519234606000070F1;
+			productRefGroup = 183FC60F19234606000070F1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				183FC60D19234606000070F1 /* EcoaSmarthome */,
+				183FC63119234606000070F1 /* EcoaSmarthomeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		183FC60C19234606000070F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				183FC62819234606000070F1 /* Main_iPad.storyboard in Resources */,
+				183FC62D19234606000070F1 /* Images.xcassets in Resources */,
+				183FC62519234606000070F1 /* Main_iPhone.storyboard in Resources */,
+				183FC61C19234606000070F1 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		183FC63019234606000070F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				183FC63E19234606000070F1 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		183FC60A19234606000070F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				183FC62B19234606000070F1 /* ViewController.m in Sources */,
+				183FC62219234606000070F1 /* AppDelegate.m in Sources */,
+				183FC61E19234606000070F1 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		183FC62E19234606000070F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				183FC64019234606000070F1 /* EcoaSmarthomeTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		183FC63819234606000070F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 183FC60D19234606000070F1 /* EcoaSmarthome */;
+			targetProxy = 183FC63719234606000070F1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		183FC61A19234606000070F1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				183FC61B19234606000070F1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		183FC62319234606000070F1 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				183FC62419234606000070F1 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		183FC62619234606000070F1 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				183FC62719234606000070F1 /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		183FC63C19234606000070F1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				183FC63D19234606000070F1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		183FC64119234606000070F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		183FC64219234606000070F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		183FC64419234606000070F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EcoaSmarthome/EcoaSmarthome-Prefix.pch";
+				INFOPLIST_FILE = "EcoaSmarthome/EcoaSmarthome-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		183FC64519234606000070F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EcoaSmarthome/EcoaSmarthome-Prefix.pch";
+				INFOPLIST_FILE = "EcoaSmarthome/EcoaSmarthome-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		183FC64719234606000070F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/EcoaSmarthome.app/EcoaSmarthome";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EcoaSmarthome/EcoaSmarthome-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "EcoaSmarthomeTests/EcoaSmarthomeTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		183FC64819234606000070F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/EcoaSmarthome.app/EcoaSmarthome";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EcoaSmarthome/EcoaSmarthome-Prefix.pch";
+				INFOPLIST_FILE = "EcoaSmarthomeTests/EcoaSmarthomeTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		183FC60919234606000070F1 /* Build configuration list for PBXProject "EcoaSmarthome" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				183FC64119234606000070F1 /* Debug */,
+				183FC64219234606000070F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		183FC64319234606000070F1 /* Build configuration list for PBXNativeTarget "EcoaSmarthome" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				183FC64419234606000070F1 /* Debug */,
+				183FC64519234606000070F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		183FC64619234606000070F1 /* Build configuration list for PBXNativeTarget "EcoaSmarthomeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				183FC64719234606000070F1 /* Debug */,
+				183FC64819234606000070F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 183FC60619234606000070F1 /* Project object */;
+}
