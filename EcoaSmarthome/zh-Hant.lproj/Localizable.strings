@@ -1,0 +1,64 @@
+/* 
+  Localizable.strings
+  EcoaSmarthome
+
+  Created by Apple on 2014/5/14.
+  Copyright (c) 2014年 ECOA. All rights reserved.
+*/
+"welcom_to_app_first" = "歡迎使用Ecoa Smarthome APP，\n請先輸入您的使用者資料。";
+"welcom_to_app_pass" = "歡迎使用Ecoa Smarthome APP，\n請輸入密碼登入。";
+"welcom_to_app" = "歡迎使用Ecoa Smarthome APP";
+
+// for title
+"setting" = "設定";
+"smarthome" = "智慧家庭";
+"sip" = "影像電話";
+"bookmark" = "我的最愛";
+
+// for alert
+"wrong_password_alert" = "密碼錯誤！";
+"blank_password_alert" = "密碼不可留白！";
+"blank_username_alert" = "帳號不可留白！";
+"leave_without_save" = "不儲存就離開？";
+"blank_name_alert" = "使用者名稱不可留白！";
+"blank_device_name_alert" = "設備名稱不可留白！";
+"save_failed" = "儲存失敗";
+
+"login" = "登入";
+"cancel" = "取消";
+"exit" = "離開";
+"set_info" = "設定資料";
+"edit_text" = "編輯使用者資料";
+"save" = "儲存";
+"add" = "新增";
+"save_exit" = "儲存並離開";
+"delete" = "刪除";
+
+// setting
+"name" = "使用者名稱: ";
+"appPassword" = "App 密碼: ";
+"cloudAddress" = "雲端服務 IP";
+"cloudUsername" = "雲端服務帳號: ";
+"cloudPassword" = "雲端服務密碼: ";
+"sipAddress" = "SIP伺服器 IP: ";
+"sipUsername" = "SIP 帳號: ";
+"sipPassword" = "Sip 密碼: ";
+
+// add bookmark
+"device name" = "設備名稱： ";
+"ip" = "IP位址：";
+"username" = "帳號：";
+"password" = "密碼：";
+
+// device
+"wan" = "外部網路IP：";
+"lan" = "內部網路IP：";
+"username" = "帳號：";
+"password" = "密碼：";
+
+// for sip phone
+"incoming" = "來電：";
+"calling" = "撥給：";
+"callend" = "通話結束：";
+"time" = "通話時間：";
+"miss" = "未接來電：";

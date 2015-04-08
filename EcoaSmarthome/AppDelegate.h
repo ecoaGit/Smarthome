@@ -6,10 +6,32 @@
 //  Copyright (c) 2014年 ECOA. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "import.h"
+#import "EcoaDBHelper.h"
+#import "CallViewController.h"
+#import "SessionManager.h"
+#import "CallView.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+#import <GCDAsyncSocket.h>
+#import <pjsua.h>
+#import <pjlib.h>
+
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate, GCDAsyncSocketDelegate>
+{
+    SessionManager *manager;
+    NSArray *callArray; // use this for multiple call control
+   
+    //UITransitionView *_transView;
+}
 
 @property (strong, nonatomic) UIWindow *window;
+
+- (BOOL) initializePjsua;
+- (BOOL) startService;
+- (void) registeration;
+- (BOOL) isServiceStarted;
+- (BOOL) checkAnyRegistered;
+- (void) makeCall:(NSString*) sipURI withMode:(int) mode;
 
 @end

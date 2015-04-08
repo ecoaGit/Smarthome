@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1806A0C8194AEBA000B6C1AC /* DeviceViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1806A0C7194AEBA000B6C1AC /* DeviceViewCell.m */; };
+		1806A0CA194AF1CB00B6C1AC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1806A0C9194AF1CB00B6C1AC /* QuartzCore.framework */; };
+		18074D631932DEBB00F87922 /* BookmarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18074D621932DEBB00F87922 /* BookmarkViewController.m */; };
+		18074D661933474800F87922 /* EcoaTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18074D651933474800F87922 /* EcoaTabViewController.m */; };
+		180E78831952C4E40020953F /* EcoaSipManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E78821952C4E40020953F /* EcoaSipManager.m */; };
+		180E78861952C6620020953F /* CallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E78851952C6620020953F /* CallView.m */; };
+		180E78891952C8D10020953F /* dialpad.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E78881952C8D10020953F /* dialpad.m */; };
+		18101E3F1940628F0064A117 /* BookmarkViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18101E3E1940628F0064A117 /* BookmarkViewCell.m */; };
+		1815F91C1989CB7D008AE7A3 /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1815F91B1989CB7D008AE7A3 /* MainController.m */; };
+		18166B3019416B5100A9FCE9 /* SmarthomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18166B2F19416B5100A9FCE9 /* SmarthomeViewController.m */; };
+		18166B3319416E6400A9FCE9 /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18166B3219416E6400A9FCE9 /* CustomIOS7AlertView.m */; };
+		183DAED3192AE77E0061AB7C /* SipPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183DAED2192AE77E0061AB7C /* SipPhoneViewController.m */; };
 		183FC61219234606000070F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183FC61119234606000070F1 /* Foundation.framework */; };
 		183FC61419234606000070F1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183FC61319234606000070F1 /* CoreGraphics.framework */; };
 		183FC61619234606000070F1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183FC61519234606000070F1 /* UIKit.framework */; };
@@ -22,6 +34,27 @@
 		183FC63619234606000070F1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183FC61519234606000070F1 /* UIKit.framework */; };
 		183FC63E19234606000070F1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 183FC63C19234606000070F1 /* InfoPlist.strings */; };
 		183FC64019234606000070F1 /* EcoaSmarthomeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 183FC63F19234606000070F1 /* EcoaSmarthomeTests.m */; };
+		183FC64E192346A0000070F1 /* EcoaDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 183FC64A192346A0000070F1 /* EcoaDBHelper.m */; };
+		183FC64F192346A0000070F1 /* EcoaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183FC64C192346A0000070F1 /* EcoaViewController.m */; };
+		183FC655192346FA000070F1 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183FC652192346FA000070F1 /* LoginViewController.m */; };
+		183FC656192346FA000070F1 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183FC654192346FA000070F1 /* SettingViewController.m */; };
+		183FC66819234900000070F1 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 183FC66719234900000070F1 /* libsqlite3.0.dylib */; };
+		183FC66B19234D51000070F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 183FC66D19234D51000070F1 /* Localizable.strings */; };
+		183FC67419235DCB000070F1 /* ViewTransitionObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 183FC67319235DCB000070F1 /* ViewTransitionObject.m */; };
+		1848D6D11995C82B007E7242 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1848D6D01995C82B007E7242 /* LoginController.m */; };
+		1850FC47194E93280044C44F /* DeviceDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1850FC46194E93280044C44F /* DeviceDataView.m */; };
+		186F0DA9195191150005B487 /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186F0DA8195191150005B487 /* CallViewController.m */; };
+		187C76A11A5A870C00C81805 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187C76A01A5A870C00C81805 /* CFNetwork.framework */; };
+		18A317DD1A7A2E3400DF74C1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A317DC1A7A2E3400DF74C1 /* AudioToolbox.framework */; };
+		18AD76A31A36A4E6004F9D69 /* NewCityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AD76A21A36A4E6004F9D69 /* NewCityController.m */; };
+		18AF860F1AAFDDD100E83DB6 /* oldphone_mono.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18AF860E1AAFDDD100E83DB6 /* oldphone_mono.wav */; };
+		18B1BFB3192EE648000BA7AF /* FirstSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B1BFB2192EE648000BA7AF /* FirstSettingController.m */; };
+		18B9A01719470154000FB514 /* BookmarkDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B9A01619470154000FB514 /* BookmarkDataView.m */; };
+		18BA8238193F212500CE050C /* AddBookmarkController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA8237193F212500CE050C /* AddBookmarkController.m */; };
+		18BF4F301A53A058001692DA /* AlarmViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BF4F2F1A53A058001692DA /* AlarmViewCell.m */; };
+		18CB54C11A6F92A3004D8C35 /* AlarmManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CB54C01A6F92A3004D8C35 /* AlarmManager.m */; };
+		18EBB084195C055F00B9673B /* SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EBB083195C055F00B9673B /* SessionManager.m */; };
+		8DD9F3DCB1D444D4B669FB78 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4C7CDF38BF74C5BA1727830 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +68,29 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1806A0C6194AEBA000B6C1AC /* DeviceViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceViewCell.h; sourceTree = "<group>"; };
+		1806A0C7194AEBA000B6C1AC /* DeviceViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceViewCell.m; sourceTree = "<group>"; };
+		1806A0C9194AF1CB00B6C1AC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		18074D611932DEBB00F87922 /* BookmarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkViewController.h; sourceTree = "<group>"; };
+		18074D621932DEBB00F87922 /* BookmarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkViewController.m; sourceTree = "<group>"; };
+		18074D641933474800F87922 /* EcoaTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EcoaTabViewController.h; sourceTree = "<group>"; };
+		18074D651933474800F87922 /* EcoaTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EcoaTabViewController.m; sourceTree = "<group>"; };
+		180E78811952C4E40020953F /* EcoaSipManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EcoaSipManager.h; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/EcoaSipManager.h"; sourceTree = "<group>"; };
+		180E78821952C4E40020953F /* EcoaSipManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EcoaSipManager.m; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/EcoaSipManager.m"; sourceTree = "<group>"; };
+		180E78841952C6620020953F /* CallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CallView.h; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/CallView.h"; sourceTree = "<group>"; };
+		180E78851952C6620020953F /* CallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CallView.m; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/CallView.m"; sourceTree = "<group>"; };
+		180E78871952C8D10020953F /* dialpad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dialpad.h; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/dialpad.h"; sourceTree = "<group>"; };
+		180E78881952C8D10020953F /* dialpad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = dialpad.m; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/dialpad.m"; sourceTree = "<group>"; };
+		18101E3D1940628F0064A117 /* BookmarkViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkViewCell.h; sourceTree = "<group>"; };
+		18101E3E1940628F0064A117 /* BookmarkViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkViewCell.m; sourceTree = "<group>"; };
+		1815F91A1989CB7D008AE7A3 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
+		1815F91B1989CB7D008AE7A3 /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainController.m; sourceTree = "<group>"; };
+		18166B2E19416B5100A9FCE9 /* SmarthomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmarthomeViewController.h; sourceTree = "<group>"; };
+		18166B2F19416B5100A9FCE9 /* SmarthomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmarthomeViewController.m; sourceTree = "<group>"; };
+		18166B3119416E6400A9FCE9 /* CustomIOS7AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOS7AlertView.h; sourceTree = "<group>"; };
+		18166B3219416E6400A9FCE9 /* CustomIOS7AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOS7AlertView.m; sourceTree = "<group>"; };
+		183DAED1192AE77E0061AB7C /* SipPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SipPhoneViewController.h; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/SipPhoneViewController.h"; sourceTree = "<group>"; };
+		183DAED2192AE77E0061AB7C /* SipPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SipPhoneViewController.m; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/SipPhoneViewController.m"; sourceTree = "<group>"; };
 		183FC60E19234606000070F1 /* EcoaSmarthome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcoaSmarthome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		183FC61119234606000070F1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		183FC61319234606000070F1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -55,6 +111,49 @@
 		183FC63B19234606000070F1 /* EcoaSmarthomeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EcoaSmarthomeTests-Info.plist"; sourceTree = "<group>"; };
 		183FC63D19234606000070F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		183FC63F19234606000070F1 /* EcoaSmarthomeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EcoaSmarthomeTests.m; sourceTree = "<group>"; };
+		183FC649192346A0000070F1 /* EcoaDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EcoaDBHelper.h; sourceTree = "<group>"; };
+		183FC64A192346A0000070F1 /* EcoaDBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EcoaDBHelper.m; sourceTree = "<group>"; };
+		183FC64B192346A0000070F1 /* EcoaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EcoaViewController.h; sourceTree = "<group>"; };
+		183FC64C192346A0000070F1 /* EcoaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EcoaViewController.m; sourceTree = "<group>"; };
+		183FC64D192346A0000070F1 /* import.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = import.h; sourceTree = "<group>"; };
+		183FC651192346FA000070F1 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		183FC652192346FA000070F1 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		183FC653192346FA000070F1 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		183FC654192346FA000070F1 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		183FC66719234900000070F1 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		183FC66C19234D51000070F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		183FC66E19234D59000070F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		183FC67019234DD8000070F1 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		183FC67119234DE4000070F1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		183FC67219235DCB000070F1 /* ViewTransitionObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewTransitionObject.h; sourceTree = "<group>"; };
+		183FC67319235DCB000070F1 /* ViewTransitionObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTransitionObject.m; sourceTree = "<group>"; };
+		1848D6CF1995C82B007E7242 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
+		1848D6D01995C82B007E7242 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
+		1850FC45194E93280044C44F /* DeviceDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceDataView.h; sourceTree = "<group>"; };
+		1850FC46194E93280044C44F /* DeviceDataView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceDataView.m; sourceTree = "<group>"; };
+		186F0DA7195191150005B487 /* CallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CallViewController.h; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/CallViewController.h"; sourceTree = "<group>"; };
+		186F0DA8195191150005B487 /* CallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CallViewController.m; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/CallViewController.m"; sourceTree = "<group>"; };
+		187C76A01A5A870C00C81805 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		18A317DB1A7A2E3400DF74C1 /* EcoaSmarthome.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = EcoaSmarthome.entitlements; sourceTree = "<group>"; };
+		18A317DC1A7A2E3400DF74C1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		18AD76A11A36A4E6004F9D69 /* NewCityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCityController.h; sourceTree = "<group>"; };
+		18AD76A21A36A4E6004F9D69 /* NewCityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCityController.m; sourceTree = "<group>"; };
+		18AF860E1AAFDDD100E83DB6 /* oldphone_mono.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = oldphone_mono.wav; sourceTree = "<group>"; };
+		18B1BFB1192EE648000BA7AF /* FirstSettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstSettingController.h; sourceTree = "<group>"; };
+		18B1BFB2192EE648000BA7AF /* FirstSettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstSettingController.m; sourceTree = "<group>"; };
+		18B9A01519470154000FB514 /* BookmarkDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkDataView.h; sourceTree = "<group>"; };
+		18B9A01619470154000FB514 /* BookmarkDataView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkDataView.m; sourceTree = "<group>"; };
+		18BA8236193F212500CE050C /* AddBookmarkController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddBookmarkController.h; sourceTree = "<group>"; };
+		18BA8237193F212500CE050C /* AddBookmarkController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddBookmarkController.m; sourceTree = "<group>"; };
+		18BF4F2E1A53A058001692DA /* AlarmViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmViewCell.h; sourceTree = "<group>"; };
+		18BF4F2F1A53A058001692DA /* AlarmViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmViewCell.m; sourceTree = "<group>"; };
+		18CB54BF1A6F92A3004D8C35 /* AlarmManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmManager.h; sourceTree = "<group>"; };
+		18CB54C01A6F92A3004D8C35 /* AlarmManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmManager.m; sourceTree = "<group>"; };
+		18EBB082195C055F00B9673B /* SessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionManager.h; sourceTree = "<group>"; };
+		18EBB083195C055F00B9673B /* SessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionManager.m; sourceTree = "<group>"; };
+		26D48B7B5850D878D1904B71 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		A1C628C9017194A2E94EC425 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		D4C7CDF38BF74C5BA1727830 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,9 +161,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				187C76A11A5A870C00C81805 /* CFNetwork.framework in Frameworks */,
+				1806A0CA194AF1CB00B6C1AC /* QuartzCore.framework in Frameworks */,
+				18A317DD1A7A2E3400DF74C1 /* AudioToolbox.framework in Frameworks */,
+				183FC66819234900000070F1 /* libsqlite3.0.dylib in Frameworks */,
 				183FC61419234606000070F1 /* CoreGraphics.framework in Frameworks */,
 				183FC61619234606000070F1 /* UIKit.framework in Frameworks */,
 				183FC61219234606000070F1 /* Foundation.framework in Frameworks */,
+				8DD9F3DCB1D444D4B669FB78 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +185,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1442F1EAA692FF44E06CDAA8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A1C628C9017194A2E94EC425 /* Pods.debug.xcconfig */,
+				26D48B7B5850D878D1904B71 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		183FC60519234606000070F1 = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +201,7 @@
 				183FC63919234606000070F1 /* EcoaSmarthomeTests */,
 				183FC61019234606000070F1 /* Frameworks */,
 				183FC60F19234606000070F1 /* Products */,
+				1442F1EAA692FF44E06CDAA8 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,10 +217,15 @@
 		183FC61019234606000070F1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				18A317DC1A7A2E3400DF74C1 /* AudioToolbox.framework */,
+				187C76A01A5A870C00C81805 /* CFNetwork.framework */,
+				1806A0C9194AF1CB00B6C1AC /* QuartzCore.framework */,
+				183FC66719234900000070F1 /* libsqlite3.0.dylib */,
 				183FC61119234606000070F1 /* Foundation.framework */,
 				183FC61319234606000070F1 /* CoreGraphics.framework */,
 				183FC61519234606000070F1 /* UIKit.framework */,
 				183FC63319234606000070F1 /* XCTest.framework */,
+				D4C7CDF38BF74C5BA1727830 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -114,6 +233,15 @@
 		183FC61719234606000070F1 /* EcoaSmarthome */ = {
 			isa = PBXGroup;
 			children = (
+				18A317DB1A7A2E3400DF74C1 /* EcoaSmarthome.entitlements */,
+				18166B3119416E6400A9FCE9 /* CustomIOS7AlertView.h */,
+				18166B3219416E6400A9FCE9 /* CustomIOS7AlertView.m */,
+				183FC650192346E0000070F1 /* ViewController */,
+				183FC649192346A0000070F1 /* EcoaDBHelper.h */,
+				183FC64A192346A0000070F1 /* EcoaDBHelper.m */,
+				183FC64B192346A0000070F1 /* EcoaViewController.h */,
+				183FC64C192346A0000070F1 /* EcoaViewController.m */,
+				183FC64D192346A0000070F1 /* import.h */,
 				183FC62019234606000070F1 /* AppDelegate.h */,
 				183FC62119234606000070F1 /* AppDelegate.m */,
 				183FC62319234606000070F1 /* Main_iPhone.storyboard */,
@@ -122,6 +250,29 @@
 				183FC62A19234606000070F1 /* ViewController.m */,
 				183FC62C19234606000070F1 /* Images.xcassets */,
 				183FC61819234606000070F1 /* Supporting Files */,
+				183FC66D19234D51000070F1 /* Localizable.strings */,
+				183FC67219235DCB000070F1 /* ViewTransitionObject.h */,
+				183FC67319235DCB000070F1 /* ViewTransitionObject.m */,
+				18101E3D1940628F0064A117 /* BookmarkViewCell.h */,
+				18101E3E1940628F0064A117 /* BookmarkViewCell.m */,
+				18B9A01519470154000FB514 /* BookmarkDataView.h */,
+				18B9A01619470154000FB514 /* BookmarkDataView.m */,
+				1806A0C6194AEBA000B6C1AC /* DeviceViewCell.h */,
+				1806A0C7194AEBA000B6C1AC /* DeviceViewCell.m */,
+				1850FC45194E93280044C44F /* DeviceDataView.h */,
+				1850FC46194E93280044C44F /* DeviceDataView.m */,
+				180E78811952C4E40020953F /* EcoaSipManager.h */,
+				180E78821952C4E40020953F /* EcoaSipManager.m */,
+				180E78841952C6620020953F /* CallView.h */,
+				180E78851952C6620020953F /* CallView.m */,
+				180E78871952C8D10020953F /* dialpad.h */,
+				180E78881952C8D10020953F /* dialpad.m */,
+				18EBB082195C055F00B9673B /* SessionManager.h */,
+				18EBB083195C055F00B9673B /* SessionManager.m */,
+				18BF4F2E1A53A058001692DA /* AlarmViewCell.h */,
+				18BF4F2F1A53A058001692DA /* AlarmViewCell.m */,
+				18CB54BF1A6F92A3004D8C35 /* AlarmManager.h */,
+				18CB54C01A6F92A3004D8C35 /* AlarmManager.m */,
 			);
 			path = EcoaSmarthome;
 			sourceTree = "<group>";
@@ -129,6 +280,7 @@
 		183FC61819234606000070F1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				18AF860E1AAFDDD100E83DB6 /* oldphone_mono.wav */,
 				183FC61919234606000070F1 /* EcoaSmarthome-Info.plist */,
 				183FC61A19234606000070F1 /* InfoPlist.strings */,
 				183FC61D19234606000070F1 /* main.m */,
@@ -155,6 +307,37 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		183FC650192346E0000070F1 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				183FC651192346FA000070F1 /* LoginViewController.h */,
+				183FC652192346FA000070F1 /* LoginViewController.m */,
+				183FC653192346FA000070F1 /* SettingViewController.h */,
+				183FC654192346FA000070F1 /* SettingViewController.m */,
+				183DAED1192AE77E0061AB7C /* SipPhoneViewController.h */,
+				183DAED2192AE77E0061AB7C /* SipPhoneViewController.m */,
+				18B1BFB1192EE648000BA7AF /* FirstSettingController.h */,
+				18B1BFB2192EE648000BA7AF /* FirstSettingController.m */,
+				18074D611932DEBB00F87922 /* BookmarkViewController.h */,
+				18074D621932DEBB00F87922 /* BookmarkViewController.m */,
+				18074D641933474800F87922 /* EcoaTabViewController.h */,
+				18074D651933474800F87922 /* EcoaTabViewController.m */,
+				18BA8236193F212500CE050C /* AddBookmarkController.h */,
+				18BA8237193F212500CE050C /* AddBookmarkController.m */,
+				18166B2E19416B5100A9FCE9 /* SmarthomeViewController.h */,
+				18166B2F19416B5100A9FCE9 /* SmarthomeViewController.m */,
+				186F0DA7195191150005B487 /* CallViewController.h */,
+				186F0DA8195191150005B487 /* CallViewController.m */,
+				1815F91A1989CB7D008AE7A3 /* MainController.h */,
+				1815F91B1989CB7D008AE7A3 /* MainController.m */,
+				1848D6CF1995C82B007E7242 /* LoginController.h */,
+				1848D6D01995C82B007E7242 /* LoginController.m */,
+				18AD76A11A36A4E6004F9D69 /* NewCityController.h */,
+				18AD76A21A36A4E6004F9D69 /* NewCityController.m */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -162,9 +345,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 183FC64319234606000070F1 /* Build configuration list for PBXNativeTarget "EcoaSmarthome" */;
 			buildPhases = (
+				2ABD7C59D9EB44F4AB2A0A60 /* Check Pods Manifest.lock */,
 				183FC60A19234606000070F1 /* Sources */,
 				183FC60B19234606000070F1 /* Frameworks */,
 				183FC60C19234606000070F1 /* Resources */,
+				189F6FB1E78249F9AFC02E6D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -202,6 +387,17 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = ECOA;
 				TargetAttributes = {
+					183FC60D19234606000070F1 = {
+						DevelopmentTeam = FNGZA8F536;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.InterAppAudio = {
+								enabled = 1;
+							};
+						};
+					};
 					183FC63119234606000070F1 = {
 						TestTargetID = 183FC60D19234606000070F1;
 					};
@@ -214,6 +410,8 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hant",
+				"zh-Hans",
 			);
 			mainGroup = 183FC60519234606000070F1;
 			productRefGroup = 183FC60F19234606000070F1 /* Products */;
@@ -231,9 +429,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				183FC66B19234D51000070F1 /* Localizable.strings in Resources */,
 				183FC62819234606000070F1 /* Main_iPad.storyboard in Resources */,
 				183FC62D19234606000070F1 /* Images.xcassets in Resources */,
 				183FC62519234606000070F1 /* Main_iPhone.storyboard in Resources */,
+				18AF860F1AAFDDD100E83DB6 /* oldphone_mono.wav in Resources */,
 				183FC61C19234606000070F1 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,14 +448,73 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		189F6FB1E78249F9AFC02E6D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2ABD7C59D9EB44F4AB2A0A60 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		183FC60A19234606000070F1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				183FC62B19234606000070F1 /* ViewController.m in Sources */,
+				183FC64F192346A0000070F1 /* EcoaViewController.m in Sources */,
+				18BF4F301A53A058001692DA /* AlarmViewCell.m in Sources */,
+				18CB54C11A6F92A3004D8C35 /* AlarmManager.m in Sources */,
+				183DAED3192AE77E0061AB7C /* SipPhoneViewController.m in Sources */,
+				18BA8238193F212500CE050C /* AddBookmarkController.m in Sources */,
+				18074D631932DEBB00F87922 /* BookmarkViewController.m in Sources */,
+				183FC655192346FA000070F1 /* LoginViewController.m in Sources */,
+				180E78891952C8D10020953F /* dialpad.m in Sources */,
+				180E78861952C6620020953F /* CallView.m in Sources */,
+				183FC656192346FA000070F1 /* SettingViewController.m in Sources */,
+				1850FC47194E93280044C44F /* DeviceDataView.m in Sources */,
 				183FC62219234606000070F1 /* AppDelegate.m in Sources */,
 				183FC61E19234606000070F1 /* main.m in Sources */,
+				18AD76A31A36A4E6004F9D69 /* NewCityController.m in Sources */,
+				186F0DA9195191150005B487 /* CallViewController.m in Sources */,
+				180E78831952C4E40020953F /* EcoaSipManager.m in Sources */,
+				1806A0C8194AEBA000B6C1AC /* DeviceViewCell.m in Sources */,
+				18B9A01719470154000FB514 /* BookmarkDataView.m in Sources */,
+				18166B3319416E6400A9FCE9 /* CustomIOS7AlertView.m in Sources */,
+				18101E3F1940628F0064A117 /* BookmarkViewCell.m in Sources */,
+				18EBB084195C055F00B9673B /* SessionManager.m in Sources */,
+				1848D6D11995C82B007E7242 /* LoginController.m in Sources */,
+				18074D661933474800F87922 /* EcoaTabViewController.m in Sources */,
+				183FC64E192346A0000070F1 /* EcoaDBHelper.m in Sources */,
+				18B1BFB3192EE648000BA7AF /* FirstSettingController.m in Sources */,
+				183FC67419235DCB000070F1 /* ViewTransitionObject.m in Sources */,
+				1815F91C1989CB7D008AE7A3 /* MainController.m in Sources */,
+				18166B3019416B5100A9FCE9 /* SmarthomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +567,17 @@
 				183FC63D19234606000070F1 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		183FC66D19234D51000070F1 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				183FC66C19234D51000070F1 /* Base */,
+				183FC66E19234D59000070F1 /* en */,
+				183FC67019234DD8000070F1 /* zh-Hant */,
+				183FC67119234DE4000070F1 /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -387,26 +657,84 @@
 		};
 		183FC64419234606000070F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A1C628C9017194A2E94EC425 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = EcoaSmarthome/EcoaSmarthome.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EcoaSmarthome/EcoaSmarthome-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"PJ_AUTOCONF=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/CocoaAsyncSocket\"",
+					"\"${PODS_ROOT}/Headers/Public/FMDB\"",
+					"/Users/apple/Downloads/pjproject-2.3/pjlib-util/include",
+					"/Users/apple/Downloads/pjproject-2.3/pjlib/include",
+					"/Users/apple/Downloads/pjproject-2.3/pjmedia/include",
+					"/Users/apple/Downloads/pjproject-2.3/pjnath/include",
+					"/Users/apple/Downloads/pjproject-2.3/pjsip/include",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "EcoaSmarthome/EcoaSmarthome-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos7.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		183FC64519234606000070F1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 26D48B7B5850D878D1904B71 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = EcoaSmarthome/EcoaSmarthome.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EcoaSmarthome/EcoaSmarthome-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PJ_AUTOCONF=1",
+					"COCOAPODS=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/CocoaAsyncSocket\"",
+					"\"${PODS_ROOT}/Headers/Public/FMDB\"",
+					"/Users/apple/Downloads/pjproject-2.3/pjlib-util/include",
+					"/Users/apple/Downloads/pjproject-2.3/pjlib/include",
+					"/Users/apple/Downloads/pjproject-2.3/pjmedia/include",
+					"/Users/apple/Downloads/pjproject-2.3/pjnath/include",
+					"/Users/apple/Downloads/pjproject-2.3/pjsip/include",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "EcoaSmarthome/EcoaSmarthome-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos7.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -470,6 +798,7 @@
 				183FC64519234606000070F1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		183FC64619234606000070F1 /* Build configuration list for PBXNativeTarget "EcoaSmarthomeTests" */ = {
 			isa = XCConfigurationList;
@@ -478,6 +807,7 @@
 				183FC64819234606000070F1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
