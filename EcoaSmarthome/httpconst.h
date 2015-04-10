@@ -14,7 +14,7 @@
 extern GCDAsyncSocket *ExUDPSocket[8];
 extern int ExPort[8];
 extern NSString *ExIpaddr[8];
-extern lonf *ExTime[8];
+extern long *ExTime[8];
 extern int bitmk;
 
 @end

@@ -57,6 +57,9 @@
 		18BF4F301A53A058001692DA /* AlarmViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BF4F2F1A53A058001692DA /* AlarmViewCell.m */; };
 		18CB54C11A6F92A3004D8C35 /* AlarmManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CB54C01A6F92A3004D8C35 /* AlarmManager.m */; };
 		18EBB084195C055F00B9673B /* SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EBB083195C055F00B9673B /* SessionManager.m */; };
+		18F688711AD799D1004FD812 /* dtmfpadController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F6886F1AD799D1004FD812 /* dtmfpadController.m */; };
+		18F688721AD799D1004FD812 /* dtmfpadController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18F688701AD799D1004FD812 /* dtmfpadController~ipad.xib */; };
+		18F688761AD79F83004FD812 /* dtmfpadController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18F688751AD79F83004FD812 /* dtmfpadController.xib */; };
 		8DD9F3DCB1D444D4B669FB78 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4C7CDF38BF74C5BA1727830 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -160,6 +163,10 @@
 		18CB54C01A6F92A3004D8C35 /* AlarmManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmManager.m; sourceTree = "<group>"; };
 		18EBB082195C055F00B9673B /* SessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionManager.h; sourceTree = "<group>"; };
 		18EBB083195C055F00B9673B /* SessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionManager.m; sourceTree = "<group>"; };
+		18F6886E1AD799D1004FD812 /* dtmfpadController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dtmfpadController.h; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/dtmfpadController.h"; sourceTree = "<group>"; };
+		18F6886F1AD799D1004FD812 /* dtmfpadController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = dtmfpadController.m; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/dtmfpadController.m"; sourceTree = "<group>"; };
+		18F688701AD799D1004FD812 /* dtmfpadController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "dtmfpadController~ipad.xib"; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/dtmfpadController~ipad.xib"; sourceTree = "<group>"; };
+		18F688751AD79F83004FD812 /* dtmfpadController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = dtmfpadController.xib; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/dtmfpadController.xib"; sourceTree = "<group>"; };
 		26D48B7B5850D878D1904B71 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A1C628C9017194A2E94EC425 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D4C7CDF38BF74C5BA1727830 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -288,6 +295,10 @@
 				1806476F1AD61A8900BF2FCD /* httpconst.m */,
 				180647741AD64B1200BF2FCD /* httpsersub.h */,
 				180647751AD64B1200BF2FCD /* httpsersub.m */,
+				18F6886E1AD799D1004FD812 /* dtmfpadController.h */,
+				18F6886F1AD799D1004FD812 /* dtmfpadController.m */,
+				18F688751AD79F83004FD812 /* dtmfpadController.xib */,
+				18F688701AD799D1004FD812 /* dtmfpadController~ipad.xib */,
 			);
 			path = EcoaSmarthome;
 			sourceTree = "<group>";
@@ -446,8 +457,10 @@
 			files = (
 				183FC66B19234D51000070F1 /* Localizable.strings in Resources */,
 				183FC62819234606000070F1 /* Main_iPad.storyboard in Resources */,
+				18F688761AD79F83004FD812 /* dtmfpadController.xib in Resources */,
 				183FC62D19234606000070F1 /* Images.xcassets in Resources */,
 				183FC62519234606000070F1 /* Main_iPhone.storyboard in Resources */,
+				18F688721AD799D1004FD812 /* dtmfpadController~ipad.xib in Resources */,
 				18AF860F1AAFDDD100E83DB6 /* oldphone_mono.wav in Resources */,
 				183FC61C19234606000070F1 /* InfoPlist.strings in Resources */,
 			);
@@ -504,6 +517,7 @@
 				183FC62B19234606000070F1 /* ViewController.m in Sources */,
 				183FC64F192346A0000070F1 /* EcoaViewController.m in Sources */,
 				18BF4F301A53A058001692DA /* AlarmViewCell.m in Sources */,
+				18F688711AD799D1004FD812 /* dtmfpadController.m in Sources */,
 				180647701AD61A8900BF2FCD /* httpconst.m in Sources */,
 				18CB54C11A6F92A3004D8C35 /* AlarmManager.m in Sources */,
 				183DAED3192AE77E0061AB7C /* SipPhoneViewController.m in Sources */,
