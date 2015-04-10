@@ -1207,7 +1207,7 @@
     <resources>
         <image name="board" width="292" height="190"/>
         <image name="myfavorites" width="358" height="171"/>
-        <image name="newcity" width="353" height="171"/>
+        <image name="newcity" width="100" height="100"/>
         <image name="regimode_off" width="20" height="20"/>
         <image name="setting" width="358" height="171"/>
         <image name="sipphone" width="358" height="171"/>
