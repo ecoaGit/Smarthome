@@ -16,7 +16,7 @@ NSString *_device = @"ECOA000C08000F86";
 
 bool runit = YES;
 int listenPort = 3123;
-Byte bit[] = {1, 2, 4, 8, 0x10, 0x20, 0x40, (Byte)0x80};
+Byte _bit[] = {1, 2, 4, 8, 0x10, 0x20, 0x40, (Byte)0x80};
 
 -(void) httpser:(int) port {
     httpPort = port;
@@ -48,8 +48,8 @@ Byte bit[] = {1, 2, 4, 8, 0x10, 0x20, 0x40, (Byte)0x80};
 - (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket {
     NSLog(@"accept new socket");
     for (int i=0; i<8; i++){
-        if ((bitmk&bit[i]) == 0) {
-            bitmk |= bit[i];
+        if ((bitmk&_bit[i]) == 0) {
+            bitmk |= _bit[i];
             httpsersub *me = [[httpsersub alloc]init];
             [me httpsersub:newSocket withDevice:_device port:listenPort+i index:i];
         }

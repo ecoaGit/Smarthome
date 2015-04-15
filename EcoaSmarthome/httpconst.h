@@ -16,5 +16,6 @@ extern int ExPort[8];
 extern NSString *ExIpaddr[8];
 extern long *ExTime[8];
 extern int bitmk;
+//extern Byte bit[8];
 
 @end

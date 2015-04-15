@@ -10,4 +10,6 @@
 
 @interface dtmfpadController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIView *dtmfView;
+
 @end

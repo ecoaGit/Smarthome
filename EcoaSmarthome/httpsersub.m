@@ -13,7 +13,7 @@
 GCDAsyncSocket *client;
 int ListenPort = 3123, serPort = 3456, ind;
 NSString *device = @"ECOA000C08000F86";
-Byte bit[] = {1, 2, 4, 8, 0x10, 0x20, 0x40, (Byte)0x80};
+Byte _bit1[] = {1, 2, 4, 8, 0x10, 0x20, 0x40, (Byte)0x80};
 Byte OK[4];
 Byte buffer[];
 
@@ -35,7 +35,7 @@ Byte buffer[];
         }
         if ([self askForConnet]>=5) {
             [client disconnect];
-            bitmk &= ~bit[ix];
+            bitmk &= ~_bit1[ix];
             NSLog(@"=== httpsersub unnormal close %d ===", ix);
         }
         else {

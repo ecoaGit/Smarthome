@@ -30,7 +30,7 @@
     [super viewDidLoad];
     
     isEditing = false;
-    rButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"edit"] style:UIBarButtonItemStyleBordered target:self action:@selector(buttonAction:)];
+    rButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"add"] style:UIBarButtonItemStyleBordered target:self action:@selector(buttonAction:)];
     [rButton setImageInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationItem setRightBarButtonItem:rButton];

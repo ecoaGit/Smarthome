@@ -91,7 +91,7 @@
     }
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    [lButton setTitle:NSLocalizedString(@"cancel",@"cancelbutton") forState:UIControlStateNormal];
+    [lButton setTitle:NSLocalizedString(@"exit",@"cancelbutton") forState:UIControlStateNormal];
     if (editable) {
         [rButton setTitle:NSLocalizedString(@"save", @"savebutton") forState:UIControlStateNormal];
     }
