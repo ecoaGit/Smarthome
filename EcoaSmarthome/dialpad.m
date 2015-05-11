@@ -165,7 +165,7 @@ NSArray *arr;
         [self addSubview:b9];
         [self addSubview:b_back];
         [self addSubview:b_switch];
-
+        dtmfDial = false;
         
     }
     return self;
@@ -185,9 +185,18 @@ NSArray *arr;
         case 9:
         {
             // add word
-            NSString *texx = [input text];
             UIButton *button = (UIButton *) sender;
-            [input setText: [texx stringByAppendingString:[NSString stringWithFormat:@"%@", button.currentTitle]]];
+            if (dtmfDial) {
+                NSString *texx = [input text];
+                const char *tex = [[input text] UTF8String];
+                pj_str_t digits = pj_str((char*)tex);
+                pjsua_call_dial_dtmf(cid, &digits);
+                //[input setText: [texx stringByAppendingString:[NSString stringWithFormat:@"%@", button.currentTitle]]];
+            }
+            else {
+                NSString *texx = [input text];
+                [input setText: [texx stringByAppendingString:[NSString stringWithFormat:@"%@", button.currentTitle]]];
+            }
         }
             break;
         case 11:
@@ -202,9 +211,14 @@ NSArray *arr;
             break;
         case 12:
         {
-            NSString *texx = [input text];
-            if (![texx isEqualToString:@""]) {
-                [input setText: [texx substringToIndex:texx.length-1]];
+            if (dtmfDial) {
+                [self setHidden:![self isHidden]];
+            }
+            else {
+                NSString *texx = [input text];
+                if (![texx isEqualToString:@""]) {
+                    [input setText: [texx substringToIndex:texx.length-1]];
+                }
             }
         }
             break;
@@ -246,6 +260,14 @@ NSArray *arr;
     }
     
     inputType = type;
+}
+
+- (void) setDtmfDial:(BOOL)dial {
+    dtmfDial = dial;
+}
+
+- (void) setCallId:(pjsua_call_id)cid {
+    cid = cid;
 }
 
 /*

@@ -96,6 +96,11 @@ int font;
         [opendoor setTag:107];
         currentType = call_none;
         
+        dtmfPad = [[dialpad alloc]initWithFrame:CGRectMake(60, 60, self.frame.size.width-120, self.frame.size.height-120)];
+        [dtmfPad setHidden:YES];
+        [dtmfPad setDtmfDial:YES];
+        
+        [self addSubview:dtmfPad];
         [self addSubview:remoteName];
         [self addSubview:remoteView];
         [self addSubview:hangup];
@@ -105,6 +110,7 @@ int font;
         [self addSubview:dtmf];
         [self addSubview:opendoor];
         [self addSubview:callTime];
+        
     }
     return self;
 }
@@ -396,7 +402,8 @@ int font;
     pjsua_call_vid_strm_op_param_default(&parm);
     parm.dir = PJMEDIA_DIR_CAPTURE;
     pjsua_call_set_vid_strm(cid, PJSUA_CALL_VID_STRM_CHANGE_DIR, &parm);*/
-    dtmfPad = [[dialpad alloc]initWithFrame:CGRectMake(self.frame.size.width/4, self.frame.size.height/4, self.frame.size.width/2, self.frame.size.height/2)];
+    [dtmfPad setHidden:![dtmfPad isHidden]];
+    [self bringSubviewToFront:dtmfPad];
     
 }
 

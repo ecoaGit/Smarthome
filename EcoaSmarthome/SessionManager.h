@@ -23,6 +23,7 @@
 - (BOOL) logout;
 - (BOOL) isLogin;
 - (void) getDeviceList;
+- (NSMutableArray *) getDeviceList:(int) n;
 - (BOOL) getServerListFromCloud;
 - (BOOL) useBookmark;
 @end

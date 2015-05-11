@@ -46,7 +46,7 @@ static SessionManager *instance = nil;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleLogin:) name:@"login" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleLogout:) name:@"logout" object:nil];
     ccount = 0;
-    [self getServerListFromCloud];
+    //[self getServerListFromCloud];
 }
 
 - (void) handleServerList:(NSNotification *)notify{
@@ -345,6 +345,10 @@ static SessionManager *instance = nil;
  *
  */
 
+- (NSMutableArray *) getDeviceList:(int) n {
+    return deviceList;
+}
+
 - (void) getDeviceList {
     NSLog(@"getdevicelist");
     NSString *url;
@@ -367,42 +371,54 @@ static SessionManager *instance = nil;
                 }
                 else {
                     NSError *jsonError;
-                    NSLog(@"use cloud data");
-                    NSDictionary *nsJson = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&jsonError];
+                    //NSLog(@"use cloud data");
+                    if (result != NULL){
+                        //NSLog(@"result != null");
+                        NSDictionary *nsJson = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&jsonError];
+                        //NSLog(@"%@", [nsJson description]);
                     
-                    if ([nsJson objectForKey:@"chkMsg"] != nil) {
-                        // error
-                        NSString *error = [nsJson objectForKey:@"chkMsg"];
-                        NSLog(@"%@", error);
-                    }
-                    else if ([nsJson objectForKey:@"list"] != nil){
-                        int count = [[nsJson objectForKey:@"list_count"]intValue];
-                        NSArray *list = [nsJson objectForKey:@"list"];
-                        NSString *selfIp = [nsJson objectForKey:@"destinationIP"];
-                        
-                        NSMutableArray *temp = [NSMutableArray arrayWithCapacity:count];
-                        for (int i = 0; i < count; i++) {
-                            NSDictionary *ns = [list objectAtIndex:i];
-                            
-                            NSString *decodeUTF8 = [ns objectForKey:@"alias"];
-                            decodeUTF8 = [decodeUTF8 stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                            NSData *decode64 = [[NSData alloc]initWithBase64EncodedString:decodeUTF8 options:0];
-                            NSString *alias = [[NSString alloc]initWithData:decode64 encoding:NSUTF8StringEncoding];
-        
-                            NSString *state = [ns objectForKey:@"state"];
-                            NSString *wan_ip = [ns objectForKey:@"wan_ip"];
-                            NSString *wan_port = [ns objectForKey:@"wan_port"];
-                            NSString *lan_ip = [ns objectForKey:@"lan_ip"];
-                            NSString *lan_port = [ns objectForKey:@"lan_port"];
-                            NSString *did = [ns objectForKey:@"did"];
-                            NSString *update = [ns objectForKey:@"update_time"];
-                            
-                            NSArray *arr = [[NSArray alloc]initWithObjects:alias, state, wan_ip, wan_port, lan_ip, lan_port, did, update, nil];
-                            [temp addObject:arr];
+                        if ([nsJson objectForKey:@"chkMsg"] != nil) {
+                            // error
+                            NSString *error = [nsJson objectForKey:@"chkMsg"];
+                            NSLog(@"error message %@", error);
                         }
-                        NSDictionary *nd = [NSDictionary dictionaryWithObjectsAndKeys:temp, @"list", selfIp, @"selfIp",nil];
-                        
-                        [[NSNotificationCenter defaultCenter]postNotificationName:@"deviceData" object:@"cloud" userInfo:nd];
+                        else if ([nsJson objectForKey:@"list"] != nil){
+                            int count = [[nsJson objectForKey:@"list_count"]intValue];
+                            NSArray *list = [nsJson objectForKey:@"list"];
+                            NSString *selfIp = [nsJson objectForKey:@"destinationIP"];
+                            
+                            NSMutableArray *temp = [NSMutableArray arrayWithCapacity:count];
+                            for (int i = 0; i < count; i++) {
+                                NSDictionary *ns = [list objectAtIndex:i];
+                                
+                                NSString *decodeUTF8 = [ns objectForKey:@"alias"];
+                                decodeUTF8 = [decodeUTF8 stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                                NSData *decode64 = [[NSData alloc]initWithBase64EncodedString:decodeUTF8 options:0];
+                                NSString *alias = [[NSString alloc]initWithData:decode64 encoding:NSUTF8StringEncoding];
+            
+                                NSString *state = [ns objectForKey:@"state"];
+                                NSString *wan_ip = [ns objectForKey:@"wan_ip"];
+                                NSString *wan_port = [ns objectForKey:@"wan_port"];
+                                NSString *lan_ip = [ns objectForKey:@"lan_ip"];
+                                NSString *lan_port = [ns objectForKey:@"lan_port"];
+                                NSString *did = [ns objectForKey:@"did"];
+                                NSString *update = [ns objectForKey:@"update_time"];
+                                
+                                NSArray *arr = [[NSArray alloc]initWithObjects:alias, state, wan_ip, wan_port, lan_ip, lan_port, did, update, nil];
+                                [temp addObject:arr];
+                            }
+                            
+                            if (temp != nil)
+                            {
+                                deviceList = temp;
+                                NSDictionary *nd = [NSDictionary dictionaryWithObjectsAndKeys:temp, @"list", selfIp, @"selfIp", nil];
+                                
+                                [[NSNotificationCenter defaultCenter]postNotificationName:@"deviceData" object:@"cloud" userInfo:nd];
+                            }
+                            else {
+                                NSLog(@"temp is null don't use it");
+                            }
+                        }
                     }
                 }
             }];

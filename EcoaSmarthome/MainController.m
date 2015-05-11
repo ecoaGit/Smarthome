@@ -92,6 +92,8 @@ NSMutableArray *alarmList;
                 [regisMode setImage:[UIImage imageNamed:@"regimode_on"]];
                 [regisLabel setText:@"registred"];
             });
+            AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"check_param" object:nil];
         }
         else {
             dispatch_barrier_async(dispatch_get_main_queue(), ^{
@@ -114,9 +116,9 @@ NSMutableArray *alarmList;
         cell = [nib objectAtIndex:0];
     }
     if (alarmList != nil && [alarmList count] != 0) {
-        cell.alarmMessage;
-        cell.alarmTitle;
-        cell.alarmstate;
+        //cell.alarmMessage;
+        //cell.alarmTitle;
+        //cell.alarmstate;
     }
     return cell;
 }

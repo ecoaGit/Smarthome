@@ -97,7 +97,7 @@ pjsua_call_id cid;
     [super viewDidLoad];
     NSLog(@"callviewcontroll viewdidload");
     
-    CGRect rect = [[UIScreen mainScreen] bounds];
+    //CGRect rect = [[UIScreen mainScreen] bounds];
 
     //NSLog(@"callviewcontrol: view did load");
     //currentType = call_none;

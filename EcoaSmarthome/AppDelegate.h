@@ -21,7 +21,7 @@
 {
     SessionManager *manager;
     NSArray *callArray; // use this for multiple call control
-   
+    BOOL doCheckSip;
     //UITransitionView *_transView;
 }
 
@@ -33,5 +33,6 @@
 - (BOOL) isServiceStarted;
 - (BOOL) checkAnyRegistered;
 - (void) makeCall:(NSString*) sipURI withMode:(int) mode;
+- (void) handleSip;
 
 @end

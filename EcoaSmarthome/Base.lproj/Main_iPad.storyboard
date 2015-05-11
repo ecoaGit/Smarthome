@@ -261,6 +261,33 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="UCA-AB-aqS">
+                                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UCA-AB-aqS" id="gHB-dg-TUe">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b29-9E-y65">
+                                                    <rect key="frame" x="20" y="0.0" width="51" height="31"/>
+                                                </switch>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9oB-ij-P2Q">
+                                                    <rect key="frame" x="20" y="33" width="51" height="31"/>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6NE-4C-RpV">
+                                                    <rect key="frame" x="77" y="6" width="578" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aqn-9a-a36">
+                                                    <rect key="frame" x="77" y="39" width="578" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5w4-K5-iuH">
                                         <rect key="frame" x="0.0" y="590" width="768" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -328,6 +355,7 @@
                     <connections>
                         <outlet property="appPassLabel" destination="RzE-Eb-sNV" id="Vb0-lp-0Ab"/>
                         <outlet property="appPassword" destination="XZc-ji-uKc" id="Uzo-FW-hDJ"/>
+                        <outlet property="autoSipLabel" destination="6NE-4C-RpV" id="hVz-Pa-etO"/>
                         <outlet property="cloudAddLabel" destination="PGJ-Ox-Sxv" id="X9o-41-xmA"/>
                         <outlet property="cloudAddress" destination="6Gy-s2-Fke" id="Jdh-Sl-Pcz"/>
                         <outlet property="cloudNameLabel" destination="x2R-V5-H3q" id="NgS-kW-d3P"/>
@@ -338,6 +366,7 @@
                         <outlet property="name" destination="U9Q-4S-Osw" id="plA-rz-AvV"/>
                         <outlet property="nameLabel" destination="WKU-Jg-5Fv" id="yVd-Av-wet"/>
                         <outlet property="rButton" destination="IVi-lD-4Am" id="Nfn-cE-4Hd"/>
+                        <outlet property="showAlarmLabel" destination="aqn-9a-a36" id="e5n-f9-U6T"/>
                         <outlet property="sipAddLabel" destination="9y0-nQ-AEv" id="k5a-g8-hGx"/>
                         <outlet property="sipAddress" destination="35Y-tc-2F0" id="nqX-5I-L0g"/>
                         <outlet property="sipNameLabel" destination="JDX-Pf-86w" id="IQX-rE-iDk"/>
@@ -345,13 +374,15 @@
                         <outlet property="sipPassword" destination="lMr-48-795" id="xwn-cN-0Xs"/>
                         <outlet property="sipUsername" destination="dxr-cV-5Av" id="d9P-CQ-7p7"/>
                         <outlet property="use3G" destination="xsA-My-VHl" id="581-8q-W0G"/>
+                        <outlet property="useAutoSip" destination="b29-9E-y65" id="o0d-s6-VDd"/>
+                        <outlet property="useShowAlarm" destination="9oB-ij-P2Q" id="a7g-kn-m0s"/>
                         <outlet property="useWifi" destination="3TM-SH-wgf" id="kFN-oy-k92"/>
                         <outlet property="userLock" destination="nMW-zW-Q8g" id="yrC-9l-vHl"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P48-t7-oC1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1514" y="-1003"/>
+            <point key="canvasLocation" x="1514" y="-1005"/>
         </scene>
         <!--Bookmark View Controller-->
         <scene sceneID="bsc-v8-KrD">
@@ -1139,6 +1170,33 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="64" id="vya-r3-2VY">
+                                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vya-r3-2VY" id="ffa-dh-JRP">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pis-xZ-GRR">
+                                                    <rect key="frame" x="20" y="0.0" width="51" height="31"/>
+                                                </switch>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4YU-Bf-kKK">
+                                                    <rect key="frame" x="20" y="32" width="51" height="31"/>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xCD-fh-7m4">
+                                                    <rect key="frame" x="77" y="6" width="466" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LhU-dk-z8k">
+                                                    <rect key="frame" x="77" y="38" width="466" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="O7E-i4-F1A">
                                         <rect key="frame" x="0.0" y="669" width="768" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -1179,6 +1237,7 @@
                     <connections>
                         <outlet property="appPassLabel" destination="gex-L2-s99" id="kOM-Ig-AQI"/>
                         <outlet property="appPassword" destination="mU6-dv-6hj" id="BPs-tH-72R"/>
+                        <outlet property="autoSipLabel" destination="xCD-fh-7m4" id="CMX-AX-uen"/>
                         <outlet property="cloudAddLabel" destination="PrF-AU-gWH" id="tAE-kP-j3g"/>
                         <outlet property="cloudAddress" destination="La8-jb-3Re" id="HsZ-Iq-C5g"/>
                         <outlet property="cloudNameLabel" destination="oY6-fP-l69" id="JLy-Ae-xHz"/>
@@ -1188,6 +1247,7 @@
                         <outlet property="name" destination="IG7-0t-g9Q" id="rvj-es-E0N"/>
                         <outlet property="nameLabel" destination="M3h-3B-x3D" id="xL1-k6-hrN"/>
                         <outlet property="rButton" destination="Elg-re-qdn" id="Khb-v4-ro3"/>
+                        <outlet property="showAlarmLabel" destination="LhU-dk-z8k" id="JWV-aB-Lkg"/>
                         <outlet property="sipAddLabel" destination="Wzy-NS-fyM" id="oc4-lD-0cZ"/>
                         <outlet property="sipAddress" destination="W0J-VI-019" id="tpP-4p-tvw"/>
                         <outlet property="sipNameLabel" destination="DXL-JT-hIZ" id="qn8-jZ-Nn1"/>
@@ -1195,13 +1255,15 @@
                         <outlet property="sipPassword" destination="Q1Q-m2-Bwp" id="LXM-XC-sh9"/>
                         <outlet property="sipUsername" destination="8rx-sz-MMo" id="mZ8-fi-sm2"/>
                         <outlet property="use3G" destination="dCF-Lo-7d7" id="b9f-7U-MH6"/>
+                        <outlet property="useAutoSip" destination="pis-xZ-GRR" id="EMg-0o-0Sz"/>
+                        <outlet property="useShowAlarm" destination="4YU-Bf-kKK" id="kzV-uE-67H"/>
                         <outlet property="useWifi" destination="1hu-Az-fso" id="9sU-Zm-qi2"/>
                         <outlet property="userLock" destination="ctQ-Zx-g0q" id="tdP-cN-wfN"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pmk-nI-xw3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3938" y="2613"/>
+            <point key="canvasLocation" x="3938" y="2611"/>
         </scene>
     </scenes>
     <resources>

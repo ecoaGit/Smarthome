@@ -32,7 +32,8 @@
 	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>remote-notification</string>
+		<string>fetch</string>
+		<string>external-accessory</string>
 		<string>voip</string>
 	</array>
 	<key>UIMainStoryboardFile</key>

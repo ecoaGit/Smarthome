@@ -169,6 +169,7 @@
         
         if ([userDefaults synchronize]) {
             NSLog(@"saved successfully!");
+          
         }
         else {
             NSLog(@"save failed");
@@ -226,7 +227,6 @@
         [self setUI:isEditing];
     }
     else {
-        
         isEditing = true;
         [self setUI:isEditing];
     }

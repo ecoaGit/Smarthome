@@ -43,6 +43,8 @@
 "sipAddress" = "SIP服务器IP: ";
 "sipUsername" = "SIP帐号: ";
 "sipPassword" = "SIP密码: ";
+"autoSip" = "自动取得SIP网域";
+"showAlarm" = "自动显示警报画面";
 
 // add bookmark
 "device name" = "设备名称：";

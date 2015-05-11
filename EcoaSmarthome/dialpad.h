@@ -6,7 +6,8 @@
 //  Copyright (c) 2014年 ECOA. All rights reserved.
 //
 #import <UIKit/UIKit.h>
-
+#import <pjsua.h>
+#import <pjmedia.h>
 
 
 @interface dialpad : UIView
@@ -24,8 +25,11 @@
     UIButton *b9;
     UIButton *b_switch;
     UIButton *b_back;
+    BOOL dtmfDial;
+    pjsua_call_id cid;
 }
 
 //@property (nonatomic,retain) UITextField* input;
 - (NSString*) getInput;
+- (void) setDtmfDial:(BOOL) dial;
 @end
