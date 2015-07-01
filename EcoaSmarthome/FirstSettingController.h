@@ -37,5 +37,5 @@
 @property (nonatomic, retain) IBOutlet UILabel *autoSipLabel;
 @property (nonatomic, retain) IBOutlet UILabel *showAlarmLabel;
 @property (nonatomic, retain) IBOutlet UISwitch *useAutoSip;
-@property (nonatomic, retain) IBOutlet UISwitch *useShowAlarm;
+//@property (nonatomic, retain) IBOutlet UISwitch *useShowAlarm;
 @end

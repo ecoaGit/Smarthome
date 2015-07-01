@@ -33,8 +33,12 @@
 @synthesize sipAddLabel;
 @synthesize sipNameLabel;
 @synthesize sipPassLabel;
+@synthesize autoSipLabel;
+@synthesize showAlarmLabel;
 @synthesize use3G;
 @synthesize useWifi;
+@synthesize useAutoSip;
+//@synthesize useShowAlarm;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -62,6 +66,8 @@
     [sipAddLabel setText:NSLocalizedString(@"sipAddress", @"sip address label")];
     [sipNameLabel setText:NSLocalizedString(@"sipUsername", @"sip username label")];
     [sipPassLabel setText:NSLocalizedString(@"sipPassword", @"sip password label")];
+    [autoSipLabel setText:NSLocalizedString(@"autoSip", @"auto sip label")];
+    //[showAlarmLabel setText:NSLocalizedString(@"showAlarm", @"show alarm label")];
 }
 
 - (void)didReceiveMemoryWarning
@@ -128,6 +134,10 @@
     [use3G setOn:[userDefaults boolForKey:@"use3G"]];
     [useWifi setEnabled:editable];
     [useWifi setOn:[userDefaults boolForKey:@"useWifi"]];
+    [useAutoSip setEnabled:editable];
+    [useAutoSip setOn:[userDefaults boolForKey:@"useAutoSip"]];
+    //[useShowAlarm setEnabled:editable];
+    //[useShowAlarm setOn:[userDefaults boolForKey:@"useShowAlarm"]];
     
 }
 
@@ -166,6 +176,9 @@
         [userDefaults setValue:[sipPassword text] forKey:@"sipPassword"];
         [userDefaults setBool:[useWifi isOn] forKey:@"useWifi"];
         [userDefaults setBool:[use3G isOn] forKey:@"use3G"];
+        [userDefaults setBool:[useAutoSip isOn] forKey:@"useAutoSip"];
+        //[userDefaults setBool:[useShowAlarm isOn] forKey:@"useShowAlarm"];
+        
         
         if ([userDefaults synchronize]) {
             NSLog(@"saved successfully!");

@@ -16,6 +16,7 @@
     NSMutableArray *deviceList;
     int ccount;
     BOOL useBookmark;
+    NSString *selfIp;
 }
 + (SessionManager *)getInstance;
 - (void) initializeManager;
@@ -26,4 +27,5 @@
 - (NSMutableArray *) getDeviceList:(int) n;
 - (BOOL) getServerListFromCloud;
 - (BOOL) useBookmark;
+- (NSString *) getSelfIp;
 @end

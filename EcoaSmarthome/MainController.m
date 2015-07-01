@@ -43,7 +43,6 @@ NSMutableArray *alarmList;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receive:) name:@"alarm" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receive:) name:@"reg" object:nil];
-    // Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -68,15 +67,7 @@ NSMutableArray *alarmList;
 }
 
 - (void)setUI {
-    //manager = [SessionManager getInstance];
-    
-    
-    /*CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-    gradientLayer.colors = [NSArray arrayWithObjects:(id)[UIColor colorWithRed:249.0/255.0 green:155.0/255.0 blue:255.0/255.0 alpha:1.0f].CGColor,(id)[UIColor colorWithRed:250.0/255.0 green:53.0/255.0 blue:150.0/255.0 alpha:1.0f].CGColor, nil];
-    gradientLayer.locations = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0f],[NSNumber numberWithFloat:1.0f] , nil];
-    gradientLayer.frame = newcity.bounds;
-    [newcity.layer insertSublayer:gradientLayer atIndex:0];
-    [newcity clipsToBounds];*/
+    //[self.newcity setHidden:YES];
    
 }
 
@@ -93,7 +84,7 @@ NSMutableArray *alarmList;
                 [regisLabel setText:@"registred"];
             });
             AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"check_param" object:nil];
+            //[[NSNotificationCenter defaultCenter]postNotificationName:@"check_param" object:nil];
         }
         else {
             dispatch_barrier_async(dispatch_get_main_queue(), ^{
@@ -102,6 +93,7 @@ NSMutableArray *alarmList;
             });
             
         }
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"check_param" object:nil];
     }
 }
 

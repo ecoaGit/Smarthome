@@ -170,6 +170,7 @@ pjsua_call_id cid;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             sleep(3);
+            [callView stopTimer];
             [self dismissViewControllerAnimated:YES completion:nil];
         });
     }

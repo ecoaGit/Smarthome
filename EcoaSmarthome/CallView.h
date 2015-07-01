@@ -48,6 +48,7 @@
 
 - (void) loadView:(pjsua_call_id)call_id withType:(int)callType;
 - (int) getCurrentType;
+- (void) stopTimer;
 //- (void) callStateChange:(NSNotification *)notify;
 
 @end

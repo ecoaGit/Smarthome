@@ -12,6 +12,7 @@
 
 static SessionManager *instance = nil;
 
+
 -(id) init {
     self = [super init];
     [self initializeManager];
@@ -234,8 +235,8 @@ static SessionManager *instance = nil;
     [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *result, NSError *error) {
         if (error) {
             // 取得serverlist失敗
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!" message:@"network issues" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
+            /*UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!" message:@"network issues" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];*/
         }
         else {
             NSDictionary *nsJson = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
@@ -349,6 +350,10 @@ static SessionManager *instance = nil;
     return deviceList;
 }
 
+- (NSString *) getSelfIp {
+    return selfIp;
+}
+
 - (void) getDeviceList {
     NSLog(@"getdevicelist");
     NSString *url;
@@ -385,7 +390,7 @@ static SessionManager *instance = nil;
                         else if ([nsJson objectForKey:@"list"] != nil){
                             int count = [[nsJson objectForKey:@"list_count"]intValue];
                             NSArray *list = [nsJson objectForKey:@"list"];
-                            NSString *selfIp = [nsJson objectForKey:@"destinationIP"];
+                            NSString *selfip = [nsJson objectForKey:@"destinationIP"];
                             
                             NSMutableArray *temp = [NSMutableArray arrayWithCapacity:count];
                             for (int i = 0; i < count; i++) {
@@ -411,7 +416,8 @@ static SessionManager *instance = nil;
                             if (temp != nil)
                             {
                                 deviceList = temp;
-                                NSDictionary *nd = [NSDictionary dictionaryWithObjectsAndKeys:temp, @"list", selfIp, @"selfIp", nil];
+                                selfIp = selfip;
+                                NSDictionary *nd = [NSDictionary dictionaryWithObjectsAndKeys:temp, @"list", selfip, @"selfIp", nil];
                                 
                                 [[NSNotificationCenter defaultCenter]postNotificationName:@"deviceData" object:@"cloud" userInfo:nd];
                             }

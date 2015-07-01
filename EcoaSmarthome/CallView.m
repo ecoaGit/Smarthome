@@ -368,6 +368,9 @@ int font;
 }
 
 - (void) stopTimer {
+    NSLog(@"stop timer");
+    time = 0;
+    [callTime setText:@""];
     [timer invalidate];
 }
 
@@ -394,6 +397,7 @@ int font;
 - (IBAction)hangup:(id)sender {
     NSLog(@"callview: hangup call");
     pjsua_call_hangup(cid, 0, NULL, NULL);
+    [self stopTimer];
 }
 
 - (IBAction)dtmf:(id)sender {

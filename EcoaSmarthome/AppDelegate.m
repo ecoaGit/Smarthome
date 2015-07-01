@@ -15,13 +15,14 @@ pjsua_acc_id acc_id;
 Boolean incall;
 
 static bool _serviceIsStarted = NO;
-//static pjsua_transport_id udp_id;
+static pjsua_transport_id udp_id;
 static pjsua_transport_id tcp_id;
-static UIBackgroundTaskIdentifier bgtask;
+//static UIBackgroundTaskIdentifier bgtask;
 CallViewController *callViewController;
 static int READ_HEADER = 2;
 static int READ_CONTENT = 3;
 static int WRITE_DEVICETOKEN = 4;
+static int counter = 0;
 CallView *_callView;
 pjsua_player_id p_id;
 NSThread *sipThread;
@@ -30,6 +31,8 @@ NSThread *sipThread;
 //static pj_thread_desc   thread_desc;
 //static pj_thread_t     *thread;
 static bool _sipthreadisStarted = NO;
+static bool inLan;
+
 
 struct pjsua_player_eof_data
 {
@@ -136,7 +139,6 @@ struct pjsua_player_eof_data
     cfg.cb.on_call_state = &on_call_state;
     cfg.cb.on_reg_state2 = &on_reg_state2;
     
-    
     pjsua_logging_config_default(&logg_cfg);
     logg_cfg.console_level = 4;
 
@@ -148,14 +150,15 @@ struct pjsua_player_eof_data
         pjsua_transport_config cfg;
         pjsua_transport_config_default(&cfg);
         cfg.port = 5060;
+        
         pjsua_transport_config tcfg;
         pj_memcpy(&tcfg, &cfg, sizeof(tcfg));
         pjsua_transport_config_default(&tcfg);
         //tcfg.port = 5678;
-        /*status = pjsua_transport_create(PJSIP_TRANSPORT_UDP, &cfg, &udp_id);
-        if (status == PJ_SUCCESS) {
-            NSLog(@"UDP create");
-        }*/
+        //status = pjsua_transport_create(PJSIP_TRANSPORT_UDP, &cfg, &udp_id);
+        //if (status == PJ_SUCCESS) {
+        //    NSLog(@"UDP create");
+        //}
         status = pjsua_transport_create(PJSIP_TRANSPORT_TCP, &cfg, &tcp_id);
         if (status != PJ_SUCCESS) {
             NSLog(@"transport create failed");
@@ -219,6 +222,7 @@ static void on_config_init (pjsua_app_config *cfg) {
     NSString *domain = [ud stringForKey:@"sipAddress"];
     const char *uid = [[NSString stringWithFormat:@"sip:%@@%@", username, domain]UTF8String];
     const char *reg_uri = [[NSString stringWithFormat:@"sip:%@@%@;transport=TCP", username, domain]UTF8String];
+    //const char *reg_uri = [[NSString stringWithFormat:@"sip:%@@%@", username, domain]UTF8String];
     //NSLog(@"sip:%@@%@", username, domain);
 
     status = pjsua_verify_sip_url((char*)reg_uri);
@@ -234,7 +238,7 @@ static void on_config_init (pjsua_app_config *cfg) {
     acc_cfg.cred_count = 1;
     acc_cfg.cred_info[0].realm = pj_str("*");
     acc_cfg.cred_info[0].scheme = pj_str("digest");
-    acc_cfg.ka_interval = 15;
+    acc_cfg.ka_interval = 20;
     
     // video codec
     pj_pool_factory pf;
@@ -256,6 +260,94 @@ static void on_config_init (pjsua_app_config *cfg) {
     acc_cfg.cred_info[0].data_type = PJSIP_CRED_DATA_PLAIN_PASSWD;
     acc_cfg.cred_info[0].data = pj_str((char*)[password UTF8String]);
 
+    // auto show receive video
+    acc_cfg.vid_in_auto_show = PJ_TRUE;
+    
+    
+    // auto transfer video
+    acc_cfg.vid_out_auto_transmit = PJ_TRUE;
+    
+    // 設定proxy
+    //const char *proxy = [[NSString stringWithFormat:@"sip:%@", domain]UTF8String];
+    const char *proxy = [[NSString stringWithFormat:@"sip:%@;transport=TCP", domain]UTF8String];
+    acc_cfg.proxy[acc_cfg.proxy_cnt++] = pj_str((char*)proxy);
+    
+    //pjsua_acc_add_local(tcp_id, PJ_TRUE, &acc_id);
+    
+    if (pjsua_acc_is_valid(acc_id)) {
+        pjsua_acc_modify(acc_id, &acc_cfg);
+    }
+    else {
+        status = pjsua_acc_add(&acc_cfg, PJ_TRUE, &acc_id);
+    }
+    if (status != PJ_SUCCESS) {
+        NSLog(@"adding account failed");
+        pjsua_destroy();
+        return;
+    }
+    else {
+        
+    }
+}
+
+- (void) re_registeration:(NSString *)domain {
+    NSLog(@"re-register");
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud synchronize];
+    //pjsua_acc_id acc_id;
+    pj_status_t status;
+    
+    pjsua_acc_config acc_cfg;
+    pjsua_acc_config_default(&acc_cfg);
+    NSString *username = [ud stringForKey:@"sipUsername"];
+    NSString *password = [ud stringForKey:@"sipPassword"];
+    const char *uid = [[NSString stringWithFormat:@"sip:%@@%@", username, domain]UTF8String];
+    const char *reg_uri = [[NSString stringWithFormat:@"sip:%@@%@;transport=TCP", username, domain]UTF8String];
+    
+    /*if (pj_thread_is_registered()) {
+        NSLog(@"thread is registered");
+    }
+    else {
+        NSLog(@"thread is not registered");
+        //pj_thread_register(NULL, thread_desc, &thread);
+    }
+    //NSLog(@"sip:%@@%@", username, domain);*/
+    
+    status = pjsua_verify_sip_url((char*)reg_uri);
+    if (status != PJ_SUCCESS) {
+        NSLog(@"verify sip url failed");
+        return;
+    }
+    
+    // 帳號
+    acc_cfg.id = pj_str((char*)uid);
+    //sip domain
+    acc_cfg.reg_uri = pj_str((char*)reg_uri);
+    acc_cfg.cred_count = 1;
+    acc_cfg.cred_info[0].realm = pj_str("*");
+    acc_cfg.cred_info[0].scheme = pj_str("digest");
+    acc_cfg.ka_interval = 20;
+    
+    // video codec
+    pj_pool_factory pf;
+    pjmedia_codec_openh264_vid_init(NULL, &pf);
+    
+    // video device
+    //pjmedia_vid_dev_info vd;
+    //pj_status_t t =pjmedia_vid_dev_get_info(PJMEDIA_VID_DEFAULT_RENDER_DEV, &vd);
+    
+    //if (t == PJ_SUCCESS) {
+    //    NSLog(@"%d*********%@" , vd.id, [NSString stringWithCString:vd.name encoding:NSUTF8StringEncoding]);
+    //}
+    //acc_cfg.vid_cap_dev = vd.id;
+    //acc_cfg.vid_rend_dev = 0;
+    
+    // 帳號
+    acc_cfg.cred_info[0].username = pj_str((char *)[username UTF8String]);
+    // 密碼
+    acc_cfg.cred_info[0].data_type = PJSIP_CRED_DATA_PLAIN_PASSWD;
+    acc_cfg.cred_info[0].data = pj_str((char*)[password UTF8String]);
+    
     // auto show receive video
     acc_cfg.vid_in_auto_show = PJ_TRUE;
     
@@ -285,92 +377,6 @@ static void on_config_init (pjsua_app_config *cfg) {
     }
 }
 
-- (void) re_registeration:(NSString *)domain {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud synchronize];
-    //pjsua_acc_id acc_id;
-    pj_status_t status;
-    
-    pjsua_acc_config acc_cfg;
-    pjsua_acc_config_default(&acc_cfg);
-    NSString *username = [ud stringForKey:@"sipUsername"];
-    NSString *password = [ud stringForKey:@"sipPassword"];
-    const char *uid = [[NSString stringWithFormat:@"sip:%@@%@", username, domain]UTF8String];
-    const char *reg_uri = [[NSString stringWithFormat:@"sip:%@@%@;transport=TCP", username, domain]UTF8String];
-    
-    if (pj_thread_is_registered()) {
-        NSLog(@"thread is registered");
-    }
-    else {
-        NSLog(@"thread is not registered");
-        //pj_thread_register(NULL, thread_desc, &thread);
-    }
-    //NSLog(@"sip:%@@%@", username, domain);
-    
-    //status = pjsua_verify_sip_url((char*)reg_uri);
-    //if (status != PJ_SUCCESS) {
-    //    NSLog(@"verify sip url failed");
-    //    return;
-    //}
-    
-    // 帳號
-    acc_cfg.id = pj_str((char*)uid);
-    //sip domain
-    acc_cfg.reg_uri = pj_str((char*)reg_uri);
-    acc_cfg.cred_count = 1;
-    acc_cfg.cred_info[0].realm = pj_str("*");
-    acc_cfg.cred_info[0].scheme = pj_str("digest");
-    acc_cfg.ka_interval = 15;
-    
-    // video codec
-    pj_pool_factory pf;
-    pjmedia_codec_openh264_vid_init(NULL, &pf);
-    
-    // video device
-    //pjmedia_vid_dev_info vd;
-    //pj_status_t t =pjmedia_vid_dev_get_info(PJMEDIA_VID_DEFAULT_RENDER_DEV, &vd);
-    
-    //if (t == PJ_SUCCESS) {
-    //    NSLog(@"%d*********%@" , vd.id, [NSString stringWithCString:vd.name encoding:NSUTF8StringEncoding]);
-    //}
-    //acc_cfg.vid_cap_dev = vd.id;
-    //acc_cfg.vid_rend_dev = 0;
-    
-    // 帳號
-    acc_cfg.cred_info[0].username = pj_str((char *)[username UTF8String]);
-    // 密碼
-    acc_cfg.cred_info[0].data_type = PJSIP_CRED_DATA_PLAIN_PASSWD;
-    acc_cfg.cred_info[0].data = pj_str((char*)[password UTF8String]);
-    
-    // auto show receive video
-    acc_cfg.vid_in_auto_show = PJ_TRUE;
-    
-    
-    // auto transfer video
-    acc_cfg.vid_out_auto_transmit = PJ_TRUE;
-    
-    // 設定proxy
-    const char *proxy = [[NSString stringWithFormat:@"sip:%@;transport=TCP", domain]UTF8String];
-    acc_cfg.proxy[acc_cfg.proxy_cnt++] = pj_str((char*)proxy);
-    
-    //pjsua_acc_add_local(tcp_id, PJ_TRUE, &acc_id);
-    
-    if (pjsua_acc_is_valid(acc_id)) {
-        //pjsua_acc_modify(acc_id, &acc_cfg);
-    }
-    else {
-        status = pjsua_acc_add(&acc_cfg, PJ_TRUE, &acc_id);
-    }
-    if (status != PJ_SUCCESS) {
-        NSLog(@"adding account failed");
-        pjsua_destroy();
-        return;
-    }
-    else {
-        
-    }
-}
-
 - (BOOL) checkAnyRegistered {
     if (pjsua_acc_is_valid(acc_id)) {
         return true;
@@ -381,23 +387,21 @@ static void on_config_init (pjsua_app_config *cfg) {
 }
 
 - (void)keepAlive {
-    NSLog(@"do keep alive");
+    NSLog(@"do keepalive");
     /* Register this thread if not yet */
     if (!pj_thread_is_registered()) {
         static pj_thread_desc   thread_desc;
         static pj_thread_t     *thread;
         pj_thread_register("keepalivethread", thread_desc, &thread);
     }
-    
+    //pjsua_acc_set_registration(acc_id, 0);
     pjsua_acc_set_registration(acc_id, PJ_TRUE);
-
-    
     /* Simply sleep for 5s, give the time for library to send transport
      * keepalive packet, and wait for server response if any. Don't sleep
      * too short, to avoid too many wakeups, because when there is any
      * response from server, app will be woken up again (see also #1482).
      */
-    pj_thread_sleep(5000);
+    pj_thread_sleep(7000);
 }
 
 - (void)checkAlarm {
@@ -431,6 +435,7 @@ static void on_config_init (pjsua_app_config *cfg) {
             // wan
             if (![self isSameNetwork:selfIp device:ip mask:@"255.255.255.0"]) {
                 NSLog(@"wan");
+                inLan = false;
                 port = [[temp objectAtIndex:0] objectAtIndex:3];
             }
             // lan
@@ -438,6 +443,7 @@ static void on_config_init (pjsua_app_config *cfg) {
                 NSLog(@"lan");
                 ip = [[temp objectAtIndex:0]objectAtIndex:4];
                 port = [[temp objectAtIndex:0]objectAtIndex:5];
+                inLan = true;
             }
             //NSLog(@"ip + %@", ip);
             //NSLog(@"port + %@", port);
@@ -485,9 +491,10 @@ static void on_config_init (pjsua_app_config *cfg) {
 {
     NSLog(@"enter background mode");
     /* Send keep alive manually at the beginning of background */
-    //pjsua_acc_set_registration(acc_id, PJ_TRUE);
-    [self performSelectorOnMainThread:@selector(keepAlive)
-                           withObject:nil waitUntilDone:YES];
+    //bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+    //    bgTask = UIBackgroundTaskInvalid;
+    //}];
+    [self performSelectorOnMainThread:@selector(keepAlive) withObject:nil waitUntilDone:YES];
     [self setUpKeepAlive:application];
    
 }
@@ -522,6 +529,7 @@ static void on_config_init (pjsua_app_config *cfg) {
 
 // this function triggers by incoming call
 static void on_incoming_call(pjsua_acc_id acc_id, pjsua_call_id call_id, pjsip_rx_data *rdata) {
+    
     pjsua_call_info ci;
     PJ_UNUSED_ARG(acc_id);
     PJ_UNUSED_ARG(rdata);
@@ -554,8 +562,6 @@ static void on_incoming_call(pjsua_acc_id acc_id, pjsua_call_id call_id, pjsip_r
             pjsua_conf_connect(pjsua_player_get_conf_port(p_id), 0);
         }
     }
-    
-    
     UILocalNotification *alert = [[UILocalNotification alloc] init];
     if (alert) {
         alert.timeZone = [NSTimeZone defaultTimeZone];
@@ -571,14 +577,13 @@ static void on_incoming_call(pjsua_acc_id acc_id, pjsua_call_id call_id, pjsip_r
          * --auto-answer option).
          */
         alert.alertAction = @"Active app";
-        alert.applicationIconBadgeNumber = pjsua_call_get_count();
-        NSDictionary *info = [NSDictionary dictionaryWithObject:data forKey:@"call_id"];
-        alert.userInfo = info;
+        alert.applicationIconBadgeNumber = 1;
+        //NSDictionary *info = [NSDictionary dictionaryWithObject:data forKey:@"call_id"];
+        //alert.userInfo = info;
         
         NSLog(@"show localnotification");
         [[UIApplication sharedApplication] presentLocalNotificationNow:alert];
     }
-    
     //auto answer
     //pjsua_call_answer(call_id, 200, NULL, NULL);
 }
@@ -772,7 +777,7 @@ static void on_call_state(pjsua_call_id call_id, pjsip_event *e) {
             }
             break;
     }
-    NSDictionary *callInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:call_id], @"call_id", [NSNumber numberWithInt:ci.state], @"call_state" , nil];
+    //NSDictionary *callInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:call_id], @"call_id", [NSNumber numberWithInt:ci.state], @"call_state" , nil];
     //[[NSNotificationCenter defaultCenter]postNotificationName:@"call_data" object:nil userInfo:callInfo];
 }
 
@@ -807,6 +812,7 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    //[[UIApplication sharedApplication] endBackgroundTask:bgTask];
     
 }
 
@@ -970,6 +976,9 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
         sipThread = [[NSThread alloc]initWithTarget:self selector:@selector(startSipThread) object:nil];
         [sipThread start];
     }
+    else if (doCheckSip && _sipthreadisStarted) {
+        
+    }
     else {
         // stop sip thread after 5 secs
         [self performSelector:@selector(stopSipThread) withObject:nil afterDelay:5.0f];
@@ -982,34 +991,42 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
         static pj_thread_t     *thread;
         pj_thread_register("checkregthread", thread_desc, &thread);
     }
+    [NSThread sleepForTimeInterval:1];
     _sipthreadisStarted = YES;
     while (doCheckSip) {
         NSLog(@"check sip domain");
+        [manager login];
         [manager getDeviceList];
         NSMutableArray *array = [manager getDeviceList:0];
         if ([array count]>0) {
             //NSLog(@"%@",[[array objectAtIndex:0] description]);
-            NSString *ip = [[array objectAtIndex:0] objectAtIndex:2];
-            NSString *port = [[array objectAtIndex:0] objectAtIndex:3];
-            NSString *sip_reg = [ip stringByAppendingString:@":"];
-            sip_reg = [sip_reg stringByAppendingString:port];
+            NSString *ip, *sip_reg;
+             NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+            inLan = [self isSameNetwork:[manager getSelfIp] device:[[array objectAtIndex:0] objectAtIndex:2] mask:@"255.255.255.0"];
+            if (!inLan) {
+                NSLog(@"wan");
+                ip = [[array objectAtIndex:0] objectAtIndex:2];
+                //NSString *port = [[array objectAtIndex:0] objectAtIndex:3];
+                sip_reg = [ip stringByAppendingString:@":5678"];
+            }
+            else {
+                NSLog(@"inlan");
+                sip_reg = [def stringForKey:@"sipAddress"];
+            }
             //NSLog(@"%@", sip_reg);
-            NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-            NSString *old_reg = [def stringForKey:@"sipAddress"];
             pjsua_acc_info info;
             pjsua_acc_get_info(acc_id, &info);
             
-            old_reg = [[NSString alloc ]initWithBytes:info.acc_uri.ptr length:info.acc_uri.slen encoding:NSUTF8StringEncoding];
+            NSString *old_reg = [[NSString alloc ]initWithBytes:info.acc_uri.ptr length:info.acc_uri.slen encoding:NSUTF8StringEncoding];
             //NSLog(@"old%@", old_reg);
             old_reg = [old_reg stringByReplacingOccurrencesOfString:@"sip:" withString:@""];
             old_reg = [old_reg substringFromIndex:[old_reg rangeOfString:@"@"].location +1];
             //NSLog(@"%@", old_reg);
-            //if (![sip_reg isEqualToString:old_reg]) {
-                //[self re_registeration:sip_reg];
-            //}
+            if (![sip_reg isEqualToString:old_reg]) {
+                [self re_registeration:sip_reg];
+            }
         }
-        
-        [NSThread sleepForTimeInterval:10];
+        [NSThread sleepForTimeInterval:5];
     }
 }
 

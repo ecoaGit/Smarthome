@@ -23,6 +23,7 @@
     NSArray *callArray; // use this for multiple call control
     BOOL doCheckSip;
     //UITransitionView *_transView;
+    __block UIBackgroundTaskIdentifier bgTask;
 }
 
 @property (strong, nonatomic) UIWindow *window;
