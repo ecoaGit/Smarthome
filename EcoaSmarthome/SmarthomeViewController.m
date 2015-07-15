@@ -199,7 +199,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"connect");
-    NSString *path = [NSString stringWithFormat:@"http://%@:%@", [[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:2], [[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:3]];
+    AppDelegate *dele = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+    NSString *path;
+    if ([dele isDeviceInLan]) {
+        path = [NSString stringWithFormat:@"http://%@:%@", [[self.deviceList objectAtIndex:indexPath.row]objectAtIndex:4], [[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:5]];
+                
+    }
+    else {
+        path = [NSString stringWithFormat:@"http://%@:%@", [[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:2], [[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:3]];
+    }
+    
+    NSLog(@"%@", path);
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSString *user_info = [ud stringForKey:[[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:6]];
@@ -213,8 +223,8 @@
     }
     if (![username isEqualToString:@""] &&![password isEqualToString:@""]) {
         NSLog(@"user data is not null");
-        NSData* data = [[NSString stringWithFormat:@"%@:%@", username, password]dataUsingEncoding:NSUTF8StringEncoding];
-        NSString *auth = [[NSString alloc]initWithData:[data base64EncodedDataWithOptions:0] encoding:NSUTF8StringEncoding];
+        NSData* aData = [[NSString stringWithFormat:@"%@:%@", username, password]dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *auth = [[NSString alloc]initWithData:[aData base64EncodedDataWithOptions:0] encoding:NSUTF8StringEncoding];
         path = [path stringByAppendingString:[NSString stringWithFormat:@"?auth=%@", auth]];
     }
     NSURL *url = [NSURL URLWithString:path];
@@ -277,9 +287,21 @@
         else {
             CustomIOS7AlertView *alertview = [[CustomIOS7AlertView alloc]init];
             [alertview setContainerView:[[DeviceDataView alloc]initWithFrameAndData:CGRectMake(0, 0, 300, 320) data:[self.deviceList objectAtIndex:path.row]]];
+            
             [alertview show];
         }
     }
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    UIInterfaceOrientation *orient = [[UIApplication sharedApplication] statusBarOrientation];
+    if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
+    
+    }
+    if (toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
+        
+    }
+    
 }
 
 /*

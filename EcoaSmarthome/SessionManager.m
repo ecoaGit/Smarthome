@@ -94,7 +94,7 @@ static SessionManager *instance = nil;
  */
 - (BOOL) login {
     
-    NSLog(@"login");
+    //NSLog(@"login");
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *username = [userDefaults stringForKey:@"cloudUsername"];
     NSString *password = [userDefaults stringForKey:@"cloudPassword"];
@@ -351,11 +351,10 @@ static SessionManager *instance = nil;
 }
 
 - (NSString *) getSelfIp {
-    return selfIp;
-}
+    return selfIp; }
 
 - (void) getDeviceList {
-    NSLog(@"getdevicelist");
+    //NSLog(@"getdevicelist");
     NSString *url;
 
     for (int i = 0; i < serverList.count; i++) {

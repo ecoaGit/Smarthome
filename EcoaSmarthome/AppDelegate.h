@@ -35,5 +35,6 @@
 - (BOOL) checkAnyRegistered;
 - (void) makeCall:(NSString*) sipURI withMode:(int) mode;
 - (void) handleSip;
+- (BOOL) isDeviceInLan;
 
 @end

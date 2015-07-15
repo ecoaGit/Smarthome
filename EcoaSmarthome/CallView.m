@@ -198,7 +198,7 @@ int font;
         [dtmf setFrame:CGRectMake(self.frame.size.width/3, remoteView.frame.origin.y+remoteView.frame.size.height+rest/4, self.frame.size.width/3, rest/4)];
         [dtmf setHidden:NO];
         [opendoor setFrame:CGRectMake(2*(self.frame.size.width/3), remoteView.frame.origin.y+remoteView.frame.size.height+rest/4, self.frame.size.width/3, rest/4)];
-        [opendoor setHidden:YES];
+        [opendoor setHidden:NO];
         
         pjsua_vid_preview_param pre;
         pjsua_vid_win_id pre_id;
@@ -214,7 +214,7 @@ int font;
                 NSLog(@"preview window invalid");
             pjsua_vid_win_get_info(pre_id, &pre_info);
             NSLog(@"show%d", pre_info.show);
-            NSLog(@"isnative%d", pre_info.is_native);
+            NSLog(@"is native %d", pre_info.is_native);
             //NSLog(@"%d",pre_info.size.h);
             //NSLog(@"%s", pre_info.hwnd.info.ios.window);
         }
@@ -293,10 +293,12 @@ int font;
                 else {
                     NSLog(@"not native");
                 }
-                [_win setBackgroundColor:[UIColor greenColor]];
-                [_win setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+                //[_win setBackgroundColor:[UIColor greenColor]];
+                //[_win setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
                 [self addSubview:_win];
+                NSLog(@"add _win to subview");
                 [self bringSubviewToFront:_win];
+                NSLog(@"bring _win to front");
             }
             else {
                 NSLog(@"callview window id invalid");
@@ -407,6 +409,9 @@ int font;
     parm.dir = PJMEDIA_DIR_CAPTURE;
     pjsua_call_set_vid_strm(cid, PJSUA_CALL_VID_STRM_CHANGE_DIR, &parm);*/
     [dtmfPad setHidden:![dtmfPad isHidden]];
+    if (![dtmfPad isHidden]) {
+        [dtmfPad setNeedsDisplay];
+    }
     [self bringSubviewToFront:dtmfPad];
     
 }

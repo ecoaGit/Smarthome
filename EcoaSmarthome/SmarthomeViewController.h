@@ -10,6 +10,7 @@
 #import "DeviceViewCell.h"
 #import "DeviceDataView.h"
 #import "SessionManager.h"
+#import "AppDelegate.h"
 
 @interface SmarthomeViewController : UITableViewController <NSURLConnectionDataDelegate, NSURLConnectionDelegate, UITableViewDataSource, UITableViewDelegate>
 {

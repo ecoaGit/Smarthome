@@ -994,7 +994,7 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
     [NSThread sleepForTimeInterval:1];
     _sipthreadisStarted = YES;
     while (doCheckSip) {
-        NSLog(@"check sip domain");
+        //NSLog(@"check sip domain");
         [manager login];
         [manager getDeviceList];
         NSMutableArray *array = [manager getDeviceList:0];
@@ -1004,13 +1004,13 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
              NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
             inLan = [self isSameNetwork:[manager getSelfIp] device:[[array objectAtIndex:0] objectAtIndex:2] mask:@"255.255.255.0"];
             if (!inLan) {
-                NSLog(@"wan");
+                //NSLog(@"wan");
                 ip = [[array objectAtIndex:0] objectAtIndex:2];
                 //NSString *port = [[array objectAtIndex:0] objectAtIndex:3];
                 sip_reg = [ip stringByAppendingString:@":5678"];
             }
             else {
-                NSLog(@"inlan");
+                //NSLog(@"inlan");
                 sip_reg = [def stringForKey:@"sipAddress"];
             }
             //NSLog(@"%@", sip_reg);
@@ -1033,6 +1033,10 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
 - (void) stopSipThread {
     [sipThread cancel];
     sipThread = nil;
+}
+
+- (BOOL) isDeviceInLan {
+    return inLan;
 }
 
 @end

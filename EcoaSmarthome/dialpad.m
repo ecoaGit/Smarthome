@@ -187,11 +187,9 @@ NSArray *arr;
             // add word
             UIButton *button = (UIButton *) sender;
             if (dtmfDial) {
-                NSString *texx = [input text];
                 const char *tex = [[input text] UTF8String];
                 pj_str_t digits = pj_str((char*)tex);
                 pjsua_call_dial_dtmf(cid, &digits);
-                //[input setText: [texx stringByAppendingString:[NSString stringWithFormat:@"%@", button.currentTitle]]];
             }
             else {
                 NSString *texx = [input text];
@@ -266,9 +264,11 @@ NSArray *arr;
     dtmfDial = dial;
 }
 
-- (void) setCallId:(pjsua_call_id)cid {
-    cid = cid;
+- (void) setCallId:(pjsua_call_id)acid {
+    cid = acid;
 }
+
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

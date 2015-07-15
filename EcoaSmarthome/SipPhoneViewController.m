@@ -115,7 +115,7 @@ CallViewController *callView;
 - (IBAction)videoAction:(id)sender {
     NSUserDefaults *nd = [NSUserDefaults standardUserDefaults];
     NSString *url = [NSString stringWithFormat:@"sip:%@@%@", [dialPad getInput], [nd stringForKey:@"sipAddress"]];
-    AppDelegate *dele = [[UIApplication sharedApplication]delegate];
+    AppDelegate *dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     [dele makeCall:url withMode:1];
 
     //[self presentCallingView];
@@ -124,7 +124,7 @@ CallViewController *callView;
 - (IBAction)audioAction:(id)sender {
     NSUserDefaults *nd = [NSUserDefaults standardUserDefaults];
     NSString *url = [NSString stringWithFormat:@"sip:%@@%@", [dialPad getInput], [nd stringForKey:@"sipAddress"]];
-    AppDelegate *dele = [[UIApplication sharedApplication]delegate];
+    AppDelegate *dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     [dele makeCall:url withMode:0];
     //[self presentCallingView];
 }
@@ -137,6 +137,10 @@ CallViewController *callView;
     }
    
     [rootController presentViewController:callView animated:YES completion:nil];
+}
+
+- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 /*
