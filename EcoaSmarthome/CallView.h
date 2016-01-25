@@ -22,7 +22,7 @@
 #define call_none 11
 
 
-@interface CallView : UIView
+@interface CallView : UIView <dtmfDelegate>
 {
     UIImageView *remoteView;
     //UIView *localView;

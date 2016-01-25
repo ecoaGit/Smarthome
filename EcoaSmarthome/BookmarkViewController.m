@@ -8,7 +8,7 @@
 
 #import "BookmarkViewController.h"
 
-@interface BookmarkViewController () <CustomIOS7AlertViewDelegate, UITableViewDataSource, UITableViewDelegate, NSURLConnectionDataDelegate>
+@interface BookmarkViewController () <CustomIOS7AlertViewDelegate, UITableViewDataSource, UITableViewDelegate, NSURLConnectionDataDelegate, UIWebViewDelegate>
 
 @end
 
@@ -116,8 +116,14 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *path = [NSString stringWithFormat:@"http://%@", [[deviceList objectAtIndex:indexPath.row] objectAtIndex:1]];
-   
+    NSString *path;
+    if ([[deviceList objectAtIndex:indexPath.row] containsObject:@"http://"]) {
+        path = [[deviceList objectAtIndex:indexPath.row]objectAtIndex:1];
+    }
+    else {
+        path = [NSString stringWithFormat:@"http://%@", [[deviceList objectAtIndex:indexPath.row] objectAtIndex:1]];
+    }
+    //NSLog(@"path%@", path);
     NSString *username = [[deviceList objectAtIndex:indexPath.row] objectAtIndex:2];
     NSString *password = [[deviceList objectAtIndex:indexPath.row] objectAtIndex:3];
    
@@ -136,6 +142,8 @@
     web.scalesPageToFit = YES;
     [web setAutoresizesSubviews:YES];
     [web setAutoresizingMask:(UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth)];
+    [web setDelegate:self];
+    NSLog(@"bookmark loadrequest");
     [web loadRequest:request];
     [web setTag:55];
     [self.view addSubview:web];
@@ -143,16 +151,18 @@
     [self.navigationItem setHidesBackButton:YES];
     [rButton setImage:[UIImage imageNamed:@"back"]];
     [rButton setAction:@selector(closeWebView:)];
-    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
 }
 
 - (IBAction) closeWebView:(id) sender {
+    
     [[self.view viewWithTag:55]removeFromSuperview];
-    [rButton setImage:[UIImage imageNamed:@"edit"]];
+    [rButton setImage:[UIImage imageNamed:@"add"]];
     [rButton setAction:@selector(buttonAction:)];
     [self.navigationItem setHidesBackButton:NO];
     [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
+    
 }
 
 #pragma mark - Table view data source
@@ -231,6 +241,33 @@
             [alertview show];
         }
     }
+}
+
+-(void)webViewDidStartLoad:(UIWebView *)webView {
+    NSLog(@"bookmark start load");
+    if (splash == nil) {
+        splash = [[CustomIOS7AlertView alloc]init];
+        UIDevice *dev = [UIDevice currentDevice];
+        if ([dev.model isEqualToString:@"iPhone"] || [dev.model isEqualToString:@"iPhone6"]) {
+            [splash setContainerView:[[LoadingView alloc]initWithFrame:CGRectMake(0, 0, 160, 100)]];
+        }
+        else if ([dev.model isEqualToString:@"iPad"]) {
+            [splash setContainerView:[[LoadingView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)]];
+        }
+        [splash setOnButtonTouchUpInside:^(CustomIOS7AlertView *alertView, int buttonIndex) {
+            [alertView close];
+        }];
+        [splash show];
+    }
+}
+-(void)webViewDidFinishLoad:(UIWebView *)webView {
+    NSLog(@"bookmark load finished");
+    [splash close];
+    splash = nil;
+}
+-(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    NSLog(@"bookmark load finished with error");
+    NSLog([error description]);
 }
 
 /*

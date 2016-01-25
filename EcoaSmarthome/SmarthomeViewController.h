@@ -11,15 +11,18 @@
 #import "DeviceDataView.h"
 #import "SessionManager.h"
 #import "AppDelegate.h"
+#import "LoadingView.h"
 
-@interface SmarthomeViewController : UITableViewController <NSURLConnectionDataDelegate, NSURLConnectionDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface SmarthomeViewController : UITableViewController <NSURLConnectionDataDelegate, NSURLConnectionDelegate, UITableViewDataSource, UITableViewDelegate, UIWebViewDelegate>
 {
     NSString *TAG;
     FMDatabase *db;
     NSMutableData *data;
     int ccount;
-    
+    CustomIOS7AlertView *splash;
+    UIWebView *web;
     SessionManager *manager;
+    UIActivityIndicatorView *indicator;
 }
 
 @property (nonatomic, strong) NSMutableArray *deviceList;

@@ -22,7 +22,7 @@ static SessionManager *instance = nil;
 
 +(id) alloc {
     @synchronized ([SessionManager class]) {
-        NSAssert(_singletonObject == nil, @"_singletonObject 已經做過記憶體配置");
+        NSAssert(instance == nil, @"_singletonObject 已經做過記憶體配置");
         instance = [super alloc];
         return instance;
     }
@@ -233,7 +233,7 @@ static SessionManager *instance = nil;
     [request setHTTPMethod:@"POST"];
     NSOperationQueue *queue = [[NSOperationQueue alloc]init];
     [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *result, NSError *error) {
-        if (error) {
+        if (error != NULL) {
             // 取得serverlist失敗
             /*UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!" message:@"network issues" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];*/
@@ -347,6 +347,7 @@ static SessionManager *instance = nil;
  */
 
 - (NSMutableArray *) getDeviceList:(int) n {
+    [self getDeviceList];
     return deviceList;
 }
 
@@ -368,12 +369,12 @@ static SessionManager *instance = nil;
             [request setValue:sess forHTTPHeaderField:@"Auth-Token"];
             NSOperationQueue *queue = [[NSOperationQueue alloc]init];
             [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *result, NSError *error) {
-                if (error.code == NSURLErrorTimedOut) {
-                    NSLog(@"use old data");
-                    NSDictionary *nd = [NSDictionary dictionaryWithObjectsAndKeys:deviceList, @"list", nil];
-                    [[NSNotificationCenter defaultCenter]postNotificationName:@"deviceData" object:@"cloud" userInfo:nd];
+                if (error != NULL) {
+                        //NSLog(@"use old data");
+                        NSDictionary *nd = [NSDictionary dictionaryWithObjectsAndKeys:deviceList, @"list", nil];
+                        [[NSNotificationCenter defaultCenter]postNotificationName:@"deviceData" object:@"cloud" userInfo:nd];
                 }
-                else {
+                else if (error == NULL) {
                     NSError *jsonError;
                     //NSLog(@"use cloud data");
                     if (result != NULL){
@@ -411,9 +412,10 @@ static SessionManager *instance = nil;
                                 NSArray *arr = [[NSArray alloc]initWithObjects:alias, state, wan_ip, wan_port, lan_ip, lan_port, did, update, nil];
                                 [temp addObject:arr];
                             }
-                            
-                            if (temp != nil)
+                            NSLog(@"temp length%lu", (unsigned long)temp.count);
+                            if (temp != nil && selfip != nil)
                             {
+                                deviceList = NULL;
                                 deviceList = temp;
                                 selfIp = selfip;
                                 NSDictionary *nd = [NSDictionary dictionaryWithObjectsAndKeys:temp, @"list", selfip, @"selfIp", nil];

@@ -19,7 +19,6 @@
     UIButton* audio;
     UIButton* video;
     UINavigationBar *navigationBar;
-    
 }
 
 @end

@@ -48,6 +48,7 @@
 		1850FC47194E93280044C44F /* DeviceDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1850FC46194E93280044C44F /* DeviceDataView.m */; };
 		186F0DA9195191150005B487 /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186F0DA8195191150005B487 /* CallViewController.m */; };
 		187C76A11A5A870C00C81805 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187C76A01A5A870C00C81805 /* CFNetwork.framework */; };
+		187EB0861B71B59800233BA6 /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187EB0851B71B59800233BA6 /* LoadingView.m */; };
 		18A317DD1A7A2E3400DF74C1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A317DC1A7A2E3400DF74C1 /* AudioToolbox.framework */; };
 		18AD76A31A36A4E6004F9D69 /* NewCityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AD76A21A36A4E6004F9D69 /* NewCityController.m */; };
 		18AF860F1AAFDDD100E83DB6 /* oldphone_mono.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18AF860E1AAFDDD100E83DB6 /* oldphone_mono.wav */; };
@@ -143,6 +144,8 @@
 		186F0DA7195191150005B487 /* CallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CallViewController.h; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/CallViewController.h"; sourceTree = "<group>"; };
 		186F0DA8195191150005B487 /* CallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CallViewController.m; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/CallViewController.m"; sourceTree = "<group>"; };
 		187C76A01A5A870C00C81805 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		187EB0841B71B59800233BA6 /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadingView.h; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/LoadingView.h"; sourceTree = "<group>"; };
+		187EB0851B71B59800233BA6 /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadingView.m; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/LoadingView.m"; sourceTree = "<group>"; };
 		18A317DB1A7A2E3400DF74C1 /* EcoaSmarthome.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = EcoaSmarthome.entitlements; sourceTree = "<group>"; };
 		18A317DC1A7A2E3400DF74C1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		18AD76A11A36A4E6004F9D69 /* NewCityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCityController.h; sourceTree = "<group>"; };
@@ -288,6 +291,8 @@
 				1806476F1AD61A8900BF2FCD /* httpconst.m */,
 				180647741AD64B1200BF2FCD /* httpsersub.h */,
 				180647751AD64B1200BF2FCD /* httpsersub.m */,
+				187EB0841B71B59800233BA6 /* LoadingView.h */,
+				187EB0851B71B59800233BA6 /* LoadingView.m */,
 			);
 			path = EcoaSmarthome;
 			sourceTree = "<group>";
@@ -399,7 +404,7 @@
 		183FC60619234606000070F1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = ECOA;
 				TargetAttributes = {
 					183FC60D19234606000070F1 = {
@@ -523,6 +528,7 @@
 				18B9A01719470154000FB514 /* BookmarkDataView.m in Sources */,
 				18166B3319416E6400A9FCE9 /* CustomIOS7AlertView.m in Sources */,
 				18101E3F1940628F0064A117 /* BookmarkViewCell.m in Sources */,
+				187EB0861B71B59800233BA6 /* LoadingView.m in Sources */,
 				18EBB084195C055F00B9673B /* SessionManager.m in Sources */,
 				1806476D1AD6019800BF2FCD /* httpser.m in Sources */,
 				1848D6D11995C82B007E7242 /* LoginController.m in Sources */,
@@ -667,6 +673,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -682,6 +689,7 @@
 				CODE_SIGN_ENTITLEMENTS = EcoaSmarthome/EcoaSmarthome.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EcoaSmarthome/EcoaSmarthome-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -705,11 +713,48 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/EcoaSmarthome/openh264/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/openssl/bin/iPhoneOS8.3-arm64.sdk/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/openssl/bin/iPhoneOS8.3-armv7.sdk/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/openssl/bin/iPhoneOS8.3-armv7s.sdk/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/openssl/bin/iPhoneSimulator8.3-i386.sdk/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/openssl/bin/iPhoneSimulator8.3-x86_64.sdk/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/openssl/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib/lib-arm64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib/lib-armv7",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib/lib-armv7s",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib/lib-i386",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib/lib-x86_64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib-util/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib-util/lib-arm64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib-util/lib-armv7",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib-util/lib-armv7s",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib-util/lib-i386",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib-util/lib-x86_64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjmedia/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjmedia/lib-arm64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjmedia/lib-armv7",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjmedia/lib-armv7s",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjmedia/lib-i386",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjmedia/lib-x86_64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjnath/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjnath/lib-arm64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjnath/lib-armv7",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjnath/lib-armv7s",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjnath/lib-i386",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjnath/lib-x86_64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/third_party/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/third_party/lib-arm64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/third_party/lib-armv7",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/third_party/lib-armv7s",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/third_party/lib-i386",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/third_party/lib-x86_64",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos7.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -724,6 +769,7 @@
 				CODE_SIGN_ENTITLEMENTS = EcoaSmarthome/EcoaSmarthome.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EcoaSmarthome/EcoaSmarthome-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -747,11 +793,48 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/EcoaSmarthome/openh264/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/openssl/bin/iPhoneOS8.3-arm64.sdk/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/openssl/bin/iPhoneOS8.3-armv7.sdk/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/openssl/bin/iPhoneOS8.3-armv7s.sdk/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/openssl/bin/iPhoneSimulator8.3-i386.sdk/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/openssl/bin/iPhoneSimulator8.3-x86_64.sdk/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/openssl/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib/lib-arm64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib/lib-armv7",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib/lib-armv7s",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib/lib-i386",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib/lib-x86_64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib-util/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib-util/lib-arm64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib-util/lib-armv7",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib-util/lib-armv7s",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib-util/lib-i386",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjlib-util/lib-x86_64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjmedia/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjmedia/lib-arm64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjmedia/lib-armv7",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjmedia/lib-armv7s",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjmedia/lib-i386",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjmedia/lib-x86_64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjnath/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjnath/lib-arm64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjnath/lib-armv7",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjnath/lib-armv7s",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjnath/lib-i386",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/pjnath/lib-x86_64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/third_party/lib",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/third_party/lib-arm64",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/third_party/lib-armv7",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/third_party/lib-armv7s",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/third_party/lib-i386",
+					"$(PROJECT_DIR)/EcoaSmarthome/pjproject/src/third_party/lib-x86_64",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos7.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

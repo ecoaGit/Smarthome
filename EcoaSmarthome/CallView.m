@@ -13,11 +13,116 @@ int font;
 
 @implementation CallView
 
+-(instancetype)initWithFrame:(CGRect)frame {
+    NSLog(@"initWithFrame");
+    self = [super initWithFrame:frame];
+    
+    if (self) {
+        vid = false;
+        cid = PJSUA_INVALID_ID;
+        NSString *device = [UIDevice currentDevice].model;
+        int font = 0;
+        if ([device isEqualToString:@"iPhone"] || [device isEqualToString:@"iPhoneSimulator"]) {
+            font = 20;
+        }else if ([device isEqualToString:@"iPhone5"]) {
+            font = 20;
+        }
+        else if ([device isEqualToString:@"iPad"]) {
+            font = 35;
+        }
+        else {
+            font = 20;
+        }
+        
+        remoteName = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, frame.size.width, font)];
+        NSLog(@"height %f y %f ", remoteName.frame.size.height, remoteName.frame.origin.y);
+        [remoteName setTextColor:[UIColor whiteColor]];
+        [remoteName setTextAlignment:NSTextAlignmentCenter];
+        [remoteName setTag:101];
+        [remoteName setHidden:NO];
+        [remoteName setBackgroundColor:[UIColor redColor]];
+        callTime = [[UILabel alloc]initWithFrame:CGRectMake(0, remoteName.frame.origin.y+remoteName.frame.size.height, self.frame.size.width, font)];
+        NSLog(@"height %f y %f", callTime.frame.size.height, callTime.frame.origin.y);
+        [callTime setTextColor:[UIColor whiteColor]];
+        [callTime setTextAlignment:NSTextAlignmentCenter];
+        [callTime setBackgroundColor:[UIColor redColor]];
+        [callTime setHidden:NO];
+        [remoteView setTag:102];
+        remoteView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20+font, self.frame.size.width, (self.frame.size.height - font - 50)/2)];
+        [remoteView setBackgroundColor:[UIColor grayColor]];
+        [remoteView setImage:[UIImage imageNamed:@"remote"]];
+        remoteView.contentMode = UIViewContentModeCenter;
+        remoteView.clipsToBounds = YES;
+        hangup = [[UIButton alloc]init];
+        [hangup setBackgroundColor:[UIColor whiteColor]];
+        hangup.layer.borderWidth=3.0f;
+        hangup.layer.borderColor=[[UIColor grayColor] CGColor];
+        [hangup setImage:[UIImage imageNamed:@"hangup"] forState:UIControlStateNormal];
+        [hangup addTarget:self action:@selector(hangup:) forControlEvents:UIControlEventTouchUpInside];
+        [hangup setTag:103];
+        answer = [[UIButton alloc]init];
+        [answer setBackgroundColor:[UIColor whiteColor]];
+        answer.layer.borderWidth=3.0f;
+        answer.layer.borderColor=[[UIColor grayColor] CGColor];
+        [answer setImage:[UIImage imageNamed:@"answer"] forState:UIControlStateNormal];
+        [answer addTarget:self action:@selector(answer:) forControlEvents:UIControlEventTouchUpInside];
+        [answer setTag:104];
+        answerVid = [[UIButton alloc]init];
+        [answerVid setBackgroundColor:[UIColor whiteColor]];
+        [answerVid setImage:[UIImage imageNamed:@"answerVid"] forState:UIControlStateNormal];
+        answerVid.layer.borderWidth=3.0f;
+        answerVid.layer.borderColor=[[UIColor grayColor]CGColor];
+        [answerVid addTarget:self action:@selector(answer:) forControlEvents:UIControlEventTouchUpInside];
+        [answerVid setTag:108];
+        speaker = [[UIButton alloc]init];
+        [speaker setBackgroundColor:[UIColor lightGrayColor]];
+        speaker.layer.borderWidth=3.0f;
+        speaker.layer.borderColor=[[UIColor grayColor]CGColor];
+        [speaker setImage:[UIImage imageNamed:@"speaker"] forState:UIControlStateNormal];
+        [speaker setTag:105];
+        dtmf = [[UIButton alloc]init];
+        [dtmf setBackgroundColor:[UIColor lightGrayColor]];
+        dtmf.layer.borderWidth=3.0f;
+        dtmf.layer.borderColor=[[UIColor grayColor] CGColor];
+        [dtmf setImage:[UIImage imageNamed:@"dtmf"] forState:UIControlStateNormal];
+        [dtmf setTag:106];
+        [dtmf addTarget:self action:@selector(dtmf:) forControlEvents:UIControlEventTouchUpInside];
+        opendoor = [[UIButton alloc]init];
+        [opendoor setBackgroundColor:[UIColor lightGrayColor]];
+        opendoor.layer.borderWidth=3.0f;
+        opendoor.layer.borderColor=[[UIColor grayColor]CGColor];
+        [opendoor setImage:[UIImage imageNamed:@"opendoor"] forState:UIControlStateNormal];
+        [opendoor setTag:107];
+        currentType = call_none;
+        
+        dtmfPad = [[dialpad alloc]initWithFrame:CGRectMake(60, 60, self.frame.size.width-120, self.frame.size.height-120)];
+        [dtmfPad setHidden:YES];
+        [dtmfPad setDtmfDial:YES];
+        
+        
+        [self addSubview:dtmfPad];
+        [self addSubview:remoteName];
+        [self addSubview:remoteView];
+        [self addSubview:hangup];
+        [self addSubview:answer];
+        [self addSubview:answerVid];
+        [self addSubview:speaker];
+        [self addSubview:dtmf];
+        [self addSubview:opendoor];
+        [self addSubview:callTime];
+    }
+    return self;
+}
+
+/*- (id)initWithFrame:(CGRect)frame {
+    
+    return self;
+}*/
 
 - (id)init
 {
-    CGRect rect = [[UIScreen mainScreen] bounds];
-    self = [super initWithFrame:rect];
+    //CGRect rect = [[UIScreen mainScreen] bounds];
+    //self = [super initWithFrame:rect];
     if (self) {
         // Initialization code
         NSLog(@"initial callview");
@@ -38,22 +143,25 @@ int font;
             font = 20;
         }
         
-        remoteName = [[UILabel alloc]init];
+        
+        remoteName = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, self.frame.size.width, font+4)];
         [remoteName setTextColor:[UIColor whiteColor]];
         [remoteName setTextAlignment:NSTextAlignmentCenter];
         [remoteName setTag:101];
         [remoteName setHidden:NO];
-        [remoteName setFrame:CGRectMake(0, 20, self.frame.size.width, font+4)];
         [remoteName setBackgroundColor:[UIColor redColor]];
-        callTime = [[UILabel alloc]init];
+        callTime = [[UILabel alloc]initWithFrame:CGRectMake(0, remoteName.frame.size.height+20, self.frame.size.width, font)];
+        
         [callTime setTextColor:[UIColor whiteColor]];
         [callTime setTextAlignment:NSTextAlignmentCenter];
         [callTime setBackgroundColor:[UIColor redColor]];
-        [callTime setFrame:CGRectMake(0, remoteName.frame.size.height+20, self.frame.size.width, font)];
+        //[callTime setFrame:CGRectMake(0, remoteName.frame.size.height+20, self.frame.size.width, font)];
         [callTime setHidden:NO];
-        remoteView = [[UIImageView alloc]init];
         [remoteView setTag:102];
+        remoteView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20+font, self.frame.size.width, (self.frame.size.height - font - 50)/2)];
+        [remoteView setBackgroundColor:[UIColor greenColor]];
         [remoteView setImage:[UIImage imageNamed:@"remote"]];
+
         hangup = [[UIButton alloc]init];
         [hangup setBackgroundColor:[UIColor whiteColor]];
         hangup.layer.borderWidth=3.0f;
@@ -117,12 +225,15 @@ int font;
 
 - (void)loadView:(pjsua_call_id)call_id withType:(int)callType {
     NSLog(@"call view: load view type");
+    //NSLog(@"%f", self.frame.size.width);
+    //NSLog(@"%f", self.bounds.size.width);
     cid = call_id;
-    NSLog(@"call view get call id");
+    //NSLog(@"call view get call id");
     currentType = callType;
-    NSLog(@"call view get call type");
+    //NSLog(@"call view get call type");
     pjsua_call_info call_info;
     NSString *remote_info;
+    
     
     pj_status_t status = pjsua_call_get_info(call_id, &call_info);
     NSLog(@"call view get call info");
@@ -142,6 +253,10 @@ int font;
         [remoteName setText:remote_info];
     }
     if (callType == PJSIP_INV_STATE_EARLY || callType == PJSIP_INV_STATE_CALLING) {
+        if (callType == PJSIP_INV_STATE_CALLING)
+            currentType = call_wait;
+        else
+            currentType = call_inc;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self loadIncomingView:call_info];
         });
@@ -161,16 +276,20 @@ int font;
 }
 
 - (void) loadWaitingView:(pjsua_call_info) c_i {
-    NSInteger rest = self.frame.size.height - font - 50;
+    NSInteger rest = self.bounds.size.height-font-50;// self.frame.size.height - font - 50;
     NSLog(@"call type:call_wait");
-    remoteView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20+font, self.frame.size.width, rest/2)];
-    [remoteView setImage:[UIImage imageNamed:@"remote"]];
+    /*remoteView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20+font, self.bounds.size.width, rest/2)];*/
+    //[remoteView setImage:[UIImage imageNamed:@"remote"]];
     if (c_i.state == PJSIP_INV_STATE_CALLING) {
-        [hangup setFrame:CGRectMake(0, remoteView.frame.origin.y+remoteView.frame.size.height, self.frame.size.width, rest/4)];
+        [hangup setFrame:CGRectMake(0, remoteView.frame.origin.y+remoteView.frame.size.height, self.bounds.size.width/*self.frame.size.width*/, rest/4)];
         [hangup setHidden:NO];
         [answer setHidden:YES];
     }
 }
+/*
+-(void) layoutSubviews {
+    NSLog(@"layoutsubviews");
+}*/
 
 - (void) loadCallEndView:(pjsua_call_info) c_i {
     NSLog(@"call type:call_end");
@@ -184,20 +303,19 @@ int font;
 }
 
 - (void) loadCallingView:(pjsua_call_info) call_info {
-   
     if (call_info.setting.vid_cnt == 1) {
         NSLog(@"call type:call_vid");
         
         [answer setHidden:YES];
         [answerVid setHidden:YES];
-        NSInteger rest = self.frame.size.height - font - 50;
-        [hangup setFrame:CGRectMake(0, remoteView.frame.origin.y+remoteView.frame.size.height, self.frame.size.width, rest/4)];
+        NSInteger rest = /*self.frame.size.height*/self.bounds.size.height - font - 50;
+        [hangup setFrame:CGRectMake(0, remoteView.frame.origin.y+remoteView.frame.size.height, /*self.frame.size.width*/self.bounds.size.width, rest/4)];
         [hangup setHidden:NO];
-        [speaker setFrame:CGRectMake(0, remoteView.frame.origin.y+remoteView.frame.size.height+rest/4, self.frame.size.width/3, rest/4)];
+        [speaker setFrame:CGRectMake(0, remoteView.frame.origin.y+remoteView.frame.size.height+rest/4, /*self.frame.size.width/3*/self.bounds.size.width/3, rest/4)];
         [speaker setHidden:YES];
-        [dtmf setFrame:CGRectMake(self.frame.size.width/3, remoteView.frame.origin.y+remoteView.frame.size.height+rest/4, self.frame.size.width/3, rest/4)];
+        [dtmf setFrame:CGRectMake(/*self.frame.size.width/3*/self.bounds.size.width/3, remoteView.frame.origin.y+remoteView.frame.size.height+rest/4, /*self.frame.size.width/3*/self.bounds.size.width/3, rest/4)];
         [dtmf setHidden:NO];
-        [opendoor setFrame:CGRectMake(2*(self.frame.size.width/3), remoteView.frame.origin.y+remoteView.frame.size.height+rest/4, self.frame.size.width/3, rest/4)];
+        [opendoor setFrame:CGRectMake(2*(/*self.frame.size.width/3*/self.bounds.size.width/3), remoteView.frame.origin.y+remoteView.frame.size.height+rest/4, /*self.frame.size.width/3*/self.bounds.size.width/3, rest/4)];
         [opendoor setHidden:NO];
         
         pjsua_vid_preview_param pre;
@@ -315,31 +433,29 @@ int font;
     NSInteger rest = self.frame.size.height - font - 50;
     [answer setHidden:YES];
     [answerVid setHidden:YES];
-    [hangup setFrame:CGRectMake(0, remoteView.frame.origin.y+remoteView.frame.size.height, self.frame.size.width, rest/4)];
+    [hangup setFrame:CGRectMake(0, remoteView.frame.origin.y+remoteView.frame.size.height, /*self.frame.size.width*/self.bounds.size.width, rest/4)];
     [hangup setHidden:NO];
-    [speaker setFrame:CGRectMake(0, remoteView.frame.origin.y+remoteView.frame.size.height+rest/4, self.frame.size.width/3, rest/4)];
+    [speaker setFrame:CGRectMake(0, remoteView.frame.origin.y+remoteView.frame.size.height+rest/4, /*self.frame.size.width/3*/self.bounds.size.width/3, rest/4)];
     [speaker setHidden:NO];
-    [dtmf setFrame:CGRectMake(self.frame.size.width/3, remoteView.frame.origin.y+remoteView.frame.size.height+rest/4, self.frame.size.width/3, rest/4)];
+    [dtmf setFrame:CGRectMake(/*self.frame.size.width/3*/self.bounds.size.width/3, remoteView.frame.origin.y+remoteView.frame.size.height+rest/4, /*self.frame.size.width/3*/self.bounds.size.width/3, rest/4)];
     [dtmf setHidden:NO];
-    [opendoor setFrame:CGRectMake(2*(self.frame.size.width/3), remoteView.frame.origin.y+remoteView.frame.size.height+rest/4, self.frame.size.width/3, rest/4)];
+    [opendoor setFrame:CGRectMake(2*(/*self.frame.size.width/3*/self.bounds.size.width/3), remoteView.frame.origin.y+remoteView.frame.size.height+rest/4, /*self.frame.size.width/3*/self.bounds.size.width/3, rest/4)];
     [opendoor setHidden:NO];
     return;
 }
 
 - (void) loadIncomingView:(pjsua_call_info) call_info {
+    NSLog(@"load incoming view");
     NSInteger rest = self.frame.size.height - font - 50;
-    remoteView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20+font, self.frame.size.width, rest/2)];
-    [remoteView setBackgroundColor:[UIColor greenColor]];
-    [remoteView setImage:[UIImage imageNamed:@"remote"]];
     [answer setFrame:CGRectMake(0, remoteView.frame.origin.y+remoteView.frame.size.height, self.frame.size.width/3, rest/4)];
     [answerVid setFrame:CGRectMake(self.frame.size.width/3, remoteView.frame.origin.y+remoteView.frame.size.height, self.frame.size.width/3, rest/4 )];
     [hangup setFrame:CGRectMake(2*(self.frame.size.width/3), remoteView.frame.origin.y+remoteView.frame.size.height, self.frame.size.width/3, rest/4)];
-    if (call_info.state == PJSIP_INV_STATE_CALLING) {
+    if (currentType == call_wait) {
         [answer setHidden:YES];
         [answerVid setHidden:YES];
         [hangup setFrame:CGRectMake(0, remoteView.frame.origin.y+remoteView.frame.size.height, self.frame.size.width, rest/4)];
     }
-    else {
+    else if (currentType == call_inc){
         [answer setHidden:NO];
         [answerVid setHidden:NO];
     }
@@ -350,7 +466,7 @@ int font;
 }
 
 - (void) drawRect:(CGRect)rect{
-    NSLog(@"draw rect");
+    //NSLog(@"draw rect");
 }
 
 - (void) dealloc {
@@ -366,7 +482,9 @@ int font;
 
 - (void) countTotalTime:(NSTimer *)timer {
     time++;
-    [callTime setText:[NSString stringWithFormat:@"%@%ld:%ld:%ld", NSLocalizedString(@"time", @"text"), time/3600, time/60, time]];
+    [callTime setText:[NSString stringWithFormat:@"%@%ld:%ld:%ld", NSLocalizedString(@"time", @"text"), time/3600, time/60, time%60]];
+    
+
 }
 
 - (void) stopTimer {
@@ -398,7 +516,11 @@ int font;
 
 - (IBAction)hangup:(id)sender {
     NSLog(@"callview: hangup call");
-    pjsua_call_hangup(cid, 0, NULL, NULL);
+    pj_status_t status = pjsua_call_hangup(cid, 0, NULL, NULL);
+    if (status != PJ_SUCCESS){
+        NSLog(@"hangup failed");
+        pjsua_call_hangup_all();
+    }
     [self stopTimer];
 }
 
@@ -419,7 +541,95 @@ int font;
 - (IBAction)openDoor:(id)sender {
     const char *hash = [@"#" UTF8String];
     pj_str_t digits = pj_str((char*)hash);
-    pjsua_call_dial_dtmf(cid, &digits);
+    pj_status_t status = pjsua_call_dial_dtmf(cid, &digits);
+    if (status != PJ_SUCCESS) {
+        NSLog(@"send dtmf failed %d", status);
+    }
+}
+
+struct my_call_data
+{
+    pj_pool_t          *pool;
+    pjmedia_port       *tonegen;
+    pjsua_conf_port_id  toneslot;
+};
+
+struct my_call_data *call_init_tonegen(pjsua_call_id call_id)
+{
+    pj_pool_t *pool;
+    struct my_call_data *cd;
+    pjsua_call_info ci;
+    
+    pool = pjsua_pool_create("mycall", 512, 512);
+    cd = PJ_POOL_ZALLOC_T(pool, struct my_call_data);
+    cd->pool = pool;
+    
+    pjmedia_tonegen_create(cd->pool, 8000, 1, 160, 16, 0, &cd->tonegen);
+    pjsua_conf_add_port(cd->pool, cd->tonegen, &cd->toneslot);
+    
+    pjsua_call_get_info(call_id, &ci);
+    pjsua_conf_connect(cd->toneslot, ci.conf_slot);
+    
+    pjsua_call_set_user_data(call_id, (void*) cd);
+    
+    return cd;
+}
+
+void call_play_digit(pjsua_call_id call_id, const char *digits)
+{
+    pjmedia_tone_digit d[16];
+    unsigned i;
+    unsigned count = strlen(digits);
+    struct my_call_data *cd;
+    
+    cd = (struct my_call_data*) pjsua_call_get_user_data(call_id);
+    if (!cd)
+        cd = call_init_tonegen(call_id);
+    
+    if (count > PJ_ARRAY_SIZE(d))
+        count = PJ_ARRAY_SIZE(d);
+    
+    pj_bzero(d, sizeof(d));
+    for (i=0; i<count; ++i) {
+        d[i].digit = digits[i];
+        d[i].on_msec = 100;
+        d[i].off_msec = 200;
+        d[i].volume = 10;
+    }
+    
+    pjmedia_tonegen_play_digits(cd->tonegen, count, d, 0);
+}
+
+void call_deinit_tonegen(pjsua_call_id call_id)
+{
+    NSLog(@"deinit_tonegen");
+    struct my_call_data *cd;
+    
+    cd = (struct my_call_data*) pjsua_call_get_user_data(call_id);
+    if (!cd)
+        return;
+    
+    pjsua_conf_remove_port(cd->toneslot);
+    pjmedia_port_destroy(cd->tonegen);
+    pj_pool_release(cd->pool);
+    
+    pjsua_call_set_user_data(call_id, NULL);
+}
+
+- (void) deinit_tonegen:(pjsua_call_id) call_id {
+    call_deinit_tonegen(call_id);
+}
+
+- (void) init_tonegen:(pjsua_call_id) call_id{
+    call_init_tonegen(call_id);
+}
+
+- (void) dialDtmf:(NSString *)dtmfDigits {
+    const char *digits = [dtmfDigits UTF8String];
+    call_play_digit(cid, digits);
+}
+
+- (void) viewDidLayoutSubviews{
 }
 
 /*

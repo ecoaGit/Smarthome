@@ -15,9 +15,10 @@
 #import <GCDAsyncSocket.h>
 #import <pjsua.h>
 #import <pjlib.h>
+//#import <Google/CloudMessaging.h>
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, GCDAsyncSocketDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, GCDAsyncSocketDelegate/*, GGLInstanceIDDelegate, GCMReceiverDelegate*/>
 {
     SessionManager *manager;
     NSArray *callArray; // use this for multiple call control
@@ -27,6 +28,7 @@
 }
 
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, readonly, strong) NSDictionary *registrationOptions;
 
 - (BOOL) initializePjsua;
 - (BOOL) startService;
@@ -36,5 +38,6 @@
 - (void) makeCall:(NSString*) sipURI withMode:(int) mode;
 - (void) handleSip;
 - (BOOL) isDeviceInLan;
++ (void) playdigits:(pjsua_call_id) call_id withDigit:(NSString *)str;
 
 @end

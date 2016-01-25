@@ -46,6 +46,11 @@ NSMutableArray *alarmList;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    if ([[UIDevice currentDevice] orientation] != UIInterfaceOrientationPortrait || [[UIDevice currentDevice]orientation] != UIInterfaceOrientationPortraitUpsideDown) {
+        [[UIDevice currentDevice] setValue:
+         [NSNumber numberWithInteger: UIInterfaceOrientationPortrait]
+                                forKey:@"orientation"];
+    }
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     if (![delegate isServiceStarted]) {
         if ([delegate startService]) {
@@ -58,6 +63,7 @@ NSMutableArray *alarmList;
         }
     }
     [self.navigationController setNavigationBarHidden:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,7 +87,7 @@ NSMutableArray *alarmList;
         if ([[notify object]isEqualToString:@"success"]) {
             dispatch_barrier_async(dispatch_get_main_queue(), ^{
                 [regisMode setImage:[UIImage imageNamed:@"regimode_on"]];
-                [regisLabel setText:@"registred"];
+                [regisLabel setText:@"Registered"];
             });
             AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
             //[[NSNotificationCenter defaultCenter]postNotificationName:@"check_param" object:nil];
@@ -89,7 +95,7 @@ NSMutableArray *alarmList;
         else {
             dispatch_barrier_async(dispatch_get_main_queue(), ^{
                 [regisMode setImage:[UIImage imageNamed:@"regimode_off"]];
-                [regisLabel setText:@"registered fail"];
+                [regisLabel setText:@"Registered fail"];
             });
             
         }
@@ -98,6 +104,11 @@ NSMutableArray *alarmList;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    /*if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+        if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+            return;
+        }
+    }*/
     [self setUI];
 }
 

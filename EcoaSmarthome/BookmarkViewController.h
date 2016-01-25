@@ -11,12 +11,14 @@
 #import "CustomIOS7AlertView.h"
 #import "BookmarkDataView.h"
 #import "EcoaDBHelper.h"
+#import "LoadingView.h"
 
-@interface BookmarkViewController : UITableViewController <CustomIOS7AlertViewDelegate, UITableViewDataSource, UITableViewDelegate, NSURLConnectionDataDelegate>
+@interface BookmarkViewController : UITableViewController <CustomIOS7AlertViewDelegate, UITableViewDataSource, UITableViewDelegate, NSURLConnectionDataDelegate, UIWebViewDelegate>
 {
     FMDatabase *ecoaDB;
     NSMutableArray *deviceList;
     BOOL isEditing;
+    CustomIOS7AlertView *splash;
 }
 
 @property (nonatomic, retain) UIBarButtonItem *rButton;

@@ -26,8 +26,11 @@ pjsua_call_id cid;
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(proximityStateChanged:) name:UIDeviceProximityStateDidChangeNotification object:nil];
+        
         // Custom initialization
-        cid = PJSUA_INVALID_ID;
+        /*cid = PJSUA_INVALID_ID;
         vid = false;
         
         remoteName = [[UILabel alloc]init];
@@ -76,7 +79,7 @@ pjsua_call_id cid;
         opendoor.layer.borderColor=[[UIColor grayColor]CGColor];
         [opendoor setImage:[UIImage imageNamed:@"opendoor"] forState:UIControlStateNormal];
         [opendoor setTag:107];
-        currentType = call_none;
+        currentType = call_none;*/
         
         //[self addSubview:remoteName];
         //[self addSubview:remoteView];
@@ -95,7 +98,6 @@ pjsua_call_id cid;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"callviewcontroll viewdidload");
     
     //CGRect rect = [[UIScreen mainScreen] bounds];
 
@@ -135,6 +137,9 @@ pjsua_call_id cid;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
+    NSLog(@"callviewcontroller viewwillappear");
+    [self.view addSubview:callView];
+    NSLog(@"views %@", self.view.subviews.description);
     /*NSLog(@"callviewcontrol: viewWillAppear");
     if (&ci != NULL) {
         pjsua_call_info info;
@@ -158,8 +163,21 @@ pjsua_call_id cid;
 
  */
 
+- (void) initialCallView {
+    NSLog(@"initialCallview");
+    //NSLog(@"w%f h%f", self.view.bounds.size.width, self.view.bounds.size.height);
+    if (callView == nil) {
+        NSLog(@"add callview");
+        callView = [[CallView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+        //callView = [CallView initWithFrame:self.view.bounds];
+        //[self.view addSubview:self.callView];
+    }
+}
+
 - (void) bringCallView:(pjsua_call_id)c_i withType:(int)type{
     NSLog(@"callviewcontrol: bring call view");
+    calltype = type;
+    cid = c_i;
     [self.view setBackgroundColor:[UIColor blackColor]];
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -181,7 +199,44 @@ pjsua_call_id cid;
     NSLog(@"dealloc");
 }
 
+-(void)viewWillLayoutSubviews {
+    //NSLog(@"viewwilllayoutsubviews called");
+    //NSLog(@"%f",callView.bounds.size.width);
+    //NSLog(@"%f",self.view.bounds.size.width);
+}
 
+-(void)viewDidLayoutSubviews {
+    NSLog(@"");
+    [callView removeFromSuperview];
+    callView = nil;
+    callView = [[CallView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.view addSubview:callView];
+    [self bringCallView:cid withType:calltype];
+}
+
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    NSLog(@"device rotation");
+    //[callView loadView:cid withType:calltype];
+}
+
+- (void)releaseCallView {
+}
+
+- (void) proximityStateChanged:(NSNotification *)notify {
+    if ([[UIDevice currentDevice]proximityState]==YES) {
+        NSLog(@"close to user");
+    }
+    else {
+        NSLog(@"leave from user");
+    }
+}
+
+/*- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+        return NO;
+    }
+    return YES;
+}*/
 
 /*
 #pragma mark - Navigation

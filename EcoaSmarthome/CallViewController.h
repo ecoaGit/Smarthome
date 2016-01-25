@@ -39,6 +39,6 @@
 
 
 - (void) bringCallView:(pjsua_call_id)ci withType:(int)type;
-
+- (void) initialCallView;
 
 @end

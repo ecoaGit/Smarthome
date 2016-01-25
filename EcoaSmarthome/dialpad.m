@@ -23,7 +23,7 @@ NSArray *arr;
     self = [super initWithFrame:frame];
     if (self) {
         NSString *device = [UIDevice currentDevice].model;
-        NSLog(@"%@", device);
+        //NSLog(@"%@", device);
         NSInteger font = 0;
         if ([device isEqualToString:@"iPhone"] || [device isEqualToString:@"iPhone5"]) {
             font = 20;
@@ -187,9 +187,18 @@ NSArray *arr;
             // add word
             UIButton *button = (UIButton *) sender;
             if (dtmfDial) {
-                const char *tex = [[input text] UTF8String];
+               // NSLog(@"send dtmf%@", [sender currentTitle]);
+                const char *tex = [[sender currentTitle] UTF8String];//[[input text] UTF8String];
                 pj_str_t digits = pj_str((char*)tex);
-                pjsua_call_dial_dtmf(cid, &digits);
+                //pj_str_t digits = [[intput text]pjString];
+                pj_status_t status = pjsua_call_dial_dtmf(cid, &digits);
+                if (status != PJ_SUCCESS) {
+                    NSLog(@"send dtmf failed %d", status);
+                }
+            
+                NSString *texx = [input text];
+                [input setText: [texx stringByAppendingString:[NSString stringWithFormat:@"%@", button.currentTitle]]];
+                //[_delegate dial_dtmf:button.currentTitle];
             }
             else {
                 NSString *texx = [input text];
@@ -268,6 +277,12 @@ NSArray *arr;
     cid = acid;
 }
 
+- (void) init_tonegen:(pjsua_call_id) call_id {
+    
+}
+- (void) deinit_tonegen:(pjsua_call_id) call_id{
+    
+}
 
 
 /*

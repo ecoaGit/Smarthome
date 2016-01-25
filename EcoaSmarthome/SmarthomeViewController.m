@@ -8,7 +8,7 @@
 
 #import "SmarthomeViewController.h"
 
-@interface SmarthomeViewController () <NSURLConnectionDataDelegate, NSURLConnectionDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface SmarthomeViewController () <NSURLConnectionDataDelegate, NSURLConnectionDelegate, UITableViewDataSource, UITableViewDelegate, UIWebViewDelegate>
 
 @end
 
@@ -26,6 +26,7 @@
     if (self) {
         // Custom initialization
         TAG = @"SmarthomeViewController";
+        
     }
     return self;
 }
@@ -57,6 +58,9 @@
 
 -(void) viewWillAppear:(BOOL)animated {
     NSLog(@"view will appear");
+    [[UIDevice currentDevice] setValue:
+     [NSNumber numberWithInteger: UIInterfaceOrientationLandscapeLeft]
+                                forKey:@"orientation"];
     // update serverList
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO];
@@ -198,7 +202,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"connect");
+    //NSLog(@"connect");
     AppDelegate *dele = (AppDelegate*)[[UIApplication sharedApplication]delegate];
     NSString *path;
     if ([dele isDeviceInLan]) {
@@ -209,7 +213,7 @@
         path = [NSString stringWithFormat:@"http://%@:%@", [[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:2], [[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:3]];
     }
     
-    NSLog(@"%@", path);
+    //NSLog(@"%@", path);
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSString *user_info = [ud stringForKey:[[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:6]];
@@ -234,30 +238,34 @@
     [self.navigationItem setHidesBackButton:YES];
     [self.navigationItem setRightBarButtonItem:close];
     
-    UIWebView *web = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    web.scalesPageToFit = YES;
-    [web setAutoresizesSubviews:YES];
-    [web setAutoresizingMask:(UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth)];
+    if (web == nil) {
+        web = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        web.scalesPageToFit = YES;
+        [web setAutoresizesSubviews:YES];
+        [web setAutoresizingMask:(UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth)];
+        web.delegate = self;
+    }
     [web loadRequest:request];
     [web setTag:55];
     [self.view addSubview:web];
     
-   
+
     [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
 }
 
 - (void) openWebView:(NSURL*)url {
+    NSLog(@"smarthomeviewcontroller openwebview");
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
-    UIWebView *web = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, 320, 480)];
-    web.scalesPageToFit = YES;
     [web loadRequest:request];
-    [self.view addSubview:web];
-    
-    [self.view bringSubviewToFront:web];
+    //[self.view addSubview:web];
+    //[web setHidden:NO];
+    //[self.view bringSubviewToFront:web];
 }
 
 - (IBAction) closeWebView:(id) sender {
+    //NSLog(@"closewebview");
+    [web loadHTMLString:@"about:blank" baseURL:nil];
     [[self.view viewWithTag:55]removeFromSuperview];
     [self.navigationItem setRightBarButtonItem:nil];
     [self.navigationItem setRightBarButtonItem:logout];
@@ -294,13 +302,56 @@
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    UIInterfaceOrientation *orient = [[UIApplication sharedApplication] statusBarOrientation];
+    /*UIInterfaceOrientation *orient = [[UIApplication sharedApplication] statusBarOrientation];
     if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
     
     }
     if (toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
         
+    }*/
+}
+
+- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    return YES;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    if (webView.isLoading)
+        return;
+    NSLog(@"webviewfinish");
+    [splash close];
+    splash = nil;
+    //[web setHidden:NO];
+
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    //if (web.isLoading)
+    //    return;
+    NSLog(@"webviewstart");
+    if (splash == nil) {
+    splash = [[CustomIOS7AlertView alloc]init];
+    UIDevice *dev = [UIDevice currentDevice];
+    if ([dev.model isEqualToString:@"iPhone"] || [dev.model isEqualToString:@"iPhone6"]) {
+        [splash setContainerView:[[LoadingView alloc]initWithFrame:CGRectMake(0, 0, 160, 100)]];
     }
+    else if ([dev.model isEqualToString:@"iPad"]) {
+        [splash setContainerView:[[LoadingView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)]];
+    }
+    [splash setOnButtonTouchUpInside:^(CustomIOS7AlertView *alertView, int buttonIndex) {
+        [alertView close];
+    }];
+    [splash show];
+    }
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    NSLog(@"webview should start");
+    
+    return true;
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     
 }
 

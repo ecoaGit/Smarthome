@@ -8,6 +8,14 @@
 
 #import "AppDelegate.h"
 
+/*@interface AppDelegate ()
+@property(nonatomic, strong) void (^registrationHandler)
+(NSString *registrationToken, NSError *error);
+@property(nonatomic, assign) BOOL connectedToGCM;
+@property(nonatomic, strong) NSString* registrationToken;
+@property(nonatomic, assign) BOOL subscribedToTopic;
+@end*/
+
 @implementation AppDelegate
 
 pjsua_call_setting call_setting;
@@ -15,7 +23,7 @@ pjsua_acc_id acc_id;
 Boolean incall;
 
 static bool _serviceIsStarted = NO;
-static pjsua_transport_id udp_id;
+//static pjsua_transport_id udp_id;
 static pjsua_transport_id tcp_id;
 //static UIBackgroundTaskIdentifier bgtask;
 CallViewController *callViewController;
@@ -32,6 +40,7 @@ NSThread *sipThread;
 //static pj_thread_t     *thread;
 static bool _sipthreadisStarted = NO;
 static bool inLan;
+static NSString *_gcmSenderID = @"1006004105041";
 
 
 struct pjsua_player_eof_data
@@ -60,31 +69,14 @@ struct pjsua_player_eof_data
     manager = [SessionManager getInstance];
     [manager getServerListFromCloud];
     
-   // UILocalNotification *notify = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
-    
-   /* if (notify) {
-        [self showNotification:notify.alertBody];
-        application.applicationIconBadgeNumber = 0;
-    }*/
-    application.applicationIconBadgeNumber = 0;
-    
-    //[application setKeepAliveTimeout:600 handler: ^{
-     //   [self performSelectorOnMainThread:@selector(checkAlarm)
-    //                           withObject:nil waitUntilDone:YES];
-    //}];
-    
-    //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleAlarm:) name:@"deviceData" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(callStateChange:) name:@"call_data" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(checkParameter:) name:@"check_param" object:nil];
-    //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleSip:) name:@"reg" object:nil];
     
     // initial variable
     incall = false;
     p_id = PJSUA_INVALID_ID;
     
-    _callView = [[CallView alloc]init];
     callViewController = [[CallViewController alloc]init];
-    
     [self.window makeKeyAndVisible];
     
     if (application.applicationState == UIApplicationStateBackground) {
@@ -101,6 +93,30 @@ struct pjsua_player_eof_data
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert| UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
     }
     
+    UIUserNotificationType allNotificationTypes =
+    (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+    UIUserNotificationSettings *settings =
+    [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    /*_registrationHandler = ^(NSString *registrationToken, NSError *error){
+        if (registrationToken != nil) {
+            weakSelf.registrationToken = registrationToken;
+            NSLog(@"Registration Token: %@", registrationToken);
+            [weakSelf subscribeToTopic];
+            NSDictionary *userInfo = @{@"registrationToken":registrationToken};
+            [[NSNotificationCenter defaultCenter] postNotificationName:weakSelf.registrationKey
+                                                                object:nil
+                                                              userInfo:userInfo];
+        } else {
+            NSLog(@"Registration to GCM failed with error: %@", error.localizedDescription);
+            NSDictionary *userInfo = @{@"error":error.localizedDescription};
+            [[NSNotificationCenter defaultCenter] postNotificationName:weakSelf.registrationKey
+                                                                object:nil
+                                                              userInfo:userInfo];
+        }
+    };*/
+    
     return YES;
 }
 
@@ -111,6 +127,10 @@ struct pjsua_player_eof_data
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    
+}
+
 - (BOOL) initializePjsua {
     pj_status_t status;
     
@@ -118,6 +138,7 @@ struct pjsua_player_eof_data
     // must call pjsua_create() first
     status = pjsua_create();
     if (status != PJ_SUCCESS) {
+        pjsua_destroy();
         return false;
     }
     
@@ -138,7 +159,7 @@ struct pjsua_player_eof_data
     cfg.cb.on_call_media_state = &on_call_media_state;
     cfg.cb.on_call_state = &on_call_state;
     cfg.cb.on_reg_state2 = &on_reg_state2;
-    
+
     pjsua_logging_config_default(&logg_cfg);
     logg_cfg.console_level = 4;
 
@@ -149,8 +170,8 @@ struct pjsua_player_eof_data
     else {
         pjsua_transport_config cfg;
         pjsua_transport_config_default(&cfg);
-        cfg.port = 5060;
-        
+        //cfg.port = 5060;
+        cfg.port = 0;
         pjsua_transport_config tcfg;
         pj_memcpy(&tcfg, &cfg, sizeof(tcfg));
         pjsua_transport_config_default(&tcfg);
@@ -164,9 +185,11 @@ struct pjsua_player_eof_data
             NSLog(@"transport create failed");
             return false;
         }
+        pj_status_t status = pjsua_start();
+        return (status == PJ_SUCCESS);
     }
     
-    return true;
+    //return true;
 }
 /*
 static void on_stopped (pj_bool_t restart, int argc, char** argv) {
@@ -186,16 +209,17 @@ static void on_config_init (pjsua_app_config *cfg) {
     _serviceIsStarted = true;
     if ([self initializePjsua]) {
         // initialize success
-        pj_status_t status;
-        status = pjsua_start();
-        if (status != PJ_SUCCESS) {
-            NSLog(@"failed when start");
-            pjsua_destroy();
-            _serviceIsStarted = false;
-        }
+        //pj_status_t status;
+        //status = pjsua_start();
+        //if (status != PJ_SUCCESS) {
+            //NSLog(@"failed when start");
+            //pjsua_destroy();
+            //_serviceIsStarted = false;
+        //}
     }
     else {
         NSLog(@"initialize failed");
+        pjsua_destroy();
         _serviceIsStarted = false;
     }
     
@@ -231,6 +255,8 @@ static void on_config_init (pjsua_app_config *cfg) {
         return;
     }
     
+    // update contact via response
+    acc_cfg.allow_contact_rewrite = PJ_TRUE;
     // 帳號
     acc_cfg.id = pj_str((char*)uid);
     //sip domain
@@ -238,15 +264,15 @@ static void on_config_init (pjsua_app_config *cfg) {
     acc_cfg.cred_count = 1;
     acc_cfg.cred_info[0].realm = pj_str("*");
     acc_cfg.cred_info[0].scheme = pj_str("digest");
-    acc_cfg.ka_interval = 20;
+    acc_cfg.ka_interval = 15;
     
     // video codec
     pj_pool_factory pf;
     pjmedia_codec_openh264_vid_init(NULL, &pf);
     
     // video device
-    //pjmedia_vid_dev_info vd;
-    //pj_status_t t =pjmedia_vid_dev_get_info(PJMEDIA_VID_DEFAULT_RENDER_DEV, &vd);
+    pjmedia_vid_dev_info vd;
+    pj_status_t t =pjmedia_vid_dev_get_info(PJMEDIA_VID_DEFAULT_RENDER_DEV, &vd);
     
     //if (t == PJ_SUCCESS) {
     //    NSLog(@"%d*********%@" , vd.id, [NSString stringWithCString:vd.name encoding:NSUTF8StringEncoding]);
@@ -282,7 +308,8 @@ static void on_config_init (pjsua_app_config *cfg) {
     }
     if (status != PJ_SUCCESS) {
         NSLog(@"adding account failed");
-        pjsua_destroy();
+        //pjsua_destroy();
+        //_serviceIsStarted = false;
         return;
     }
     else {
@@ -294,24 +321,17 @@ static void on_config_init (pjsua_app_config *cfg) {
     NSLog(@"re-register");
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud synchronize];
+    NSLog(@"%@",domain);
     //pjsua_acc_id acc_id;
     pj_status_t status;
     
     pjsua_acc_config acc_cfg;
     pjsua_acc_config_default(&acc_cfg);
+    
     NSString *username = [ud stringForKey:@"sipUsername"];
     NSString *password = [ud stringForKey:@"sipPassword"];
     const char *uid = [[NSString stringWithFormat:@"sip:%@@%@", username, domain]UTF8String];
     const char *reg_uri = [[NSString stringWithFormat:@"sip:%@@%@;transport=TCP", username, domain]UTF8String];
-    
-    /*if (pj_thread_is_registered()) {
-        NSLog(@"thread is registered");
-    }
-    else {
-        NSLog(@"thread is not registered");
-        //pj_thread_register(NULL, thread_desc, &thread);
-    }
-    //NSLog(@"sip:%@@%@", username, domain);*/
     
     status = pjsua_verify_sip_url((char*)reg_uri);
     if (status != PJ_SUCCESS) {
@@ -319,61 +339,64 @@ static void on_config_init (pjsua_app_config *cfg) {
         return;
     }
     
-    // 帳號
-    acc_cfg.id = pj_str((char*)uid);
-    //sip domain
-    acc_cfg.reg_uri = pj_str((char*)reg_uri);
-    acc_cfg.cred_count = 1;
-    acc_cfg.cred_info[0].realm = pj_str("*");
-    acc_cfg.cred_info[0].scheme = pj_str("digest");
-    acc_cfg.ka_interval = 20;
-    
-    // video codec
-    pj_pool_factory pf;
-    pjmedia_codec_openh264_vid_init(NULL, &pf);
-    
-    // video device
-    //pjmedia_vid_dev_info vd;
-    //pj_status_t t =pjmedia_vid_dev_get_info(PJMEDIA_VID_DEFAULT_RENDER_DEV, &vd);
-    
-    //if (t == PJ_SUCCESS) {
-    //    NSLog(@"%d*********%@" , vd.id, [NSString stringWithCString:vd.name encoding:NSUTF8StringEncoding]);
+    //pj_pool_t *pool = pjsua_pool_create("re-registerpool", 1024, 1024);
+    //status = pjsua_acc_get_config(acc_id, pool, &acc_cfg);
+    //if (status == PJ_SUCCESS) {
+        acc_cfg.reg_uri = pj_str((char*)reg_uri);
     //}
-    //acc_cfg.vid_cap_dev = vd.id;
-    //acc_cfg.vid_rend_dev = 0;
+    //else {
+        // update contact via response
+        acc_cfg.allow_contact_rewrite = PJ_TRUE;
+        // 帳號
+        acc_cfg.id = pj_str((char*)uid);
+        //sip domain
+        acc_cfg.reg_uri = pj_str((char*)reg_uri);
+        acc_cfg.cred_count = 1;
+        acc_cfg.cred_info[0].realm = pj_str("*");
+        acc_cfg.cred_info[0].scheme = pj_str("digest");
+        acc_cfg.ka_interval = 15;
+        
+        // video codec
+        pj_pool_factory pf;
+        pjmedia_codec_openh264_vid_init(NULL, &pf);
+        
+        // 帳號
+        acc_cfg.cred_info[0].username = pj_str((char *)[username UTF8String]);
+        // 密碼
+        acc_cfg.cred_info[0].data_type = PJSIP_CRED_DATA_PLAIN_PASSWD;
+        acc_cfg.cred_info[0].data = pj_str((char*)[password UTF8String]);
+        
+        // auto show receive video
+        acc_cfg.vid_in_auto_show = PJ_TRUE;
+        
+        
+        // auto transfer video
+        acc_cfg.vid_out_auto_transmit = PJ_TRUE;
+        
+        // 設定proxy
+        const char *proxy = [[NSString stringWithFormat:@"sip:%@;transport=TCP", domain]UTF8String];
+        acc_cfg.proxy[acc_cfg.proxy_cnt++] = pj_str((char*)proxy);
+        
+        //pjsua_acc_add_local(tcp_id, PJ_TRUE, &acc_id);
+    //}
     
-    // 帳號
-    acc_cfg.cred_info[0].username = pj_str((char *)[username UTF8String]);
-    // 密碼
-    acc_cfg.cred_info[0].data_type = PJSIP_CRED_DATA_PLAIN_PASSWD;
-    acc_cfg.cred_info[0].data = pj_str((char*)[password UTF8String]);
-    
-    // auto show receive video
-    acc_cfg.vid_in_auto_show = PJ_TRUE;
-    
-    
-    // auto transfer video
-    acc_cfg.vid_out_auto_transmit = PJ_TRUE;
-    
-    // 設定proxy
-    const char *proxy = [[NSString stringWithFormat:@"sip:%@;transport=TCP", domain]UTF8String];
-    acc_cfg.proxy[acc_cfg.proxy_cnt++] = pj_str((char*)proxy);
-    
-    //pjsua_acc_add_local(tcp_id, PJ_TRUE, &acc_id);
     
     if (pjsua_acc_is_valid(acc_id)) {
         pjsua_acc_modify(acc_id, &acc_cfg);
+        NSLog(@"set registration");
+        //pjsua_acc_set_registration(acc_id, PJ_TRUE);
     }
     else {
         status = pjsua_acc_add(&acc_cfg, PJ_TRUE, &acc_id);
     }
     if (status != PJ_SUCCESS) {
         NSLog(@"adding account failed");
-        pjsua_destroy();
+        //pjsua_destroy();
+        //_serviceIsStarted = false;
         return;
     }
     else {
-        
+    
     }
 }
 
@@ -387,7 +410,7 @@ static void on_config_init (pjsua_app_config *cfg) {
 }
 
 - (void)keepAlive {
-    NSLog(@"do keepalive");
+    //NSLog(@"do keepalive");
     /* Register this thread if not yet */
     if (!pj_thread_is_registered()) {
         static pj_thread_desc   thread_desc;
@@ -401,7 +424,8 @@ static void on_config_init (pjsua_app_config *cfg) {
      * too short, to avoid too many wakeups, because when there is any
      * response from server, app will be woken up again (see also #1482).
      */
-    pj_thread_sleep(7000);
+    //pj_thread_sleep(5000);
+  
 }
 
 - (void)checkAlarm {
@@ -480,28 +504,26 @@ static void on_config_init (pjsua_app_config *cfg) {
 - (void)setUpKeepAlive:(UIApplication *)application{
     /*[self performSelectorOnMainThread:@selector(keepAlive)
                            withObject:nil waitUntilDone:YES];*/
-    [application setKeepAliveTimeout:600 handler: ^{
-        NSLog(@"keep alive handler");
-        [self performSelectorOnMainThread:@selector(keepAlive)
-                               withObject:nil waitUntilDone:YES];
-    }];
+    
 }
          
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    NSLog(@"enter background mode");
-    /* Send keep alive manually at the beginning of background */
-    //bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
-    //    bgTask = UIBackgroundTaskInvalid;
-    //}];
+    // setup keep-alive
     [self performSelectorOnMainThread:@selector(keepAlive) withObject:nil waitUntilDone:YES];
-    [self setUpKeepAlive:application];
+    [application setKeepAliveTimeout:600 handler: ^{
+        //NSLog(@"keep alive handler");
+        [self performSelectorOnMainThread:@selector(keepAlive)
+                               withObject:nil waitUntilDone:YES];
+    }];
+    //[self setUpKeepAlive:application];
    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [application setApplicationIconBadgeNumber:0];
+    //[application cancelAllLocalNotifications]; 可能導致無法在背景執行
     NSLog(@"app is active");
 }
 
@@ -512,19 +534,19 @@ static void on_config_init (pjsua_app_config *cfg) {
     //[alertView show];
 }
 
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+/*- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     NSLog(@"didReceiveLocalNotification");
    if (notification) {
         
-        /*NSData *c_i = [notification.userInfo objectForKey:@"call_id"];
+        NSData *c_i = [notification.userInfo objectForKey:@"call_id"];
         pjsua_call_id temp;
     
         [c_i getBytes:&temp length:sizeof(temp)];
         pjsua_call_info info;
-        pjsua_call_get_info(temp, &info);*/
+        pjsua_call_get_info(temp, &info);
        
     }
-}
+}*/
 
 
 // this function triggers by incoming call
@@ -587,6 +609,7 @@ static void on_incoming_call(pjsua_acc_id acc_id, pjsua_call_id call_id, pjsip_r
     //auto answer
     //pjsua_call_answer(call_id, 200, NULL, NULL);
 }
+
 
 static PJ_DEF(pj_status_t) on_pjsua_wav_file_end_callback(pjmedia_port* media_port, void* args)
 {
@@ -726,25 +749,27 @@ static void on_call_state(pjsua_call_id call_id, pjsip_event *e) {
                 pjsua_player_destroy(p_id);
                 p_id = PJSUA_INVALID_ID;
             }
-            if ([_callView superview] != nil) {
+            /*if ([_callView superview] != nil) {
                 NSLog(@"added");
-            }
+            }*/
             //[_callView loadView:c_i withType:state];
             //[_callView removeFromSuperview];
             incall = false;
             [callViewController bringCallView:call_id withType:state];
             //[callViewController dismissViewControllerAnimated:YES completion:nil];
+            [[UIDevice currentDevice]setProximityMonitoringEnabled:NO];
             break;
         case PJSIP_INV_STATE_CONFIRMED:
             break;
         case PJSIP_INV_STATE_CONNECTING:
             // do something in here
-            
+            [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];
             if (p_id != PJSUA_INVALID_ID) {
                 pjsua_player_destroy(p_id);
                 p_id = PJSUA_INVALID_ID;
             }
-            [_callView loadView:call_id withType:state];
+            [callViewController bringCallView:call_id withType:state];
+            //[_callView loadView:call_id withType:state];
             break;
             //case PJSIP_INV_STATE_CONNECTING:
         case PJSIP_INV_STATE_INCOMING:
@@ -756,11 +781,13 @@ static void on_call_state(pjsua_call_id call_id, pjsip_event *e) {
             NSLog(@"early");
             
             if (!incall) {
-                if ([_callView superview] == nil){
+                /*if ([_callView superview] == nil){
+                    NSLog(@"add callView");
                     [_callView setHidden:NO];
                     [callViewController.view addSubview:_callView];
                     callViewController.callView = _callView;
-                }
+                }*/
+                [callViewController initialCallView];
                 
                 UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
                 //NSLog(@"%@",[root description]);
@@ -777,8 +804,6 @@ static void on_call_state(pjsua_call_id call_id, pjsip_event *e) {
             }
             break;
     }
-    //NSDictionary *callInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:call_id], @"call_id", [NSNumber numberWithInt:ci.state], @"call_state" , nil];
-    //[[NSNotificationCenter defaultCenter]postNotificationName:@"call_data" object:nil userInfo:callInfo];
 }
 
 static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
@@ -789,7 +814,6 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
     else {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reg" object:@"failed"];
     }
-    
 }
 
 
@@ -806,6 +830,9 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
             NSLog(@"didn't make it");
             return;
         }
+    }
+    else {
+        NSLog(@"pjsua not running");
     }
 }
 
@@ -903,7 +930,8 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
             break;
         case PJSIP_INV_STATE_CONFIRMED:
             // do something in here
-            [_callView loadView:c_i withType:state];
+            [callViewController bringCallView:c_i withType:state];
+            //[_callView loadView:c_i withType:state];
             break;
         //case PJSIP_INV_STATE_CONNECTING:
         case PJSIP_INV_STATE_CALLING:
@@ -913,19 +941,20 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
             break;
         case PJSIP_INV_STATE_EARLY:
             NSLog(@"early");
-        
             if (!incall) {
-                if ([_callView superview] == nil){
-                    [_callView setHidden:NO];
-                    [callViewController.view addSubview:_callView];
-                    callViewController.callView = _callView;
-                }
+                //if (_callView == nil){
+                    //[_callView initWithFrame:];
+                    //[_callView setHidden:NO];
+                    //[callViewController.view addSubview:_callView];
+                    //callViewController.callView = _callView;
+               // }
+                [callViewController initialCallView];
                 
                 UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
-                NSLog(@"%@",[root description]);
+                //NSLog(@"%@",[root description]);
                 if (root.presentedViewController) {
                     root = root.presentedViewController;
-                    NSLog(@"%@", root.description);
+                    //NSLog(@"%@", root.description);
                 }
                 //[callViewController isFirstResponder];
                 [callViewController bringCallView:c_i withType:state];
@@ -943,10 +972,10 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
     
     const unsigned *tokenBytes = [deviceToken bytes];
     NSString *iosDeviceToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x", ntohl(tokenBytes[0]), ntohl(tokenBytes[1]), ntohl(tokenBytes[2]),ntohl(tokenBytes[3]), ntohl(tokenBytes[4]), ntohl(tokenBytes[5]), ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
-    NSLog(@"device token %@", iosDeviceToken);
+    //NSLog(@"device token %@", iosDeviceToken);
     // send provision
     GCDAsyncSocket *t_socket = [[GCDAsyncSocket alloc]initWithSocketQueue:dispatch_queue_create("socket_queue", NULL)];
-    NSString *cloudserver = @"http://ecoacloud.com";
+    NSString *cloudserver = @"http://ecoacloud.com/cloudserver/sendToken";
     [t_socket connectToHost:cloudserver onPort:80 error:NULL];
     [t_socket writeData:deviceToken withTimeout:10 tag:WRITE_DEVICETOKEN];
     [t_socket disconnectAfterWriting];
@@ -973,14 +1002,16 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
 
 -(void) handleSip/*:(NSNotification *)notify*/{
     if (doCheckSip && !_sipthreadisStarted) {
+        NSLog(@"situ 1");
         sipThread = [[NSThread alloc]initWithTarget:self selector:@selector(startSipThread) object:nil];
         [sipThread start];
     }
     else if (doCheckSip && _sipthreadisStarted) {
-        
+        NSLog(@"situ 2");
     }
-    else {
+    else if (!doCheckSip && _sipthreadisStarted){
         // stop sip thread after 5 secs
+        NSLog(@"situ 3");
         [self performSelector:@selector(stopSipThread) withObject:nil afterDelay:5.0f];
     }
 }
@@ -991,10 +1022,10 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
         static pj_thread_t     *thread;
         pj_thread_register("checkregthread", thread_desc, &thread);
     }
-    [NSThread sleepForTimeInterval:1];
+    //[NSThread sleepForTimeInterval:1];
     _sipthreadisStarted = YES;
     while (doCheckSip) {
-        //NSLog(@"check sip domain");
+        NSLog(@"check sip domain");
         [manager login];
         [manager getDeviceList];
         NSMutableArray *array = [manager getDeviceList:0];
@@ -1023,12 +1054,113 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
             old_reg = [old_reg substringFromIndex:[old_reg rangeOfString:@"@"].location +1];
             //NSLog(@"%@", old_reg);
             if (![sip_reg isEqualToString:old_reg]) {
+                NSLog(@"refresh reg");
                 [self re_registeration:sip_reg];
             }
         }
-        [NSThread sleepForTimeInterval:5];
+        [NSThread sleepForTimeInterval:20];
     }
 }
+
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    
+}
+
+// [START receive_apns_token]
+/*- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    // [END receive_apns_token]
+    // [START get_gcm_reg_token]
+    // Create a config and set a delegate that implements the GGLInstaceIDDelegate protocol.
+    GGLInstanceIDConfig *instanceIDConfig = [GGLInstanceIDConfig defaultConfig];
+    instanceIDConfig.delegate = self;
+    // Start the GGLInstanceID shared instance with the that config and request a registration
+    // token to enable reception of notifications
+    [[GGLInstanceID sharedInstance] startWithConfig:instanceIDConfig];
+    _registrationOptions = @{kGGLInstanceIDRegisterAPNSOption:deviceToken,
+                             kGGLInstanceIDAPNSServerTypeSandboxOption:@YES};
+    [[GGLInstanceID sharedInstance] tokenWithAuthorizedEntity:_gcmSenderID
+                                                        scope:kGGLInstanceIDScopeGCM
+                                                      options:_registrationOptions
+                                                      handler:_registrationHandler];
+    // [END get_gcm_reg_token]
+}*/
+
+
+/*
+struct my_call_data
+{
+    pj_pool_t          *pool;
+    pjmedia_port       *tonegen;
+    pjsua_conf_port_id  toneslot;
+};
+
+struct my_call_data *call_init_tonegen(pjsua_call_id call_id)
+{
+    pj_pool_t *pool;
+    struct my_call_data *cd;
+    pjsua_call_info ci;
+    
+    pool = pjsua_pool_create("mycall", 512, 512);
+    cd = PJ_POOL_ZALLOC_T(pool, struct my_call_data);
+    cd->pool = pool;
+    
+    pjmedia_tonegen_create(cd->pool, 8000, 1, 160, 16, 0, &cd->tonegen);
+    pjsua_conf_add_port(cd->pool, cd->tonegen, &cd->toneslot);
+    
+    pjsua_call_get_info(call_id, &ci);
+    pjsua_conf_connect(cd->toneslot, ci.conf_slot);
+    
+    pjsua_call_set_user_data(call_id, (void*) cd);
+    
+    return cd;
+}
+
+void call_play_digit(pjsua_call_id call_id, const char *digits)
+{
+    pjmedia_tone_digit d[16];
+    unsigned i;
+    unsigned count = strlen(digits);
+    struct my_call_data *cd;
+    
+    cd = (struct my_call_data*) pjsua_call_get_user_data(call_id);
+    if (!cd)
+        cd = call_init_tonegen(call_id);
+    
+    if (count > PJ_ARRAY_SIZE(d))
+        count = PJ_ARRAY_SIZE(d);
+    
+    pj_bzero(d, sizeof(d));
+    for (i=0; i<count; ++i) {
+        d[i].digit = digits[i];
+        d[i].on_msec = 100;
+        d[i].off_msec = 200;
+        d[i].volume = 0;
+    }
+    
+    pjmedia_tonegen_play_digits(cd->tonegen, count, d, 0);
+}
+
+void call_deinit_tonegen(pjsua_call_id call_id)
+{
+    struct my_call_data *cd;
+    
+    cd = (struct my_call_data*) pjsua_call_get_user_data(call_id);
+    if (!cd)
+        return;
+    
+    pjsua_conf_remove_port(cd->toneslot);
+    pjmedia_port_destroy(cd->tonegen);
+    pj_pool_release(cd->pool);
+    
+    pjsua_call_set_user_data(call_id, NULL);
+}
+
+- (void) playdigits:(pjsua_call_id) call_id withDigit:(NSString *)str{
+    const char *digits = [str UTF8String];
+    call_play_digit(call_id, digits);
+}*/
 
 - (void) stopSipThread {
     [sipThread cancel];

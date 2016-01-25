@@ -112,6 +112,7 @@
 }
 
 - (void) openWebView:(NSURL*)url {
+    NSLog(@"deviceDataview openwebView");
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     UIWebView *web = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, 320, 480)];
