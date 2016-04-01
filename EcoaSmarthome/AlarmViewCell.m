@@ -10,6 +10,10 @@
 
 @implementation AlarmViewCell
 
+@synthesize alarmTitle;
+@synthesize alarmMessage;
+@synthesize alarmstate;
+
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

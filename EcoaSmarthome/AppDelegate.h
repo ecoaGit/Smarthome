@@ -11,6 +11,7 @@
 #import "CallViewController.h"
 #import "SessionManager.h"
 #import "CallView.h"
+#import "AlarmHelper.h"
 
 #import <GCDAsyncSocket.h>
 #import <pjsua.h>
@@ -18,7 +19,7 @@
 //#import <Google/CloudMessaging.h>
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, GCDAsyncSocketDelegate/*, GGLInstanceIDDelegate, GCMReceiverDelegate*/>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, GCDAsyncSocketDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate/*, GGLInstanceIDDelegate, GCMReceiverDelegate*/>
 {
     SessionManager *manager;
     NSArray *callArray; // use this for multiple call control

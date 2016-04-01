@@ -51,7 +51,7 @@
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil]];
     [self.navigationItem setHidesBackButton:NO];
-    
+    [self sendToken];
     ccount = 0;
     
 }
@@ -248,6 +248,7 @@
     [web loadRequest:request];
     [web setTag:55];
     [self.view addSubview:web];
+  
     
 
     [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
@@ -333,10 +334,10 @@
     splash = [[CustomIOS7AlertView alloc]init];
     UIDevice *dev = [UIDevice currentDevice];
     if ([dev.model isEqualToString:@"iPhone"] || [dev.model isEqualToString:@"iPhone6"]) {
-        [splash setContainerView:[[LoadingView alloc]initWithFrame:CGRectMake(0, 0, 160, 100)]];
+        [splash setContainerView:[[LoadingView alloc]initWithFrame:CGRectMake(0, 0, 100, 70)]];
     }
     else if ([dev.model isEqualToString:@"iPad"]) {
-        [splash setContainerView:[[LoadingView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)]];
+        [splash setContainerView:[[LoadingView alloc] initWithFrame:CGRectMake(0, 0, 160, 160)]];
     }
     [splash setOnButtonTouchUpInside:^(CustomIOS7AlertView *alertView, int buttonIndex) {
         [alertView close];
@@ -353,6 +354,29 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     
+}
+
+- (void) sendToken{
+    NSUserDefaults *def=[NSUserDefaults standardUserDefaults];
+    NSString *token=[def stringForKey:@"APNS_TOKEN"];
+    NSString *username=[def stringForKey:@"cloudUsername"];
+    NSString *type=@"iOS";
+    
+    NSDictionary *js_dic = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            token,@"token",
+                            username, @"username",
+                            type, @"type", nil];
+    
+    NSError *error;
+    NSData *post_data = [NSJSONSerialization dataWithJSONObject:js_dic options:0 error:&error];
+    NSURL *URL = [NSURL URLWithString:@"http://ecoacloud.com:80/cloudserver/sendtoken"];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:URL];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"%d", post_data.length] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:post_data];
+    NSURLConnection *connect = [[NSURLConnection alloc]initWithRequest:request delegate:self];
 }
 
 /*

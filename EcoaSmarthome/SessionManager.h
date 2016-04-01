@@ -27,5 +27,4 @@
 - (NSMutableArray *) getDeviceList:(int) n;
 - (BOOL) getServerListFromCloud;
 - (BOOL) useBookmark;
-- (NSString *) getSelfIp;
 @end

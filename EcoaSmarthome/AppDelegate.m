@@ -93,12 +93,21 @@ struct pjsua_player_eof_data
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert| UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
     }
     
-    UIUserNotificationType allNotificationTypes =
+    
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationSettings* notificationSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    }
+    
+   /* UIUserNotificationType allNotificationTypes =
     (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
     UIUserNotificationSettings *settings =
     [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];*/
     /*_registrationHandler = ^(NSString *registrationToken, NSError *error){
         if (registrationToken != nil) {
             weakSelf.registrationToken = registrationToken;
@@ -272,7 +281,7 @@ static void on_config_init (pjsua_app_config *cfg) {
     
     // video device
     pjmedia_vid_dev_info vd;
-    pj_status_t t =pjmedia_vid_dev_get_info(PJMEDIA_VID_DEFAULT_RENDER_DEV, &vd);
+    //pj_status_t t =pjmedia_vid_dev_get_info(PJMEDIA_VID_DEFAULT_RENDER_DEV, &vd);
     
     //if (t == PJ_SUCCESS) {
     //    NSLog(@"%d*********%@" , vd.id, [NSString stringWithCString:vd.name encoding:NSUTF8StringEncoding]);
@@ -663,34 +672,22 @@ static void on_call_media_state(pjsua_call_id call_id) {
     if (sta==PJSUA_CALL_MEDIA_NONE) {
         NSLog(@"media none");
     }
-    
-    /**
-     * The media is active
-     */
+    //The media is active
     else if (sta ==PJSUA_CALL_MEDIA_ACTIVE){
         NSLog(@"media active");
     }
-    /**
-     * The media is currently put on hold by local endpoint
-     */
+    //The media is currently put on hold by local endpoint
     else if (sta==PJSUA_CALL_MEDIA_LOCAL_HOLD){
         NSLog(@"media hold local");
     }
-    
-    /**
-     * The media is currently put on hold by remote endpoint
-     */
+    //The media is currently put on hold by remote endpoint
     else if (sta==PJSUA_CALL_MEDIA_REMOTE_HOLD){
         NSLog(@"media hold remote");
     }
-    
-    /**
-     * The media has reported error (e.g. ICE negotiation)
-     */
+    //The media has reported error (e.g. ICE negotiation)
     else if (sta ==PJSUA_CALL_MEDIA_ERROR){
         NSLog(@"media error");
     }
-    
     pjmedia_vid_dev_index pjd;
     NSLog(@"get vid stream idx %d", vid_idx);
     if (vid_idx >= 0) {
@@ -866,10 +863,6 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
     NSLog(@"delegate: receive data");
     if (data != nil) {
         if (tag == READ_HEADER) {
-            
-            //NSMutableData *dd;
-            //[sock readDataWithTimeout:15 buffer:dd bufferOffset:0 tag:READ_HEADER];
-            //NSLog(@"%@", [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
             NSString *length = [self parseHTTPHeader:data];
             NSLog(@"%@bytes", length);
             [sock readDataToLength:[length integerValue] withTimeout:15 tag:READ_CONTENT];
@@ -877,7 +870,6 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
         else if (tag == READ_CONTENT) {
             //NSLog(@"content");
             //NSLog(@"content %@", [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
-            
         }
     }
 }
@@ -972,13 +964,37 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
     
     const unsigned *tokenBytes = [deviceToken bytes];
     NSString *iosDeviceToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x", ntohl(tokenBytes[0]), ntohl(tokenBytes[1]), ntohl(tokenBytes[2]),ntohl(tokenBytes[3]), ntohl(tokenBytes[4]), ntohl(tokenBytes[5]), ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
-    //NSLog(@"device token %@", iosDeviceToken);
+    NSLog(@"device token %@", iosDeviceToken);
     // send provision
-    GCDAsyncSocket *t_socket = [[GCDAsyncSocket alloc]initWithSocketQueue:dispatch_queue_create("socket_queue", NULL)];
-    NSString *cloudserver = @"http://ecoacloud.com/cloudserver/sendToken";
+  /*  GCDAsyncSocket *t_socket = [[GCDAsyncSocket alloc]initWithSocketQueue:dispatch_queue_create("socket_queue", NULL)];
+    NSString *sendData = @"POST / cloudserver/sendToken HTTP/1.1 \r\n"
+                            "Host: http://ecoacloud.com \r\n"
+                            "User-Agent:application/json"
+                            "";
+    NSString *cloudserver = @"http://ecoacloud.com";
     [t_socket connectToHost:cloudserver onPort:80 error:NULL];
-    [t_socket writeData:deviceToken withTimeout:10 tag:WRITE_DEVICETOKEN];
-    [t_socket disconnectAfterWriting];
+    [t_socket writeData:@"@POST" withTimeout:10 tag:WRITE_DEVICETOKEN];
+    [t_socket disconnectAfterWriting];*/
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:iosDeviceToken forKey:@"APNS_TOKEN"];
+    NSString *username = [userDefaults stringForKey:@"cloudUsername"];
+    NSDictionary *js_dic = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            iosDeviceToken,@"token",
+                            username, @"username",
+                            @"iOS", @"type", nil];
+    
+    NSError *error;
+    NSData *post_data = [NSJSONSerialization dataWithJSONObject:js_dic options:0 error:&error];
+    NSURL *URL = [NSURL URLWithString:@"http://ecoacloud.com:80/cloudserver/sendtoken"];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:URL];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"%d", post_data.length] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:post_data];
+    NSURLConnection *connect = [[NSURLConnection alloc]initWithRequest:request delegate:self];
+    
+    
 }
 
 -(void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
@@ -992,6 +1008,56 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
 }*/
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    
+    NSLog(@"didReceiveRemoteNotification");
+    
+    if (userInfo != NULL) {
+        NSLog(@"userinfo: %@", userInfo.description);
+        if ([userInfo objectForKey:@"ecoa_alert"] != nil) {
+            //NSString *content;
+            AlarmHelper *ah = [[AlarmHelper alloc]init];
+            NSData *nd = [[userInfo objectForKey:@"ecoa_alert"] dataUsingEncoding:NSUTF8StringEncoding];
+            NSError *jserror;
+            NSDictionary* jsonObj = [NSJSONSerialization JSONObjectWithData:nd options:NSJSONReadingMutableContainers error:&jserror];
+            int mode = 0;
+            if ([[jsonObj objectForKey:@"type"] isEqualToString:@"IPCAM_ALARM"]) {
+                mode = 1;
+            }
+            if (mode == 0) {
+                [ah saveAlarm:[jsonObj objectForKey:@"message"] withTime:[[jsonObj objectForKey:@"time"] stringByReplacingOccurrencesOfString:@"/" withString:@"-"] withPip:[jsonObj objectForKey:@"ip"] withMode:mode];
+                [ah closeDatabase];
+            }
+            else if (mode == 1) {
+                NSLog(@"save ipcam alarm");
+                NSString *content = [NSString stringWithFormat:@"%@?ip=%@&user=%@&pswd=%@&mode=%@&tm=", [jsonObj objectForKey:@"url"], [jsonObj objectForKey:@"rip"], [jsonObj objectForKey:@"usr"], [jsonObj objectForKey:@"pswd"], [jsonObj objectForKey:@"mode"]];
+                [ah saveIPCamAlarm:[jsonObj objectForKey:@"id"] time:[[jsonObj objectForKey:@"tm"] stringByReplacingOccurrencesOfString:@"/" withString:@"-"] pip:[NSString stringWithFormat:@"%@:%@",[jsonObj objectForKey:@"ip"], [jsonObj objectForKey:@"port"]] mode:mode content:content];
+                // show cam event
+            }
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"alarm" object:@"refresh"];
+            UILocalNotification *alert = [[UILocalNotification alloc] init];
+            if (alert) {
+                alert.timeZone = [NSTimeZone defaultTimeZone];
+                alert.repeatInterval = 0;
+                
+                alert.alertBody = @"remote notification test";
+                /* This action just brings the app to the FG, it doesn't
+                 * automatically answer the call (unless you specify the
+                 * --auto-answer option).
+                 */
+                alert.alertAction = @"Active app";
+                alert.applicationIconBadgeNumber = 1;
+                alert.soundName = UILocalNotificationDefaultSoundName;
+              
+                NSLog(@"show localnotification");
+                [[UIApplication sharedApplication] presentLocalNotificationNow:alert];
+            }
+
+        }
+        
+    }
+    else {
+        NSLog(@"userinfo is NULL");
+    }
     
     pjsua_acc_set_registration(acc_id, PJ_TRUE);
     UILocalNotification *notification = [[UILocalNotification alloc] init];
@@ -1033,7 +1099,7 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
             //NSLog(@"%@",[[array objectAtIndex:0] description]);
             NSString *ip, *sip_reg;
              NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-            inLan = [self isSameNetwork:[manager getSelfIp] device:[[array objectAtIndex:0] objectAtIndex:2] mask:@"255.255.255.0"];
+            inLan = [self isSameNetwork:[def stringForKey:@"selfIp"] device:[[array objectAtIndex:0] objectAtIndex:2] mask:@"255.255.255.0"];
             if (!inLan) {
                 //NSLog(@"wan");
                 ip = [[array objectAtIndex:0] objectAtIndex:2];
@@ -1088,79 +1154,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 }*/
 
 
-/*
-struct my_call_data
-{
-    pj_pool_t          *pool;
-    pjmedia_port       *tonegen;
-    pjsua_conf_port_id  toneslot;
-};
 
-struct my_call_data *call_init_tonegen(pjsua_call_id call_id)
-{
-    pj_pool_t *pool;
-    struct my_call_data *cd;
-    pjsua_call_info ci;
-    
-    pool = pjsua_pool_create("mycall", 512, 512);
-    cd = PJ_POOL_ZALLOC_T(pool, struct my_call_data);
-    cd->pool = pool;
-    
-    pjmedia_tonegen_create(cd->pool, 8000, 1, 160, 16, 0, &cd->tonegen);
-    pjsua_conf_add_port(cd->pool, cd->tonegen, &cd->toneslot);
-    
-    pjsua_call_get_info(call_id, &ci);
-    pjsua_conf_connect(cd->toneslot, ci.conf_slot);
-    
-    pjsua_call_set_user_data(call_id, (void*) cd);
-    
-    return cd;
-}
-
-void call_play_digit(pjsua_call_id call_id, const char *digits)
-{
-    pjmedia_tone_digit d[16];
-    unsigned i;
-    unsigned count = strlen(digits);
-    struct my_call_data *cd;
-    
-    cd = (struct my_call_data*) pjsua_call_get_user_data(call_id);
-    if (!cd)
-        cd = call_init_tonegen(call_id);
-    
-    if (count > PJ_ARRAY_SIZE(d))
-        count = PJ_ARRAY_SIZE(d);
-    
-    pj_bzero(d, sizeof(d));
-    for (i=0; i<count; ++i) {
-        d[i].digit = digits[i];
-        d[i].on_msec = 100;
-        d[i].off_msec = 200;
-        d[i].volume = 0;
-    }
-    
-    pjmedia_tonegen_play_digits(cd->tonegen, count, d, 0);
-}
-
-void call_deinit_tonegen(pjsua_call_id call_id)
-{
-    struct my_call_data *cd;
-    
-    cd = (struct my_call_data*) pjsua_call_get_user_data(call_id);
-    if (!cd)
-        return;
-    
-    pjsua_conf_remove_port(cd->toneslot);
-    pjmedia_port_destroy(cd->tonegen);
-    pj_pool_release(cd->pool);
-    
-    pjsua_call_set_user_data(call_id, NULL);
-}
-
-- (void) playdigits:(pjsua_call_id) call_id withDigit:(NSString *)str{
-    const char *digits = [str UTF8String];
-    call_play_digit(call_id, digits);
-}*/
 
 - (void) stopSipThread {
     [sipThread cancel];
@@ -1171,4 +1165,12 @@ void call_deinit_tonegen(pjsua_call_id call_id)
     return inLan;
 }
 
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    // url connection error
+    NSLog(@"urlconnection error %@",[error localizedDescription]);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    NSLog(@"urlconnection response %@", [response description] );
+}
 @end

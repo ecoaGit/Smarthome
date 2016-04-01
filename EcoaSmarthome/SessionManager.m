@@ -351,9 +351,6 @@ static SessionManager *instance = nil;
     return deviceList;
 }
 
-- (NSString *) getSelfIp {
-    return selfIp; }
-
 - (void) getDeviceList {
     //NSLog(@"getdevicelist");
     NSString *url;
@@ -361,7 +358,9 @@ static SessionManager *instance = nil;
     for (int i = 0; i < serverList.count; i++) {
         NSString *sess = [[serverList objectAtIndex:i]objectAtIndex:2];
         if (![sess isEqualToString:@""]){
-            url = [[serverList objectAtIndex:i]objectAtIndex:0];
+            if ([[[serverList objectAtIndex:i]objectAtIndex:0]isKindOfClass:[NSString class]]) {
+                url = [[serverList objectAtIndex:i]objectAtIndex:0];
+            }
             url = [url stringByAppendingString:[NSString stringWithFormat:@"./my_devices?tm=%f", [[NSDate date]timeIntervalSince1970] * 1000]];
             
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLCacheStorageNotAllowed timeoutInterval:15];
@@ -386,6 +385,7 @@ static SessionManager *instance = nil;
                             // error
                             NSString *error = [nsJson objectForKey:@"chkMsg"];
                             NSLog(@"error message %@", error);
+                            return ;
                         }
                         else if ([nsJson objectForKey:@"list"] != nil){
                             int count = [[nsJson objectForKey:@"list_count"]intValue];
@@ -395,12 +395,10 @@ static SessionManager *instance = nil;
                             NSMutableArray *temp = [NSMutableArray arrayWithCapacity:count];
                             for (int i = 0; i < count; i++) {
                                 NSDictionary *ns = [list objectAtIndex:i];
-                                
                                 NSString *decodeUTF8 = [ns objectForKey:@"alias"];
                                 decodeUTF8 = [decodeUTF8 stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                                 NSData *decode64 = [[NSData alloc]initWithBase64EncodedString:decodeUTF8 options:0];
                                 NSString *alias = [[NSString alloc]initWithData:decode64 encoding:NSUTF8StringEncoding];
-            
                                 NSString *state = [ns objectForKey:@"state"];
                                 NSString *wan_ip = [ns objectForKey:@"wan_ip"];
                                 NSString *wan_port = [ns objectForKey:@"wan_port"];
@@ -412,13 +410,15 @@ static SessionManager *instance = nil;
                                 NSArray *arr = [[NSArray alloc]initWithObjects:alias, state, wan_ip, wan_port, lan_ip, lan_port, did, update, nil];
                                 [temp addObject:arr];
                             }
-                            NSLog(@"temp length%lu", (unsigned long)temp.count);
+                            //NSLog(@"temp length%lu", (unsigned long)temp.count);
                             if (temp != nil && selfip != nil)
                             {
                                 deviceList = NULL;
                                 deviceList = temp;
-                                selfIp = selfip;
-                                NSDictionary *nd = [NSDictionary dictionaryWithObjectsAndKeys:temp, @"list", selfip, @"selfIp", nil];
+                                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                                [userDefaults setObject:selfip forKey:@"selfIp"];
+                                [userDefaults synchronize];
+                                NSDictionary *nd =[NSDictionary dictionaryWithObjectsAndKeys:temp, @"list", selfip, @"selfIp", nil];
                                 
                                 [[NSNotificationCenter defaultCenter]postNotificationName:@"deviceData" object:@"cloud" userInfo:nd];
                             }

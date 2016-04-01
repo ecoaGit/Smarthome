@@ -10,8 +10,8 @@
 
 @interface AlarmViewCell : UITableViewCell
 
-@property (nonatomic, retain) UIImageView *alarmstate;
-@property (nonatomic, retain) UILabel *alarmTitle;
-@property (nonatomic, retain) UILabel *alarmMessage;
+@property (nonatomic, retain) IBOutlet UIImageView *alarmstate;
+@property (nonatomic, retain) IBOutlet UILabel *alarmTitle;
+@property (nonatomic, retain) IBOutlet UILabel *alarmMessage;
 
 @end

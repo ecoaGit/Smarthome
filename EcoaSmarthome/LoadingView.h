@@ -11,6 +11,7 @@
 @interface LoadingView : UIView
 {
     UITextView *message;
+    UIActivityIndicatorView *progress;
 }
 
 @end

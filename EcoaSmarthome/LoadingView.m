@@ -21,13 +21,19 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        message = [[UITextView alloc]initWithFrame:CGRectMake(0, (self.frame.size.height/2)-30, self.frame.size.width, 60)];
-        [message setFont:[UIFont boldSystemFontOfSize:30]];
+        message = [[UITextView alloc]initWithFrame:CGRectMake(0, (self.frame.size.height/2)-40, self.frame.size.width, 40)];
+        [message setFont:[UIFont boldSystemFontOfSize:25]];
         [message setTextColor:[UIColor blueColor]];
         [message setText:@"Loading"];
         [message setTextAlignment:NSTextAlignmentCenter];
         [message setBackgroundColor:[UIColor clearColor]];
+        
+        progress = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        progress.center = CGPointMake((self.frame.size.width)/2, (self.frame.size.height/2)+10);
+        [progress startAnimating];
+        progress.transform = CGAffineTransformMakeScale(1.2f, 1.2f);
         [self addSubview:message];
+        [self addSubview:progress];
     }
     return self;
 }

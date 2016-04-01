@@ -18,9 +18,11 @@
 		180E78861952C6620020953F /* CallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E78851952C6620020953F /* CallView.m */; };
 		180E78891952C8D10020953F /* dialpad.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E78881952C8D10020953F /* dialpad.m */; };
 		18101E3F1940628F0064A117 /* BookmarkViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18101E3E1940628F0064A117 /* BookmarkViewCell.m */; };
+		18115C781CACB0A2004C0F59 /* HIstoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18115C771CACB0A2004C0F59 /* HIstoryViewController.m */; };
 		1815F91C1989CB7D008AE7A3 /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1815F91B1989CB7D008AE7A3 /* MainController.m */; };
 		18166B3019416B5100A9FCE9 /* SmarthomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18166B2F19416B5100A9FCE9 /* SmarthomeViewController.m */; };
 		18166B3319416E6400A9FCE9 /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18166B3219416E6400A9FCE9 /* CustomIOS7AlertView.m */; };
+		182481DB1C8E6A2E00FB9766 /* AlarmHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 182481DA1C8E6A2E00FB9766 /* AlarmHelper.m */; };
 		183DAED3192AE77E0061AB7C /* SipPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183DAED2192AE77E0061AB7C /* SipPhoneViewController.m */; };
 		183FC61219234606000070F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183FC61119234606000070F1 /* Foundation.framework */; };
 		183FC61419234606000070F1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183FC61319234606000070F1 /* CoreGraphics.framework */; };
@@ -49,6 +51,7 @@
 		186F0DA9195191150005B487 /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186F0DA8195191150005B487 /* CallViewController.m */; };
 		187C76A11A5A870C00C81805 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187C76A01A5A870C00C81805 /* CFNetwork.framework */; };
 		187EB0861B71B59800233BA6 /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187EB0851B71B59800233BA6 /* LoadingView.m */; };
+		188211941CAA1AFB00944442 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188211931CAA1AFB00944442 /* WebViewController.m */; };
 		18A317DD1A7A2E3400DF74C1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A317DC1A7A2E3400DF74C1 /* AudioToolbox.framework */; };
 		18AD76A31A36A4E6004F9D69 /* NewCityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AD76A21A36A4E6004F9D69 /* NewCityController.m */; };
 		18AF860F1AAFDDD100E83DB6 /* oldphone_mono.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18AF860E1AAFDDD100E83DB6 /* oldphone_mono.wav */; };
@@ -58,6 +61,7 @@
 		18BF4F301A53A058001692DA /* AlarmViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BF4F2F1A53A058001692DA /* AlarmViewCell.m */; };
 		18CB54C11A6F92A3004D8C35 /* AlarmManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CB54C01A6F92A3004D8C35 /* AlarmManager.m */; };
 		18EBB084195C055F00B9673B /* SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EBB083195C055F00B9673B /* SessionManager.m */; };
+		18EF859B1C9BDE8E00BCE7F7 /* AlarmDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EF859A1C9BDE8E00BCE7F7 /* AlarmDataView.m */; };
 		8DD9F3DCB1D444D4B669FB78 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4C7CDF38BF74C5BA1727830 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -93,12 +97,16 @@
 		180E78881952C8D10020953F /* dialpad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = dialpad.m; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/dialpad.m"; sourceTree = "<group>"; };
 		18101E3D1940628F0064A117 /* BookmarkViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkViewCell.h; sourceTree = "<group>"; };
 		18101E3E1940628F0064A117 /* BookmarkViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkViewCell.m; sourceTree = "<group>"; };
+		18115C761CACB0A2004C0F59 /* HIstoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HIstoryViewController.h; sourceTree = "<group>"; };
+		18115C771CACB0A2004C0F59 /* HIstoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HIstoryViewController.m; sourceTree = "<group>"; };
 		1815F91A1989CB7D008AE7A3 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
 		1815F91B1989CB7D008AE7A3 /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainController.m; sourceTree = "<group>"; };
 		18166B2E19416B5100A9FCE9 /* SmarthomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmarthomeViewController.h; sourceTree = "<group>"; };
 		18166B2F19416B5100A9FCE9 /* SmarthomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmarthomeViewController.m; sourceTree = "<group>"; };
 		18166B3119416E6400A9FCE9 /* CustomIOS7AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOS7AlertView.h; sourceTree = "<group>"; };
 		18166B3219416E6400A9FCE9 /* CustomIOS7AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOS7AlertView.m; sourceTree = "<group>"; };
+		182481D91C8E6A2E00FB9766 /* AlarmHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmHelper.h; sourceTree = "<group>"; };
+		182481DA1C8E6A2E00FB9766 /* AlarmHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmHelper.m; sourceTree = "<group>"; };
 		183DAED1192AE77E0061AB7C /* SipPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SipPhoneViewController.h; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/SipPhoneViewController.h"; sourceTree = "<group>"; };
 		183DAED2192AE77E0061AB7C /* SipPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SipPhoneViewController.m; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/SipPhoneViewController.m"; sourceTree = "<group>"; };
 		183FC60E19234606000070F1 /* EcoaSmarthome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcoaSmarthome.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +154,8 @@
 		187C76A01A5A870C00C81805 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		187EB0841B71B59800233BA6 /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadingView.h; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/LoadingView.h"; sourceTree = "<group>"; };
 		187EB0851B71B59800233BA6 /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadingView.m; path = "../../../../../apple/Documents/apple app workspace/EcoaSmarthome/EcoaSmarthome/LoadingView.m"; sourceTree = "<group>"; };
+		188211921CAA1AFB00944442 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		188211931CAA1AFB00944442 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		18A317DB1A7A2E3400DF74C1 /* EcoaSmarthome.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = EcoaSmarthome.entitlements; sourceTree = "<group>"; };
 		18A317DC1A7A2E3400DF74C1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		18AD76A11A36A4E6004F9D69 /* NewCityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCityController.h; sourceTree = "<group>"; };
@@ -163,6 +173,8 @@
 		18CB54C01A6F92A3004D8C35 /* AlarmManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmManager.m; sourceTree = "<group>"; };
 		18EBB082195C055F00B9673B /* SessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionManager.h; sourceTree = "<group>"; };
 		18EBB083195C055F00B9673B /* SessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionManager.m; sourceTree = "<group>"; };
+		18EF85991C9BDE8E00BCE7F7 /* AlarmDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmDataView.h; sourceTree = "<group>"; };
+		18EF859A1C9BDE8E00BCE7F7 /* AlarmDataView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmDataView.m; sourceTree = "<group>"; };
 		26D48B7B5850D878D1904B71 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A1C628C9017194A2E94EC425 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D4C7CDF38BF74C5BA1727830 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -293,6 +305,10 @@
 				180647751AD64B1200BF2FCD /* httpsersub.m */,
 				187EB0841B71B59800233BA6 /* LoadingView.h */,
 				187EB0851B71B59800233BA6 /* LoadingView.m */,
+				182481D91C8E6A2E00FB9766 /* AlarmHelper.h */,
+				182481DA1C8E6A2E00FB9766 /* AlarmHelper.m */,
+				18EF85991C9BDE8E00BCE7F7 /* AlarmDataView.h */,
+				18EF859A1C9BDE8E00BCE7F7 /* AlarmDataView.m */,
 			);
 			path = EcoaSmarthome;
 			sourceTree = "<group>";
@@ -354,6 +370,10 @@
 				1848D6D01995C82B007E7242 /* LoginController.m */,
 				18AD76A11A36A4E6004F9D69 /* NewCityController.h */,
 				18AD76A21A36A4E6004F9D69 /* NewCityController.m */,
+				188211921CAA1AFB00944442 /* WebViewController.h */,
+				188211931CAA1AFB00944442 /* WebViewController.m */,
+				18115C761CACB0A2004C0F59 /* HIstoryViewController.h */,
+				18115C771CACB0A2004C0F59 /* HIstoryViewController.m */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -370,6 +390,7 @@
 				183FC60B19234606000070F1 /* Frameworks */,
 				183FC60C19234606000070F1 /* Resources */,
 				189F6FB1E78249F9AFC02E6D /* Copy Pods Resources */,
+				C3CCA266E11C695999E77F9E /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -499,6 +520,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		C3CCA266E11C695999E77F9E /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -506,6 +542,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18115C781CACB0A2004C0F59 /* HIstoryViewController.m in Sources */,
 				183FC62B19234606000070F1 /* ViewController.m in Sources */,
 				183FC64F192346A0000070F1 /* EcoaViewController.m in Sources */,
 				18BF4F301A53A058001692DA /* AlarmViewCell.m in Sources */,
@@ -525,6 +562,7 @@
 				186F0DA9195191150005B487 /* CallViewController.m in Sources */,
 				180E78831952C4E40020953F /* EcoaSipManager.m in Sources */,
 				1806A0C8194AEBA000B6C1AC /* DeviceViewCell.m in Sources */,
+				182481DB1C8E6A2E00FB9766 /* AlarmHelper.m in Sources */,
 				18B9A01719470154000FB514 /* BookmarkDataView.m in Sources */,
 				18166B3319416E6400A9FCE9 /* CustomIOS7AlertView.m in Sources */,
 				18101E3F1940628F0064A117 /* BookmarkViewCell.m in Sources */,
@@ -536,7 +574,9 @@
 				183FC64E192346A0000070F1 /* EcoaDBHelper.m in Sources */,
 				180647761AD64B1200BF2FCD /* httpsersub.m in Sources */,
 				18B1BFB3192EE648000BA7AF /* FirstSettingController.m in Sources */,
+				188211941CAA1AFB00944442 /* WebViewController.m in Sources */,
 				183FC67419235DCB000070F1 /* ViewTransitionObject.m in Sources */,
+				18EF859B1C9BDE8E00BCE7F7 /* AlarmDataView.m in Sources */,
 				1815F91C1989CB7D008AE7A3 /* MainController.m in Sources */,
 				18166B3019416B5100A9FCE9 /* SmarthomeViewController.m in Sources */,
 			);
