@@ -1,0 +1,68 @@
+/* 
+  Localizable.strings
+  EcoaSmarthome
+
+  Created by Apple on 2014/5/14.
+  Copyright (c) 2014年 ECOA. All rights reserved.
+*/
+
+"welcom_to_app_first" = "Dear User: \nWelcome to use Ecoa Smarthome App.\nPlease set User Infomation first.";
+"welcom_to_app_pass" = "Welcom to use Ecoa Smarthome App.\nPlease enter your password.";
+"welcom_to_app" = "Welcom to use Ecoa Smarthome App.\n";
+
+// for title
+"setting" = "User Informations";
+"smarthome" = "Smarthome";
+"sip" = "Sip Phone";
+"bookmark" = "My Favorites";
+
+// for alert
+"wrong_password_alert" = "Wrong password!";
+"blank_password_alert" = "Password should not be blank!";
+"blank_username_alert" = "Username should not be blank!";
+"leave_without_save" = "Leave without save?";
+"blank_name_alert" = "Your Name should not be blank!";
+"blank_device_name_alert" = "Device name should not be blank!";
+"save_failed" = "Save failed, please try again.";
+
+// for button
+"login" = "Login";
+"cancel" = "Cancel";
+"exit" = "Exit";
+"set_info"="Set User Info";
+"edit_text" = "Edit User Info";
+"save" = "Save Changes";
+"add" = "Add";
+"save_exit" = "Save & Leave";
+"delete" = "Delete";
+
+// setting
+"name" = "Your name: ";
+"appPassword" = "Password: ";
+"cloudAddress" = "Cloud Server IP: ";
+"cloudUsername" = "CloudServer Username: ";
+"cloudPassword" = "CloudServer Password: ";
+"sipAddress" = "SIP host IP: ";
+"sipUsername" = "SIP Username: ";
+"sipPassword" = "Sip Password: ";
+"autoSip" = "Get SIP Domain from Cloud Server";
+"showAlarm" = "Show camera event automatically";
+
+// add bookmark
+"device name" = "Device: ";
+"ip" = "IP: ";
+"username" = "Username:";
+"password" = "Password:";
+
+// device
+"wan" = "WAN IP: ";
+"lan" = "LAN IP: ";
+"username" = "Username: ";
+"password" = "Password: ";
+
+// for sip phone
+"incoming" = "Incoming: ";
+"calling" = "Calling: ";
+"callend" = "Call End: ";
+"time" = "Time: ";
+"miss" = "Missing Call: ";
