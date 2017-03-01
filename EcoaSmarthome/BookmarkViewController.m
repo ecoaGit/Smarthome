@@ -81,11 +81,10 @@
     
     NSLog(@"read data from database");
     FMResultSet *rs = [ecoaDB executeQuery:query];
-    if ([rs columnCount] > 0) {
+    if (rs!=nil) {
         deviceList = [[NSMutableArray alloc] initWithCapacity:[rs columnCount]];
         NSInteger count = 0;
         while ([rs next]) {
-            
             NSString *bookmarkName = [rs stringForColumn:@"bookmarkname"];
             NSString *ip = [rs stringForColumn:@"ipaddress"];
             NSString *username = [rs stringForColumn:@"userid"];

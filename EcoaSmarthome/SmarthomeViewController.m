@@ -26,7 +26,6 @@
     if (self) {
         // Custom initialization
         TAG = @"SmarthomeViewController";
-        
     }
     return self;
 }
@@ -35,10 +34,7 @@
 {
     NSLog(@"view did load");
     [super viewDidLoad];
-    //manager = [[SessionManager alloc]init];
-    //[manager initializeManager];
     manager = [SessionManager getInstance];
-    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receive:) name:@"deviceData" object:@"cloud"];
     
     self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
@@ -53,7 +49,6 @@
     [self.navigationItem setHidesBackButton:NO];
     [self sendToken];
     ccount = 0;
-    
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -75,8 +70,6 @@
 }
 
 -(void) receive:(NSNotification *)notification {
-    //NSLog(@"receive notification");
-    //
     if([[notification object] isEqualToString:@"doneLoading"]){
         ccount++;
         if (ccount == self.serverList.count) {
@@ -126,22 +119,18 @@
                 if (arrUpdate > selfUpdate) {
                     NSMutableArray *temp = [NSMutableArray arrayWithArray:[arr objectAtIndex:j]];
                     [self.deviceList replaceObjectAtIndex:i withObject:temp];
-                    //NSLog(@"%@", [self.deviceList objectAtIndex:i]);
                 }
             }
         }
     }
-    //NSLog(@"%@", self.deviceList);
 }
 
 -(void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
     NSLog(@"error occur");
-    
 }
 
 -(void) connectionDidFinishLoading:(NSURLConnection *)connection {
     NSLog(@"start to parse data");
-  
 }
 
 -(void) connection:(NSURLConnection *)connection didReceiveData:(NSData *)receiveData {
@@ -361,22 +350,20 @@
     NSString *token=[def stringForKey:@"APNS_TOKEN"];
     NSString *username=[def stringForKey:@"cloudUsername"];
     NSString *type=@"iOS";
-    
     NSDictionary *js_dic = [[NSDictionary alloc] initWithObjectsAndKeys:
                             token,@"token",
                             username, @"username",
                             type, @"type", nil];
-    
     NSError *error;
-    NSData *post_data = [NSJSONSerialization dataWithJSONObject:js_dic options:0 error:&error];
-    NSURL *URL = [NSURL URLWithString:@"http://ecoacloud.com:80/cloudserver/sendtoken"];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:URL];
+    NSData *post_data=[NSJSONSerialization dataWithJSONObject:js_dic options:0 error:&error];
+    NSURL *URL=[NSURL URLWithString:@"http://ecoacloud.com:80/cloudserver/sendtoken"];
+    NSMutableURLRequest *request=[[NSMutableURLRequest alloc] initWithURL:URL];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:[NSString stringWithFormat:@"%d", post_data.length] forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:post_data];
-    NSURLConnection *connect = [[NSURLConnection alloc]initWithRequest:request delegate:self];
+    NSURLConnection *connect=[[NSURLConnection alloc]initWithRequest:request delegate:self];
 }
 
 /*

@@ -336,10 +336,10 @@ int font;
             //NSLog(@"%d",pre_info.size.h);
             //NSLog(@"%s", pre_info.hwnd.info.ios.window);
         }
-        //pjsua_vid_preview_get_win(PJMEDIA_VID_DEFAULT_CAPTURE_DEV);
+        pjsua_vid_preview_get_win(PJMEDIA_VID_DEFAULT_CAPTURE_DEV);
         //pjsua_vid_win_info pre_info;
-        //pjsua_vid_win_get_info(pre_id, &pre_info);
-        //pjsua_vid_win_set_show(pre_id, PJ_TRUE);
+        pjsua_vid_win_get_info(pre_id, &pre_info);
+        pjsua_vid_win_set_show(pre_id, PJ_TRUE);
         
         UIWindow *_win = self.window;// put this to vid handler
         pjsua_call_id c_id = call_info.id;
@@ -357,7 +357,6 @@ int font;
         if (sta==PJSUA_CALL_MEDIA_NONE) {
             NSLog(@"media none");
         }
-        
         /**
          * The media is active
          */
@@ -411,8 +410,8 @@ int font;
                 else {
                     NSLog(@"not native");
                 }
-                //[_win setBackgroundColor:[UIColor greenColor]];
-                //[_win setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+                [_win setBackgroundColor:[UIColor greenColor]];
+                [_win setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
                 [self addSubview:_win];
                 NSLog(@"add _win to subview");
                 [self bringSubviewToFront:_win];

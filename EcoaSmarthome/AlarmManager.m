@@ -36,30 +36,30 @@ FMDatabase *db;
     // get attr
     if ([elementName isEqualToString:@"alarm"]) {
         //
-        NSString *sigh = [attributeDict objectForKey:@"sign"];//pid
-        NSString *message = [attributeDict objectForKey:@"message"];
-        NSString *tag = [attributeDict objectForKey:@"tag"];
+    //    NSString *sigh = [attributeDict objectForKey:@"sign"];//pid
+    //    NSString *message = [attributeDict objectForKey:@"message"];
+     //   NSString *tag = [attributeDict objectForKey:@"tag"];
         NSString *haptm = [attributeDict objectForKey:@"haptm"];
         if (haptm != nil) {
             haptm = [haptm stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
         }
-        NSString *endtm = [attributeDict objectForKey:@"endtm"];
+       NSString *endtm = [attributeDict objectForKey:@"endtm"];
         if (endtm != nil) {
             endtm = [endtm stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
         }
-        NSString *hapval = [attributeDict objectForKey:@"hapval"];
-        NSString *endval = [attributeDict objectForKey:@"endval"];
+       // NSString *hapval = [attributeDict objectForKey:@"hapval"];
+       // NSString *endval = [attributeDict objectForKey:@"endval"];
         
     }
     else if ([elementName isEqualToString:@"ipcam"]) {
         // ipcam alarm
-        NSString *camid = [attributeDict objectForKey:@"id"];
-        NSString *mode = [attributeDict objectForKey:@"mode"];
-        NSString *url = [attributeDict objectForKey:@"url"];
-        NSString *rip = [attributeDict objectForKey:@"rip"];
-        NSString *usr = [attributeDict objectForKey:@"usr"];
-        NSString *pswd = [attributeDict objectForKey:@"pswd"];
-        NSString *tm = [attributeDict objectForKey:@"tm"];
+     //   NSString *camid = [attributeDict objectForKey:@"id"];
+      //  NSString *mode = [attributeDict objectForKey:@"mode"];
+       // NSString *url = [attributeDict objectForKey:@"url"];
+      //  NSString *rip = [attributeDict objectForKey:@"rip"];
+      //  NSString *usr = [attributeDict objectForKey:@"usr"];
+     //   NSString *pswd = [attributeDict objectForKey:@"pswd"];
+     //   NSString *tm = [attributeDict objectForKey:@"tm"];
     }
 }
 

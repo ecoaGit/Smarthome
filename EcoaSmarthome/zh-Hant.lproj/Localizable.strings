@@ -64,3 +64,6 @@
 "callend" = "通話結束：";
 "time" = "通話時間：";
 "miss" = "未接來電：";
+
+// push message
+"Ecoa smarthome alert" = "智能家居 警報通知";

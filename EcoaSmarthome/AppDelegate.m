@@ -8,14 +8,6 @@
 
 #import "AppDelegate.h"
 
-/*@interface AppDelegate ()
-@property(nonatomic, strong) void (^registrationHandler)
-(NSString *registrationToken, NSError *error);
-@property(nonatomic, assign) BOOL connectedToGCM;
-@property(nonatomic, strong) NSString* registrationToken;
-@property(nonatomic, assign) BOOL subscribedToTopic;
-@end*/
-
 @implementation AppDelegate
 
 pjsua_call_setting call_setting;
@@ -25,7 +17,6 @@ Boolean incall;
 static bool _serviceIsStarted = NO;
 //static pjsua_transport_id udp_id;
 static pjsua_transport_id tcp_id;
-//static UIBackgroundTaskIdentifier bgtask;
 CallViewController *callViewController;
 static int READ_HEADER = 2;
 static int READ_CONTENT = 3;
@@ -377,8 +368,6 @@ static void on_config_init (pjsua_app_config *cfg) {
         
         // auto show receive video
         acc_cfg.vid_in_auto_show = PJ_TRUE;
-        
-        
         // auto transfer video
         acc_cfg.vid_out_auto_transmit = PJ_TRUE;
         
@@ -487,7 +476,7 @@ static void on_config_init (pjsua_app_config *cfg) {
             [f setNumberStyle:NSNumberFormatterDecimalStyle];
             NSNumber *num = [f numberFromString:port];
             
-            NSLog(@"ip/port %@ %@", ip, num);
+            //NSLog(@"ip/port %@ %@", ip, num);
             
             if (![socket connectToHost:ip onPort:[num unsignedIntValue] error:&err]) {
                 NSLog(@"error: %@", err);
@@ -518,13 +507,14 @@ static void on_config_init (pjsua_app_config *cfg) {
          
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+    // 20160722 會造成app卡死 先註解 steve
     // setup keep-alive
-    [self performSelectorOnMainThread:@selector(keepAlive) withObject:nil waitUntilDone:YES];
-    [application setKeepAliveTimeout:600 handler: ^{
+    //[self performSelectorOnMainThread:@selector(keepAlive) withObject:nil waitUntilDone:YES]//;
+    //[application setKeepAliveTimeout:600 handler: ^{
         //NSLog(@"keep alive handler");
-        [self performSelectorOnMainThread:@selector(keepAlive)
-                               withObject:nil waitUntilDone:YES];
-    }];
+    //    [self performSelectorOnMainThread:@selector(keepAlive)
+    //                           withObject:nil waitUntilDone:YES];
+    //}];
     //[self setUpKeepAlive:application];
    
 }
@@ -1019,51 +1009,56 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
             NSData *nd = [[userInfo objectForKey:@"ecoa_alert"] dataUsingEncoding:NSUTF8StringEncoding];
             NSError *jserror;
             NSDictionary* jsonObj = [NSJSONSerialization JSONObjectWithData:nd options:NSJSONReadingMutableContainers error:&jserror];
+            NSString *alarmType = [jsonObj objectForKey:@"type"];
+            NSString *alarmBody=@"";
             int mode = 0;
-            if ([[jsonObj objectForKey:@"type"] isEqualToString:@"IPCAM_ALARM"]) {
+            if ([alarmType isEqualToString:@"IPCAM_ALARM"]) {
                 mode = 1;
             }
             if (mode == 0) {
                 [ah saveAlarm:[jsonObj objectForKey:@"message"] withTime:[[jsonObj objectForKey:@"time"] stringByReplacingOccurrencesOfString:@"/" withString:@"-"] withPip:[jsonObj objectForKey:@"ip"] withMode:mode];
+                alarmBody=[NSString stringWithFormat:@"Alarm from %@", [jsonObj objectForKey:@"ip"]];
                 [ah closeDatabase];
             }
             else if (mode == 1) {
                 NSLog(@"save ipcam alarm");
+                alarmBody=@"Alarm";
                 NSString *content = [NSString stringWithFormat:@"%@?ip=%@&user=%@&pswd=%@&mode=%@&tm=", [jsonObj objectForKey:@"url"], [jsonObj objectForKey:@"rip"], [jsonObj objectForKey:@"usr"], [jsonObj objectForKey:@"pswd"], [jsonObj objectForKey:@"mode"]];
                 [ah saveIPCamAlarm:[jsonObj objectForKey:@"id"] time:[[jsonObj objectForKey:@"tm"] stringByReplacingOccurrencesOfString:@"/" withString:@"-"] pip:[NSString stringWithFormat:@"%@:%@",[jsonObj objectForKey:@"ip"], [jsonObj objectForKey:@"port"]] mode:mode content:content];
                 // show cam event
             }
             [[NSNotificationCenter defaultCenter]postNotificationName:@"alarm" object:@"refresh"];
             UILocalNotification *alert = [[UILocalNotification alloc] init];
-            if (alert) {
-                alert.timeZone = [NSTimeZone defaultTimeZone];
-                alert.repeatInterval = 0;
-                
-                alert.alertBody = @"remote notification test";
-                /* This action just brings the app to the FG, it doesn't
-                 * automatically answer the call (unless you specify the
-                 * --auto-answer option).
-                 */
-                alert.alertAction = @"Active app";
-                alert.applicationIconBadgeNumber = 1;
-                alert.soundName = UILocalNotificationDefaultSoundName;
-              
-                NSLog(@"show localnotification");
-                [[UIApplication sharedApplication] presentLocalNotificationNow:alert];
+            if (application.applicationState == UIApplicationStateActive) {
             }
-
+            else {
+                if (alert) {
+                    alert.timeZone = [NSTimeZone defaultTimeZone];
+                    alert.repeatInterval = 0;
+                    alert.alertTitle= alarmType;
+                    alert.alertBody = NSLocalizedString(@"Ecoa smarthome alert", @"alert title");
+                    /* This action just brings the app to the FG, it doesn't
+                     * automatically answer the call (unless you specify the
+                     * --auto-answer option).
+                     */
+                    alert.alertAction = @"Active app";
+                    alert.applicationIconBadgeNumber = 1;
+                    alert.soundName = UILocalNotificationDefaultSoundName;
+                    NSLog(@"show localnotification");
+                    [[UIApplication sharedApplication] presentLocalNotificationNow:alert];
+                }
+            }
         }
-        
     }
     else {
         NSLog(@"userinfo is NULL");
     }
-    
-    pjsua_acc_set_registration(acc_id, PJ_TRUE);
-    UILocalNotification *notification = [[UILocalNotification alloc] init];
-    notification.alertBody =  @"Looks like i got a notification - fetch thingy";
-    [application presentLocalNotificationNow:notification];
-    completionHandler(UIBackgroundFetchResultNewData);
+    if (acc_id!=nil){
+        int checkNum=pjsua_acc_is_valid(acc_id);
+        if (checkNum!=0){
+            pjsua_acc_set_registration(acc_id, PJ_TRUE);
+        }
+    }
 }
 
 -(void) handleSip/*:(NSNotification *)notify*/{
@@ -1088,7 +1083,6 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
         static pj_thread_t     *thread;
         pj_thread_register("checkregthread", thread_desc, &thread);
     }
-    //[NSThread sleepForTimeInterval:1];
     _sipthreadisStarted = YES;
     while (doCheckSip) {
         NSLog(@"check sip domain");
@@ -1124,7 +1118,7 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
                 [self re_registeration:sip_reg];
             }
         }
-        [NSThread sleepForTimeInterval:20];
+        [NSThread sleepForTimeInterval:300];
     }
 }
 
@@ -1132,29 +1126,6 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     
 }
-
-// [START receive_apns_token]
-/*- (void)application:(UIApplication *)application
-didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    // [END receive_apns_token]
-    // [START get_gcm_reg_token]
-    // Create a config and set a delegate that implements the GGLInstaceIDDelegate protocol.
-    GGLInstanceIDConfig *instanceIDConfig = [GGLInstanceIDConfig defaultConfig];
-    instanceIDConfig.delegate = self;
-    // Start the GGLInstanceID shared instance with the that config and request a registration
-    // token to enable reception of notifications
-    [[GGLInstanceID sharedInstance] startWithConfig:instanceIDConfig];
-    _registrationOptions = @{kGGLInstanceIDRegisterAPNSOption:deviceToken,
-                             kGGLInstanceIDAPNSServerTypeSandboxOption:@YES};
-    [[GGLInstanceID sharedInstance] tokenWithAuthorizedEntity:_gcmSenderID
-                                                        scope:kGGLInstanceIDScopeGCM
-                                                      options:_registrationOptions
-                                                      handler:_registrationHandler];
-    // [END get_gcm_reg_token]
-}*/
-
-
-
 
 - (void) stopSipThread {
     [sipThread cancel];

@@ -69,13 +69,15 @@ BOOL opened;
     NSString *sql = [NSString stringWithFormat:@"SELECT * FROM alarm_list ORDER BY stime DESC"];
     NSUInteger count = [db intForQuery:@"SELECT COUNT(*) FROM alarm_list"];
     FMResultSet *rs = [db executeQuery:sql];
-    if (rs.next) {
+    if (rs) {
         //count = [rs intForColumn:@"count"];
-        if (count >=30) {
+        if (count >30) {
             int redundant = (int)count -30;
-            for (int i = 0; i <= redundant;i++) {
-                NSString *tag = [rs[i] stringForColumn:@"tag"];
+            NSLog([NSString stringWithFormat:@"count:%d, redundant%d", count, redundant]);
+            for (int i = 0; i < redundant;i++) {
+                NSString *tag = [rs stringForColumn:@"tag"];
                 [self deleteAlarmWithTag:tag];
+                [rs next];
             }
         }
     }
@@ -100,7 +102,7 @@ BOOL opened;
 }
 
 - (void)deleteAlarmWithTag:(NSString *)tag {
-    NSString *sql =[NSString stringWithFormat:@"DELETE FROM alarm_list WHERE tag = '%@'", tag];
+    NSString *sql =[NSString stringWithFormat:@"DELETE FROM alarm_list WHERE tag='%@'", tag];
     [self execsql:sql];
 }
 
@@ -119,7 +121,7 @@ BOOL opened;
     //FMResultSet *rs = [db executeQuery:sql];
     int count = [db intForQuery:[NSString stringWithFormat:@"SELECT count(*) FROM alarm_list where tag='%@'", camid]];
     if (count > 0) {
-        NSLog(@"this work");
+        //NSLog(@"this work");
         return 1;
     }
     else return 0;

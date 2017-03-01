@@ -27,8 +27,6 @@
 NSMutableArray *alarmList;
 AlarmHelper *helper;
 
-
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -41,11 +39,8 @@ AlarmHelper *helper;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setUI];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receive:) name:@"alarm" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receive:) name:@"reg" object:nil];
-    
     self.board.dataSource = self;
     [self setNavigationBar];
 }
@@ -56,7 +51,7 @@ AlarmHelper *helper;
          [NSNumber numberWithInteger: UIInterfaceOrientationPortrait]
                                 forKey:@"orientation"];
     }
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    AppDelegate *delegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
     if (![delegate isServiceStarted]) {
         if ([delegate startService]) {
             [delegate registeration];
@@ -83,11 +78,6 @@ AlarmHelper *helper;
     // Dispose of any resources that can be recreated.
 }
 
-- (void)setUI {
-    //[self.newcity setHidden:YES];
-   
-}
-
 - (void) receive:(NSNotification *) notify {
     //NSLog(@"maincontroller receive:");
     if ([[notify name] isEqualToString:@"alarm"]) {
@@ -109,7 +99,6 @@ AlarmHelper *helper;
                 [regisMode setImage:[UIImage imageNamed:@"regimode_off"]];
                 [regisLabel setText:@"Registered fail"];
             });
-            
         }
         [[NSNotificationCenter defaultCenter]postNotificationName:@"check_param" object:nil];
     }
@@ -121,12 +110,11 @@ AlarmHelper *helper;
             return;
         }
     }*/
-    [self setUI];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //NSLog(@"cellforrowindexpath");
-    AlarmViewCell *cell =[tableView dequeueReusableCellWithIdentifier:@"alarmViewCell" forIndexPath:indexPath];
+    AlarmViewCell *cell =[board dequeueReusableCellWithIdentifier:@"alarmViewCell" forIndexPath:indexPath];
     if (cell == nil) {
         NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"AlarmViewCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
@@ -166,7 +154,7 @@ AlarmHelper *helper;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *nd = [alarmList objectAtIndex:indexPath.row];
-    //[helper setReaded:[nd objectForKey:@"tag"]];
+    [helper setReaded:[nd objectForKey:@"tag"]];
     NSLog(@"%@", [nd description]);
     if ([[nd objectForKey:@"mode"]intValue]==0) {
         CustomIOS7AlertView *view = [[CustomIOS7AlertView alloc]init];
@@ -174,7 +162,6 @@ AlarmHelper *helper;
         AlarmDataView *adView;
         if ([dev.model isEqualToString:@"iPhone"] || [dev.model isEqualToString:@"iPhone6"]) {
             adView = [[AlarmDataView alloc]initWithFrame:CGRectMake(0, 0, 150, 70)];
-            
         }
         else if ([dev.model isEqualToString:@"iPad"]) {
             adView = [[AlarmDataView alloc] initWithFrame:CGRectMake(0, 0, 200, 70)];
@@ -192,21 +179,12 @@ AlarmHelper *helper;
         NSString *camid = [nd objectForKey:@"tag"];
         NSString *url = [NSString stringWithFormat:@"http://%@/3sipcam.shw?cam=Cam0%c", [nd objectForKey:@"pip"], [camid characterAtIndex:camid.length-1]] ;
         NSURL *nsurl = [NSURL URLWithString:url];
-        NSURLRequest *req = [NSURLRequest requestWithURL:nsurl];
+        //NSURLRequest *req = [NSURLRequest requestWithURL:nsurl];
         WebViewController *webCon = [[WebViewController alloc]init];
         [webCon loadWebView:nsurl];
         [self presentViewController:webCon animated:YES completion:^{
         }];
     }
-}
-
-// webview
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-    
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    
 }
 
 - (void)setNavigationBar{
