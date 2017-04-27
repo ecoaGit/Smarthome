@@ -31,8 +31,7 @@ NSThread *sipThread;
 //static pj_thread_t     *thread;
 static bool _sipthreadisStarted = NO;
 static bool inLan;
-static NSString *_gcmSenderID = @"1006004105041";
-
+//static NSString *_gcmSenderID = @"1006004105041";
 
 struct pjsua_player_eof_data
 {
@@ -116,7 +115,6 @@ struct pjsua_player_eof_data
                                                               userInfo:userInfo];
         }
     };*/
-    
     return YES;
 }
 
@@ -141,7 +139,6 @@ struct pjsua_player_eof_data
         pjsua_destroy();
         return false;
     }
-    
     NSString *domain = [ud stringForKey:@"sipAddress"];
     const char* url = [[NSString stringWithFormat:@"sip:%@", domain] UTF8String];
     status = pjsua_verify_sip_url((char*)url);
@@ -149,8 +146,6 @@ struct pjsua_player_eof_data
         NSLog(@"verify sip url failed");
         return false;
     }
-   
-    
     pjsua_config cfg;
     pjsua_logging_config logg_cfg;
     pjsua_config_default(&cfg);
@@ -248,7 +243,7 @@ static void on_config_init (pjsua_app_config *cfg) {
     const char *reg_uri = [[NSString stringWithFormat:@"sip:%@@%@;transport=TCP", username, domain]UTF8String];
     //const char *reg_uri = [[NSString stringWithFormat:@"sip:%@@%@", username, domain]UTF8String];
     //NSLog(@"sip:%@@%@", username, domain);
-
+    
     status = pjsua_verify_sip_url((char*)reg_uri);
     if (status != PJ_SUCCESS) {
         NSLog(@"verify sip url failed");
@@ -312,9 +307,7 @@ static void on_config_init (pjsua_app_config *cfg) {
         //_serviceIsStarted = false;
         return;
     }
-    else {
-        
-    }
+    else {}
 }
 
 - (void) re_registeration:(NSString *)domain {
@@ -393,9 +386,7 @@ static void on_config_init (pjsua_app_config *cfg) {
         //_serviceIsStarted = false;
         return;
     }
-    else {
-    
-    }
+    else {}
 }
 
 - (BOOL) checkAnyRegistered {
@@ -940,8 +931,7 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
                 }
                 //[callViewController isFirstResponder];
                 [callViewController bringCallView:c_i withType:state];
-                [root presentViewController:callViewController animated:YES completion:^{
-                                   }];
+                [root presentViewController:callViewController animated:YES completion:^{}];
                 incall = true;
             }
             break;
@@ -951,7 +941,7 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
 /** push notification **/
 
 -(void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    
+    NSLog(@"remotenotificationwithtoken");
     const unsigned *tokenBytes = [deviceToken bytes];
     NSString *iosDeviceToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x", ntohl(tokenBytes[0]), ntohl(tokenBytes[1]), ntohl(tokenBytes[2]),ntohl(tokenBytes[3]), ntohl(tokenBytes[4]), ntohl(tokenBytes[5]), ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
     NSLog(@"device token %@", iosDeviceToken);
@@ -972,7 +962,6 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
                             iosDeviceToken,@"token",
                             username, @"username",
                             @"iOS", @"type", nil];
-    
     NSError *error;
     NSData *post_data = [NSJSONSerialization dataWithJSONObject:js_dic options:0 error:&error];
     NSURL *URL = [NSURL URLWithString:@"http://ecoacloud.com:80/cloudserver/sendtoken"];
@@ -997,13 +986,12 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
     
 }*/
 
--(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
     NSLog(@"didReceiveRemoteNotification");
     
     if (userInfo != NULL) {
-        NSLog(@"userinfo: %@", userInfo.description);
-        if ([userInfo objectForKey:@"ecoa_alert"] != nil) {
+        //NSLog(@"userinfo: %@", userInfo.description);
+        if([userInfo objectForKey:@"ecoa_alert"]!=nil){
             //NSString *content;
             AlarmHelper *ah = [[AlarmHelper alloc]init];
             NSData *nd = [[userInfo objectForKey:@"ecoa_alert"] dataUsingEncoding:NSUTF8StringEncoding];
@@ -1027,6 +1015,7 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
                 [ah saveIPCamAlarm:[jsonObj objectForKey:@"id"] time:[[jsonObj objectForKey:@"tm"] stringByReplacingOccurrencesOfString:@"/" withString:@"-"] pip:[NSString stringWithFormat:@"%@:%@",[jsonObj objectForKey:@"ip"], [jsonObj objectForKey:@"port"]] mode:mode content:content];
                 // show cam event
             }
+            NSLog(@"alarm refresh");
             [[NSNotificationCenter defaultCenter]postNotificationName:@"alarm" object:@"refresh"];
             UILocalNotification *alert = [[UILocalNotification alloc] init];
             if (application.applicationState == UIApplicationStateActive) {
@@ -1048,6 +1037,9 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
                     [[UIApplication sharedApplication] presentLocalNotificationNow:alert];
                 }
             }
+        }
+        else{
+            NSLog(@"is not alert");
         }
     }
     else {
