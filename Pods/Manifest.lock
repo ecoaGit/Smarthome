@@ -1,0 +1,21 @@
+PODS:
+  - CocoaAsyncSocket (7.0.3)
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
+  - OpenSSL-Universal (1.0.1.k)
+  - pjsip (2.3.0.7):
+    - OpenSSL-Universal (= 1.0.1.k)
+
+DEPENDENCIES:
+  - CocoaAsyncSocket (= 7.0.3)
+  - FMDB (~> 2.3)
+  - pjsip
+
+SPEC CHECKSUMS:
+  CocoaAsyncSocket: a3c9c3aadbf453aa0d13f63ef1c9bf91723d4109
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
+  OpenSSL-Universal: 5b864c8eb334c8e78f44e4b2eb294ee2c1891c23
+  pjsip: 786cea9364ae5c4a2c02fea7b52d3b36b4eeeb95
+
+COCOAPODS: 0.39.0
