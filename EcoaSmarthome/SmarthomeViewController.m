@@ -81,6 +81,9 @@
     }
     else if ([[notification object]isEqualToString:@"cloud"]) {
         NSMutableArray *temp = [[notification userInfo]objectForKey:@"list"];
+        NSString *ip=[[temp objectAtIndex:0]objectAtIndex:2];
+        NSString *selfip=[[notification userInfo]objectForKey:@"selfIp"];
+        inlan=[self isSameNetwork:ip device:selfip mask:@"255.255.255.0"];
         if (self.deviceList == nil) {
             // 雲端設備初始化
             self.deviceList = temp;
@@ -192,36 +195,35 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //NSLog(@"connect");
-    AppDelegate *dele = (AppDelegate*)[[UIApplication sharedApplication]delegate];
     NSString *path;
-    if ([dele isDeviceInLan]) {
-        path = [NSString stringWithFormat:@"http://%@:%@", [[self.deviceList objectAtIndex:indexPath.row]objectAtIndex:4], [[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:5]];
+    if(inlan){
+        path=[NSString stringWithFormat:@"http://%@:%@", [[self.deviceList objectAtIndex:indexPath.row]objectAtIndex:4], [[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:5]];
                 
     }
     else {
-        path = [NSString stringWithFormat:@"http://%@:%@", [[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:2], [[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:3]];
+        path=[NSString stringWithFormat:@"http://%@:%@", [[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:2], [[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:3]];
     }
-    
-    //NSLog(@"%@", path);
-    
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSString *user_info = [ud stringForKey:[[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:6]];
-    NSString *username;
-    NSString *password;
-    if (user_info != nil) {
-        NSData *da = [user_info dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:da options:0 error:nil];
-        username = [json valueForKey:@"username"];
-        password = [json valueForKey:@"password"];
+    NSLog(@"%@", path);
+    NSUserDefaults *ud=[NSUserDefaults standardUserDefaults];
+    NSString *user_info=[ud stringForKey:[[self.deviceList objectAtIndex:indexPath.row] objectAtIndex:6]];
+    NSString *username=@"";
+    NSString *password=@"";
+    if (user_info!=nil) {
+        NSData *da=[user_info dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *json=[NSJSONSerialization JSONObjectWithData:da options:0 error:nil];
+        username=[json valueForKey:@"username"];
+        NSLog(@"un: %@",username);
+        password=[json valueForKey:@"password"];
+        NSLog(@"pw: %@",password);
     }
-    if (![username isEqualToString:@""] &&![password isEqualToString:@""]) {
+    if (![username isEqualToString:@""]&&![password isEqualToString:@""]) {
         NSLog(@"user data is not null");
         NSData* aData = [[NSString stringWithFormat:@"%@:%@", username, password]dataUsingEncoding:NSUTF8StringEncoding];
         NSString *auth = [[NSString alloc]initWithData:[aData base64EncodedDataWithOptions:0] encoding:NSUTF8StringEncoding];
-        path = [path stringByAppendingString:[NSString stringWithFormat:@"?auth=%@", auth]];
+        path=[path stringByAppendingString:[NSString stringWithFormat:@"?auth=%@", auth]];
     }
-    NSURL *url = [NSURL URLWithString:path];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURL *url=[NSURL URLWithString:path];
+    NSURLRequest *request=[NSURLRequest requestWithURL:url];
     
     [self.navigationItem setRightBarButtonItem:nil];
     [self.navigationItem setHidesBackButton:YES];
@@ -237,9 +239,6 @@
     [web loadRequest:request];
     [web setTag:55];
     [self.view addSubview:web];
-  
-    
-
     [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
 }
 
@@ -292,13 +291,6 @@
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    /*UIInterfaceOrientation *orient = [[UIApplication sharedApplication] statusBarOrientation];
-    if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
-    
-    }
-    if (toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
-        
-    }*/
 }
 
 - (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
@@ -312,7 +304,6 @@
     [splash close];
     splash = nil;
     //[web setHidden:NO];
-
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
@@ -366,53 +357,17 @@
     NSURLConnection *connect=[[NSURLConnection alloc]initWithRequest:request delegate:self];
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
+- (BOOL)isSameNetwork:(NSString *)selfIp device:(NSString *)deviceIp mask:(NSString *)mask{
+    Byte *d1=(Byte *)[[selfIp dataUsingEncoding:NSUTF8StringEncoding]bytes];
+    Byte *d2=(Byte *)[[deviceIp dataUsingEncoding:NSUTF8StringEncoding]bytes];
+    Byte *mas=(Byte *)[[mask dataUsingEncoding:NSUTF8StringEncoding]bytes];
+    
+    for (int i=0; i<[[selfIp dataUsingEncoding:NSUTF8StringEncoding] length]; i++){
+        if ((d1[i]&mas[i])!=(d2[i]&mas[i])) {
+            return NO;
+        }
+    }
     return YES;
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -23,6 +23,7 @@
     UIWebView *web;
     SessionManager *manager;
     UIActivityIndicatorView *indicator;
+    BOOL inlan;
 }
 
 @property (nonatomic, strong) NSMutableArray *deviceList;

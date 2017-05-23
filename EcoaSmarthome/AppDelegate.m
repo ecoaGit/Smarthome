@@ -988,7 +988,6 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
     NSLog(@"didReceiveRemoteNotification");
-    
     if (userInfo != NULL) {
         //NSLog(@"userinfo: %@", userInfo.description);
         if([userInfo objectForKey:@"ecoa_alert"]!=nil){
@@ -1015,12 +1014,12 @@ static void on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info) {
                 [ah saveIPCamAlarm:[jsonObj objectForKey:@"id"] time:[[jsonObj objectForKey:@"tm"] stringByReplacingOccurrencesOfString:@"/" withString:@"-"] pip:[NSString stringWithFormat:@"%@:%@",[jsonObj objectForKey:@"ip"], [jsonObj objectForKey:@"port"]] mode:mode content:content];
                 // show cam event
             }
-            NSLog(@"alarm refresh");
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"alarm" object:@"refresh"];
-            UILocalNotification *alert = [[UILocalNotification alloc] init];
             if (application.applicationState == UIApplicationStateActive) {
+                NSLog(@"alarm refresh");
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"alarm" object:@"refresh"];
             }
             else {
+                UILocalNotification *alert = [[UILocalNotification alloc] init];
                 if (alert) {
                     alert.timeZone = [NSTimeZone defaultTimeZone];
                     alert.repeatInterval = 0;
